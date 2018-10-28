@@ -1,10 +1,6 @@
-import codecs
 import os
 import re
-from setuptools import find_packages
-from setuptools import setup
-
-import pypandoc
+import setuptools
 
 NAME             = "pypi-template"
 AUTHOR           = "Christophe VG"
@@ -34,25 +30,25 @@ CLASSIFIERS      = [
 INSTALL_REQUIRES = []
 ENTRY_POINTS     = {}
 
-LONG_DESCRIPTION = pypandoc.convert(README, "rst")
-
-HERE = os.path.dirname(__file__)
-def read(*path):
-  with codecs.open(os.path.join(HERE, *path), encoding="utf-8") as fp:
-    return fp.read()
+def read(file):
+  with open(file, "r") as fh:
+    return fh.read()
 
 VERSION = re.search(
   r'^__version__ = [\'"]([^\'"]*)[\'"]',
   read(NAME + "/__init__.py")
 ).group(1)
 
+LONG_DESCRIPTION = read(README)
+
 if __name__ == "__main__":
-  setup(name=NAME,
+  setuptools.setup(name=NAME,
         version=VERSION,
-        packages=find_packages(),
+        packages=setuptools.find_packages(),
         author=AUTHOR,
         description=DESCRIPTION,
         long_description=LONG_DESCRIPTION,
+        long_description_content_type="text/markdown",
         license=LICENSE,
         keywords=KEYWORDS,
         url=URL,

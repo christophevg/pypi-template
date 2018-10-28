@@ -2,8 +2,19 @@ tag:
 	git tag ${TAG} -m "${MSG}"
 	git push --tags
 
-publish-test:
-	python setup.py sdist upload -r pypitest
+venv:
+	virtualenv $@
 
-publish:
-	python setup.py sdist upload -r pypi
+requirements: venv requirements.txt
+	. venv/bin/activate; pip install -r requirements.txt > /dev/null
+
+dist: requirements
+	. venv/bin/activate; python setup.py sdist bdist_wheel
+
+publish-test: dist
+	. venv/bin/activate; twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+publish: dist
+	. venv/bin/activate; twine upload --repository-url https://pypi.org/legacy/ dist/*
+
+.PHONY: dist
