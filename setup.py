@@ -30,8 +30,10 @@ CLASSIFIERS      = [
 INSTALL_REQUIRES = []
 ENTRY_POINTS     = {}
 
+HERE = os.path.dirname(__file__)
+
 def read(file):
-  with open(file, "r") as fh:
+  with open(os.path.join(HERE, file), "r") as fh:
     return fh.read()
 
 VERSION = re.search(
