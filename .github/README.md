@@ -3,7 +3,6 @@
 > My take at a template repository that I can fork for every Python project I want to push to PyPi
 
 ![[Latest Version on PyPI](https://pypi.python.org/pypi/pypi-template/)](https://img.shields.io/pypi/v/pypi-template.svg)
-![[Code Health](https://landscape.io/github/christophevg/pypi-template/master)](https://landscape.io/github/christophevg/pypi-template/master/landscape.svg?style=flat)
 ![[Build Status](http://travis-ci.org/christophevg/pypi-template)](https://secure.travis-ci.org/christophevg/pypi-template.svg?branch=master)
 
 ## Howto, the executive summary
