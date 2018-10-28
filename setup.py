@@ -4,6 +4,8 @@ import re
 from setuptools import find_packages
 from setuptools import setup
 
+import pypandoc
+
 NAME             = "pypi-template"
 AUTHOR           = "Christophe VG"
 AUTHOR_EMAIL     = "contact@christophe.vg"
@@ -11,7 +13,7 @@ DESCRIPTION      = "PyPi template repository."
 LICENSE          = "MIT"
 KEYWORDS         = "pypi template"
 URL              = "https://github.com/christophevg/" + NAME
-LONG_DESCRIPTION = "See " + URL
+README           = ".github/README.md"
 CLASSIFIERS      = [
   "Environment :: Console",
   "Development Status :: 4 - Beta",
@@ -31,6 +33,8 @@ CLASSIFIERS      = [
 ]
 INSTALL_REQUIRES = []
 ENTRY_POINTS     = {}
+
+LONG_DESCRIPTION = pypandoc.convert(README, "rst")
 
 HERE = os.path.dirname(__file__)
 def read(*path):
