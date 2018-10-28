@@ -55,6 +55,22 @@ Replace the Python package configuration with one appropriate to your project.
 
 ## Things to do
 
+### Testing
+
+A basic testing setup has been prepared. To run it locally, issue...
+
+```bash
+$ make test
+...
+___________________________________ summary ____________________________________
+  py27: commands succeeded
+  congratulations :)
+```
+
+Head over to [https://travis-ci.org](https://travis-ci.org) and register you project. A basic CI setup is also provided.
+
+### Publishing
+
 Head over to [https://test.pypi.org](https://test.pypi.org) and register for an account. Next simply issue...
 
 ```bash
