@@ -15,7 +15,7 @@ publish-test: dist
 	. venv/bin/activate; twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
 publish: dist
-	. venv/bin/activate; twine upload --repository-url https://pypi.org/legacy/ dist/*
+	. venv/bin/activate; twine upload dist/*
 
 test:
 	tox
