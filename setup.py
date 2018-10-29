@@ -28,7 +28,11 @@ CLASSIFIERS      = [
   "Programming Language :: Python :: 3.6",
 ]
 INSTALL_REQUIRES = []
-ENTRY_POINTS     = {}
+ENTRY_POINTS     = {
+  'scripts': [
+    'bin/pypi-template'
+  ]
+}
 
 HERE = os.path.dirname(__file__)
 

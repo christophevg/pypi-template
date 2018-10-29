@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [[ $# -ne 2 ]]; then
+  echo "Please provide a new project name and remote repository account path"
+  echo "e.g. $0 my-new-project git@github.com:your-account"
+  exit 1
+fi
+
+if [[ -e pypi-template ]]; then
+  echo "Please change to a folder that doesn't already contain pypi-template"
+  exit 2
+fi
+
+if [[ -e $1 ]]; then
+  echo "New project name ($1) already exists"
+  exit 3
+fi
+
+git clone https://github.com/christophevg/pypi-template
+mv pypi-template $1
+cd $1
+git remote remove origin
+git remote add origin $2/$1.git

@@ -30,6 +30,32 @@ $ git remote add origin git@github.com:your-account/your-new-project.git
 $ git push -u master origin
 ```
 
+### Use the Command Line
+
+The repository also includes a small script that automates these steps. If you install the module, the script gets registered in your PATH, and allows for
+
+```bash
+$ pip install pypi-template
+
+$ pypi-template my-new-project git@github.com:my-account
+Cloning into 'pypi-template'...
+remote: Enumerating objects: 53, done.
+remote: Counting objects: 100% (53/53), done.
+remote: Compressing objects: 100% (24/24), done.
+remote: Total 53 (delta 16), reused 50 (delta 13), pack-reused 0
+Unpacking objects: 100% (53/53), done.
+
+$ cd my-new-project/
+
+$ ls
+LICENSE.txt		pypi-template		tests
+MANIFEST.in		requirements.txt	tox.ini
+Makefile		setup.py
+
+$ git remote -v
+origin	git@github.com:my-account/my-new-project.git (fetch)
+origin	git@github.com:my-account/my-new-project.git (push)
+```
 ## Things to edit
 
 1. module top-level folder
