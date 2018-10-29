@@ -28,11 +28,10 @@ CLASSIFIERS      = [
   "Programming Language :: Python :: 3.6",
 ]
 INSTALL_REQUIRES = []
-ENTRY_POINTS     = {
-  'scripts': [
-    'bin/pypi-template'
-  ]
-}
+ENTRY_POINTS     = {}
+SCRIPTS = [
+  'bin/pypi-template'
+]
 
 HERE = os.path.dirname(__file__)
 
@@ -60,4 +59,5 @@ if __name__ == "__main__":
         url=URL,
         classifiers=CLASSIFIERS,
         install_requires=INSTALL_REQUIRES,
-        entry_points=ENTRY_POINTS)
+        entry_points=ENTRY_POINTS,
+        scripts=SCRIPTS)
