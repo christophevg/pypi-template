@@ -42,7 +42,7 @@ def read(file):
 
 VERSION = re.search(
   r'^__version__ = [\'"]([^\'"]*)[\'"]',
-  read(NAME + "/__init__.py")
+  read(NAME.replace("-", "_") + "/__init__.py")
 ).group(1)
 
 LONG_DESCRIPTION = read(README)
