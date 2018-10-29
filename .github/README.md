@@ -63,7 +63,7 @@ origin	git@github.com:my-account/my-new-project.git (push)
 There is a placeholder top-level module folder. You'll probably want to rename that.
 
 ```bash
-$ mv pypi-template your-new-project
+$ mv pypi_template your_new_project
 ```
 
 2. LICENSE.txt
@@ -92,7 +92,7 @@ ___________________________________ summary ____________________________________
   congratulations :)
 ```
 
-Head over to [https://travis-ci.org](https://travis-ci.org) and register you project. A basic CI setup is also provided.
+Head over to [https://travis-ci.org](https://travis-ci.org) and register your project. A basic CI configuration is also provided.
 
 ### Publishing
 
@@ -103,3 +103,11 @@ $ make publish-test
 ```
 
 to publish your module to the test instance of PyPi.
+
+or
+
+```bash
+$ make publish
+```
+
+to publish your module to the main instance of PyPi.
