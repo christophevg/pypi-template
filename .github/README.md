@@ -4,6 +4,7 @@
 
 ![[Latest Version on PyPI](https://pypi.python.org/pypi/pypi-template/)](https://img.shields.io/pypi/v/pypi-template.svg)
 ![[Build Status](http://travis-ci.org/christophevg/pypi-template)](https://secure.travis-ci.org/christophevg/pypi-template.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/christophevg/pypi-template/badge.svg?branch=master)](https://coveralls.io/github/christophevg/pypi-template?branch=master)
 
 ## Howto, the executive summary
 
@@ -93,6 +94,8 @@ ___________________________________ summary ____________________________________
 ```
 
 Head over to [https://travis-ci.org](https://travis-ci.org) and register your project. A basic CI configuration is also provided.
+
+Head over to [https://coveralls.io](https://coveralls.io) and register your project to consult your code coverage reporting.
 
 ### Publishing
 

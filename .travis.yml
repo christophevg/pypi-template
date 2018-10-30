@@ -1,13 +1,10 @@
 sudo: false
 language: python
-matrix:
-  include:
-    - python: "2.7"
-      env: TOXENV=py27
+python:
+  - "2.7"
 install:
-  - pip install tox
+    - pip install tox-travis coveralls
 script:
-  - tox
+    - tox
 after_success:
-  - tox -e coverage
-  - tox -e codecov
+    - coveralls
