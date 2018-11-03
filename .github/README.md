@@ -5,7 +5,7 @@
 [![Latest Version on PyPI](https://img.shields.io/pypi/v/pypi-template.svg)](https://pypi.python.org/pypi/pypi-template/)
 [![Build Status](https://secure.travis-ci.org/christophevg/pypi-template.svg?branch=master)](http://travis-ci.org/christophevg/pypi-template)
 [![Coverage Status](https://coveralls.io/repos/github/christophevg/pypi-template/badge.svg?branch=master)](https://coveralls.io/github/christophevg/pypi-template?branch=master)
-[![Build with PyPi Tempalte](https://img.shields.io/badge/PyPi_Template-v0.0.2-blue.svg)](https://github.com/christophevg/pypi-template)
+[![Built with PyPi Tempalte](https://img.shields.io/badge/PyPi_Template-v0.0.2-blue.svg)](https://github.com/christophevg/pypi-template)
 
 ## Howto, the executive summary
 
