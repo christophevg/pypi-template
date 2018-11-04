@@ -7,7 +7,7 @@ if [[ "$1" -eq "upgrade" ]]; then
     git remote add template https://github.com/christophevg/pypi-template
   fi
   git fetch template
-  git merge template
+  git merge template/master
   exit 0
 fi
 
