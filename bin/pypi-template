@@ -1,23 +1,36 @@
 #!/bin/bash
 
-if [[ $# -ne 2 ]]; then
+# pypi-template upgrade
+if [[ "$1" -eq "upgrade" ]]; then
+  git remote | grep template > /dev/null
+  if [[ $? -ne 0 ]]; then
+    git remote add template https://github.com/christophevg/pypi-template
+  fi
+  git fetch template
+  git merge template
+  exit 0
+fi
+
+# pypi-template create <name> <repo-root>
+if [[ "$1" -ne "create" ]]; then
+  echo "Please choose an action to perform:"
+  echo "$0 create <name> <repo-root>"
+  echo "$0 upgrade"
+  exit
+fi
+
+if [[ $# -ne 3 ]]; then
   echo "Please provide a new project name and remote repository account path"
-  echo "e.g. $0 my-new-project git@github.com:your-account"
+  echo "e.g. $0 create my-new-project git@github.com:your-account"
   exit 1
 fi
 
-if [[ -e pypi-template ]]; then
-  echo "Please change to a folder that doesn't already contain pypi-template"
+if [[ -e $2 ]]; then
+  echo "New project name ($2) already exists in this folder."
   exit 2
 fi
 
-if [[ -e $1 ]]; then
-  echo "New project name ($1) already exists"
-  exit 3
-fi
-
-git clone https://github.com/christophevg/pypi-template
-mv pypi-template $1
-cd $1
-git remote remove origin
-git remote add origin $2/$1.git
+git clone https://github.com/christophevg/pypi-template $2
+cd $2
+git remote rename origin template
+git remote add origin $3/$2.git

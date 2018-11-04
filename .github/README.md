@@ -40,7 +40,7 @@ The repository also includes a small script that automates these steps. If you i
 ```bash
 $ pip install pypi-template
 
-$ pypi-template my-new-project git@github.com:my-account
+$ pypi-template create my-new-project git@github.com:my-account
 Cloning into 'pypi-template'...
 remote: Enumerating objects: 53, done.
 remote: Counting objects: 100% (53/53), done.
@@ -59,6 +59,27 @@ $ git remote -v
 origin	git@github.com:my-account/my-new-project.git (fetch)
 origin	git@github.com:my-account/my-new-project.git (push)
 ```
+
+### How to upgrade to the lastest version of PyPi Template?
+
+Currently PyPi Template is still very much a moving target. New commits to this project are not guaranteed to turn into conflicts. We'll consider PyPi Template a v1.0.0 project once we've found ways to clearly separate PyPi Template from your project. Until then, you'll have to hack it a bit by merging the changes and going through the conflicts manually.
+
+The procedure will be:
+
+```bash
+$ git remote add template git@github.com:christophevg/pypi-template
+$ git fetch template
+$ git merge template
+```
+
+Or use the `pypi-template` script:
+
+```bash
+$ pypi-template upgrade
+```
+
+The latter can also be used to "upgrade" and existing project, but this will also often introduce a lot of manual conflict resolution work ;-)
+
 ## Things to edit
 
 1. module top-level folder
