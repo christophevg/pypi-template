@@ -6,7 +6,7 @@
 [![Build Status](https://secure.travis-ci.org/christophevg/pypi-template.svg?branch=master)](http://travis-ci.org/christophevg/pypi-template)
 [![Documentation Status](https://readthedocs.org/projects/pypi-template/badge/?version=latest)](https://pypi-template.readthedocs.io/en/latest/?badge=latest)
 [![Coverage Status](https://coveralls.io/repos/github/christophevg/pypi-template/badge.svg?branch=master)](https://coveralls.io/github/christophevg/pypi-template?branch=master)
-[![Built with PyPi Template](https://img.shields.io/badge/PyPi_Template-v0.0.4-blue.svg)](https://github.com/christophevg/pypi-template)
+[![Built with PyPi Template](https://img.shields.io/badge/PyPi_Template-v0.0.5-blue.svg)](https://github.com/christophevg/pypi-template)
 
 ## Howto, the executive summary
 
@@ -35,50 +35,32 @@ $ git push -u master origin
 
 ### Use the Command Line
 
-The repository also includes a small script that automates these steps. If you install the module, the script gets registered in your PATH, and allows for
+The repository also includes a small script that copies the files from a clone of the repository. If you install the module, the script gets registered in your PATH, and allows for
 
 ```bash
 $ pip install pypi-template
 
-$ pypi-template create my-new-project git@github.com:my-account
-Cloning into 'pypi-template'...
-remote: Enumerating objects: 53, done.
-remote: Counting objects: 100% (53/53), done.
-remote: Compressing objects: 100% (24/24), done.
-remote: Total 53 (delta 16), reused 50 (delta 13), pack-reused 0
-Unpacking objects: 100% (53/53), done.
+$ mkdir my-new-project
+$ cd my-new-project
 
-$ cd my-new-project/
+$ pypi-template
 
-$ ls
-LICENSE.txt		pypi-template		tests
-MANIFEST.in		requirements.txt	tox.ini
-Makefile		setup.py
-
-$ git remote -v
-origin	git@github.com:my-account/my-new-project.git (fetch)
-origin	git@github.com:my-account/my-new-project.git (push)
+$ ls -la
+total 40
+drwxr-xr-x  11 xtof  staff   352 Nov 11 21:34 .
+drwxr-xr-x  46 xtof  staff  1472 Nov 11 21:10 ..
+drwxr-xr-x   3 xtof  staff    96 Nov 11 21:35 .github
+-rw-r--r--   1 xtof  staff   144 Nov 11 21:31 .travis.yml
+-rw-r--r--   1 xtof  staff  1067 Nov 11 21:34 LICENSE.txt
+-rw-r--r--   1 xtof  staff   443 Nov 11 21:34 Makefile
+drwxr-xr-x   6 xtof  staff   192 Nov 11 21:35 docs
+drwxr-xr-x   3 xtof  staff    96 Nov 11 21:35 pypi_template
+-rw-r--r--   1 xtof  staff  1830 Nov 11 21:34 setup.py
+drwxr-xr-x   3 xtof  staff    96 Nov 11 21:35 tests
+-rw-r--r--   1 xtof  staff   167 Nov 11 21:34 tox.ini
 ```
 
-### How to upgrade to the lastest version of PyPi Template?
-
-Currently PyPi Template is still very much a moving target. New commits to this project are not guaranteed to turn into conflicts. We'll consider PyPi Template a v1.0.0 project once we've found ways to clearly separate PyPi Template from your project. Until then, you'll have to hack it a bit by merging the changes and going through the conflicts manually.
-
-The procedure will be:
-
-```bash
-$ git remote add template git@github.com:christophevg/pypi-template
-$ git fetch template
-$ git merge template/master
-```
-
-Or use the `pypi-template` script:
-
-```bash
-$ pypi-template upgrade
-```
-
-The latter can also be used to "upgrade" and existing project, but this will also often introduce a lot of manual conflict resolution work ;-)
+The script only copies files that don't exist yet, so it can also be used to upgrade to a new version of PyPi Template, and import new features based on added folders. For changes to existing files, a more elaborate copying function will be added later, probably ;-)
 
 ## Things to edit
 
@@ -102,6 +84,10 @@ Replace this information with information regarding your project.
 
 Replace the Python package configuration with one appropriate to your project.
 
+5. docs/
+
+The `docs/` contains a copy of this README as a placeholder for additional documentation, that can be published to [ReadTheDocs](https://readthedocs.org).
+
 ## Things to do
 
 ### Testing
@@ -120,7 +106,7 @@ Head over to [https://travis-ci.org](https://travis-ci.org) and register your pr
 
 Head over to [https://coveralls.io](https://coveralls.io) and register your project to consult your code coverage reporting.
 
-### Publishing
+### Publishing to PyPi
 
 Head over to [https://test.pypi.org](https://test.pypi.org) and register for an account. Next simply issue...
 

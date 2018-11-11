@@ -1,36 +1,19 @@
 #!/bin/bash
 
-# pypi-template upgrade
-if [[ "$1" -eq "upgrade" ]]; then
-  git remote | grep template > /dev/null
-  if [[ $? -ne 0 ]]; then
-    git remote add template https://github.com/christophevg/pypi-template
-  fi
-  git fetch template
-  git merge template/master
-  exit 0
-fi
+# inspired by https://stackoverflow.com/questions/4632028
 
-# pypi-template create <name> <repo-root>
-if [[ "$1" -ne "create" ]]; then
-  echo "Please choose an action to perform:"
-  echo "$0 create <name> <repo-root>"
-  echo "$0 upgrade"
-  exit
-fi
+TMP_DIR=`mktemp -d`
 
-if [[ $# -ne 3 ]]; then
-  echo "Please provide a new project name and remote repository account path"
-  echo "e.g. $0 create my-new-project git@github.com:your-account"
+if [[ ! "$TMP_DIR" || ! -d "$TMP_DIR" ]]; then
+  echo "Could not temp location to clone PyPi Template :-("
   exit 1
 fi
 
-if [[ -e $2 ]]; then
-  echo "New project name ($2) already exists in this folder."
-  exit 2
-fi
+function cleanup() {      
+  rm -rf "$TMP_DIR"
+}
+trap cleanup EXIT
 
-git clone https://github.com/christophevg/pypi-template $2
-cd $2
-git remote rename origin template
-git remote add origin $3/$2.git
+git clone -q https://github.com/christophevg/pypi-template $TMP_DIR
+
+rsync -a -r --ignore-existing --files-from=$TMP_DIR/bootstrap.txt $TMP_DIR .
