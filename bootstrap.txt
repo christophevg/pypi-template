@@ -1,0 +1,9 @@
+.github
+docs
+pypi_template
+tests
+.travis.yml
+LICENSE.txt
+Makefile
+setup.py
+tox.ini
