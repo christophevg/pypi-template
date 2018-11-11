@@ -20,4 +20,8 @@ publish: dist
 test:
 	tox
 
-.PHONY: dist
+docs: requirements
+	. venv/bin/activate; cd docs; make html
+	open docs/_build/html/index.html
+
+.PHONY: dist docs

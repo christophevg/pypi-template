@@ -106,6 +106,16 @@ Head over to [https://travis-ci.org](https://travis-ci.org) and register your pr
 
 Head over to [https://coveralls.io](https://coveralls.io) and register your project to consult your code coverage reporting.
 
+### Generate/Publish Documentation
+
+```bash
+$ make docs
+```
+
+This wil generate a HTML version of your `docs/` and open it in a browser.
+
+If you want to publish your documentation (from the [docs/](docs/) folder) to e.g. [ReadTheDocs](https://readthedocs.org), import the repository over there also.
+
 ### Publishing to PyPi
 
 Head over to [https://test.pypi.org](https://test.pypi.org) and register for an account. Next simply issue...
@@ -123,5 +133,3 @@ $ make publish
 ```
 
 to publish your module to the main instance of  [PyPi](https://pypi.org).
-
-If you want to publish your documentation (from the [docs/](docs/) folder) to e.g. [ReadTheDocs](https://readthedocs.org), import the repository over there also.
