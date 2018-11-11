@@ -6,7 +6,7 @@ venv:
 	virtualenv $@
 
 requirements: venv requirements.txt
-	. venv/bin/activate; pip install -r requirements.txt > /dev/null
+	. venv/bin/activate; pip install --upgrade -r requirements.txt > /dev/null
 
 dist: requirements
 	. venv/bin/activate; python setup.py sdist bdist_wheel
