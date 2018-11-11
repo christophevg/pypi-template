@@ -20,6 +20,9 @@ publish: dist
 test:
 	tox
 
+coverage: test requirements
+	. venv/bin/activate; coverage report
+
 docs: requirements
 	. venv/bin/activate; cd docs; make html
 	open docs/_build/html/index.html
