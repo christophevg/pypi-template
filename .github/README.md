@@ -86,7 +86,7 @@ Replace the Python package configuration with one appropriate to your project.
 
 5. docs/
 
-The `docs/` contains a copy of this README as a placeholder for additional documentation, that can be published to [ReadTheDocs](https://readthedocs.org).
+The `docs/` contains a copy of this README as a placeholder for additional documentation, that can be published to [ReadTheDocs](https://readthedocs.org). Edit `conf.py` to reflect your project's name and description.
 
 ## Things to do
 
