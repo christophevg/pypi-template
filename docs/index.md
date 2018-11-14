@@ -133,3 +133,10 @@ $ make publish
 ```
 
 to publish your module to the main instance of  [PyPi](https://pypi.org).
+
+## Contents
+
+A small example on how to generate a navigation index:
+
+* [Title1](doc1.md)
+* [Title2](doc2.md)

@@ -51,6 +51,7 @@ templates_path = ['_templates']
 # source_suffix = '.rst'
 
 from recommonmark.parser import CommonMarkParser
+from recommonmark.transform import AutoStructify
 source_parsers = { ".md": CommonMarkParser }
 source_suffix  = ['.rst', '.md']
 
@@ -175,3 +176,9 @@ epub_title = project
 
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
+
+def setup(app):
+  app.add_config_value('recommonmark_config', {
+    'auto_toc_tree_section': 'Contents'
+  }, True)
+  app.add_transform(AutoStructify)
