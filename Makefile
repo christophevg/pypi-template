@@ -17,10 +17,10 @@ publish-test: dist
 publish: dist
 	. venv/bin/activate; twine upload dist/*
 
-test:
-	tox
+test: requirements
+	. venv/bin/activate; tox
 
-coverage: test requirements
+coverage: test
 	. venv/bin/activate; coverage report
 
 docs: requirements
