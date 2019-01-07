@@ -8,6 +8,9 @@ venv:
 requirements: venv requirements.txt
 	. venv/bin/activate; pip install --upgrade -r requirements.txt > /dev/null
 
+upgrade: requirements
+	. venv/bin/activate; pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
+
 dist: requirements
 	. venv/bin/activate; python setup.py sdist bdist_wheel
 
