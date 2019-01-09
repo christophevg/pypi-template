@@ -40,7 +40,7 @@ def read(file):
     return fh.read()
 
 VERSION = re.search(
-  r'^__version__ = [\'"]([^\'"]*)[\'"]',
+  r'__version__ = [\'"]([^\'"]*)[\'"]',
   read(NAME.replace("-", "_") + "/__init__.py")
 ).group(1)
 

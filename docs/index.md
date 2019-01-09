@@ -140,3 +140,4 @@ A small example on how to generate a navigation index:
 
 * [Title1](doc1.md)
 * [Title2](doc2.md)
+* [Generated Code Documentation](code.md)
