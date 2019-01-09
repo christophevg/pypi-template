@@ -3,7 +3,7 @@ Babel==2.6.0
 bleach==3.0.2
 certifi==2018.11.29
 chardet==3.0.4
-commonmark==0.8.1
+CommonMark==0.5.4
 coverage==4.5.2
 docutils==0.14
 filelock==3.0.10
