@@ -11,6 +11,8 @@ import yaml
 
 from prompt_toolkit import prompt
 
+from pypi_template import __version__
+
 EXCLUDED_EXT = ".pyc"
 EXCLUDED     = [ "__init__.py" ]
 
@@ -37,7 +39,8 @@ def list_variables(template):
 
 # load variables cache
 system_vars = {
-  "current_year" : datetime.datetime.now().year
+  "current_year"          : datetime.datetime.now().year,
+  "pypi_template_version" : __version__
 }
 try:    vars = yaml.safe_load(open(".pypi-template"))
 except: pass

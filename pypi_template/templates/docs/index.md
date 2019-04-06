@@ -1,12 +1,13 @@
-# PyPi Template
+# {{ package_title}}
 
-> My take at a template repository that I can fork for every Python project I want to push to PyPi
+> {{ package_tagline }}
 
-[![Latest Version on PyPI](https://img.shields.io/pypi/v/pypi-template.svg)](https://pypi.python.org/pypi/pypi-template/)
-[![Build Status](https://secure.travis-ci.org/christophevg/pypi-template.svg?branch=master)](http://travis-ci.org/christophevg/pypi-template)
-[![Documentation Status](https://readthedocs.org/projects/pypi-template/badge/?version=latest)](https://pypi-template.readthedocs.io/en/latest/?badge=latest)
-[![Coverage Status](https://coveralls.io/repos/github/christophevg/pypi-template/badge.svg?branch=master)](https://coveralls.io/github/christophevg/pypi-template?branch=master)
-[![Built with PyPi Template](https://img.shields.io/badge/PyPi_Template-v0.0.5-blue.svg)](https://github.com/christophevg/pypi-template)
+[![Latest Version on PyPI](https://img.shields.io/pypi/v/{{package_name}}.svg)](https://pypi.python.org/pypi/{{package_name}}/)
+[![Supported Implementations](https://img.shields.io/pypi/pyversions/{{package_name}}.svg)](https://pypi.python.org/pypi/{{package_name}}/)
+[![Build Status](https://secure.travis-ci.org/{{your_github_name}}/{{github_repo_name}}.svg?branch=master)](http://travis-ci.org/christophevg/{{github_repo_name}})
+[![Documentation Status](https://readthedocs.org/projects/{{package_name}}/badge/?version=latest)](https://{{package_name}}.readthedocs.io/en/latest/?badge=latest)
+[![Coverage Status](https://coveralls.io/repos/github/{{your_github_name}}/{{github_repo_name}}/badge.svg?branch=master)](https://coveralls.io/github/{{your_github_name}}/{{github_repo_name}}?branch=master)
+[![Built with PyPi Template](https://img.shields.io/badge/PyPi_Template-v{{pypi_template_version}}-blue.svg)](https://github.com/christophevg/pypi-template)
 
 ## Howto, the executive summary
 
