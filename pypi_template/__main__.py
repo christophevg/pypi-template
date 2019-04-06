@@ -1,5 +1,6 @@
 import os
 import sys
+import datetime
 
 from pkg_resources import resource_string, resource_listdir, resource_isdir
 
@@ -35,7 +36,9 @@ def list_variables(template):
   return meta.find_undeclared_variables(ast)
 
 # load variables cache
-vars = {}
+system_vars = {
+  "current_year" : datetime.datetime.now().year
+}
 try:    vars = yaml.safe_load(open(".pypi-template"))
 except: pass
 if vars is None: vars = {}
@@ -46,7 +49,7 @@ for f in dict((p, None) for p in list_package()):
   name = f.replace("(dot)", ".")
   files[name] = load(f)
   for var in list_variables(files[name]):
-    if not var in vars: vars[var] = None
+    if not var in vars and not var in system_vars: vars[var] = ""
 
 # collect variable values
 for var, current in vars.items():
@@ -60,6 +63,8 @@ for var, current in vars.items():
 # save new vars settings
 with open(".pypi-template", "w") as outfile:
   yaml.safe_dump(vars, outfile, default_flow_style=False)
+
+vars.update(system_vars)
 
 # render all files
 for f in files:
