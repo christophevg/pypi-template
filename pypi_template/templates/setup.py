@@ -2,13 +2,13 @@ import os
 import re
 import setuptools
 
-NAME             = "pypi-template"
+NAME             = "{{ package_name }}"
 AUTHOR           = "Christophe VG"
-AUTHOR_EMAIL     = "contact@christophe.vg"
-DESCRIPTION      = "PyPi template repository."
+AUTHOR_EMAIL     = "{{ your_email_address }}"
+DESCRIPTION      = "{{ a_description_for_the_package }}"
 LICENSE          = "MIT"
-KEYWORDS         = "pypi template"
-URL              = "https://github.com/christophevg/" + NAME
+KEYWORDS         = "{{ keywords_describing_the_package }}"
+URL              = "https://github.com/{{ your_github_name }}/" + NAME
 README           = ".github/README.md"
 CLASSIFIERS      = [
   "Environment :: Console",
@@ -23,9 +23,7 @@ CLASSIFIERS      = [
 ]
 INSTALL_REQUIRES = []
 ENTRY_POINTS     = {}
-SCRIPTS = [
-  'bin/pypi-template'
-]
+SCRIPTS          = []
 
 HERE = os.path.dirname(__file__)
 

@@ -5,7 +5,7 @@ import setuptools
 NAME             = "pypi-template"
 AUTHOR           = "Christophe VG"
 AUTHOR_EMAIL     = "contact@christophe.vg"
-DESCRIPTION      = "PyPi template repository."
+DESCRIPTION      = "A managed template repository for PyPi packages"
 LICENSE          = "MIT"
 KEYWORDS         = "pypi template"
 URL              = "https://github.com/christophevg/" + NAME
@@ -23,9 +23,7 @@ CLASSIFIERS      = [
 ]
 INSTALL_REQUIRES = []
 ENTRY_POINTS     = {}
-SCRIPTS = [
-  'bin/pypi-template'
-]
+SCRIPTS          = []
 
 HERE = os.path.dirname(__file__)
 
