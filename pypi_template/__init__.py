@@ -1,4 +1,4 @@
-""" My take at a template repository that I can fork for every Python project I want to push to PyPi
+""" A helper to setup and maintain a package on PyPi
 
 .. moduleauthor:: Christophe VG <contact@christophe.vg>
 
@@ -7,4 +7,4 @@
 
 """
 
-__version__ = "0.0.6"
+__version__ = "0.1.0"

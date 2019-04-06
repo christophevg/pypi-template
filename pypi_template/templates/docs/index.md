@@ -3,11 +3,10 @@
 > My take at a template repository that I can fork for every Python project I want to push to PyPi
 
 [![Latest Version on PyPI](https://img.shields.io/pypi/v/pypi-template.svg)](https://pypi.python.org/pypi/pypi-template/)
-[![Supported Implementations](https://img.shields.io/pypi/pyversions/pypi-template.svg)](https://pypi.python.org/pypi/pypi-template/)
 [![Build Status](https://secure.travis-ci.org/christophevg/pypi-template.svg?branch=master)](http://travis-ci.org/christophevg/pypi-template)
 [![Documentation Status](https://readthedocs.org/projects/pypi-template/badge/?version=latest)](https://pypi-template.readthedocs.io/en/latest/?badge=latest)
 [![Coverage Status](https://coveralls.io/repos/github/christophevg/pypi-template/badge.svg?branch=master)](https://coveralls.io/github/christophevg/pypi-template?branch=master)
-[![Built with PyPi Template](https://img.shields.io/badge/PyPi_Template-v0.0.7-blue.svg)](https://github.com/christophevg/pypi-template)
+[![Built with PyPi Template](https://img.shields.io/badge/PyPi_Template-v0.0.5-blue.svg)](https://github.com/christophevg/pypi-template)
 
 ## Howto, the executive summary
 
@@ -134,3 +133,11 @@ $ make publish
 ```
 
 to publish your module to the main instance of  [PyPi](https://pypi.org).
+
+## Contents
+
+A small example on how to generate a navigation index:
+
+* [Title1](doc1.md)
+* [Title2](doc2.md)
+* [Generated Code Documentation](code.md)
