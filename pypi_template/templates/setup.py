@@ -8,7 +8,7 @@ AUTHOR_EMAIL     = "{{ your_email_address }}"
 DESCRIPTION      = "{{ a_description_for_the_package }}"
 LICENSE          = "MIT"
 KEYWORDS         = "{{ keywords_describing_the_package }}"
-URL              = "https://github.com/{{ your_github_name }}/" + NAME
+URL              = "https://github.com/{{ github_account }}/" + NAME
 README           = ".github/README.md"
 CLASSIFIERS      = [
   "Environment :: Console",

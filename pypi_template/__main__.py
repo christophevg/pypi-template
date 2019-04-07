@@ -4,8 +4,7 @@ import datetime
 
 from pkg_resources import resource_string, resource_listdir, resource_isdir
 
-from jinja2 import FileSystemLoader, Environment
-from jinja2 import Template, Environment, meta
+from jinja2 import Environment, PackageLoader, meta
 
 import yaml
 
@@ -13,69 +12,90 @@ from prompt_toolkit import prompt
 
 from pypi_template import __version__
 
-EXCLUDED_EXT = ".pyc"
-EXCLUDED     = [ "__init__.py" ]
+class CLI(object):
+  def __init__(self):
+    self.environment = Environment(
+      loader=PackageLoader("pypi_template", "templates")
+    )
+    self.environment.keep_trailing_newline=True
+    self.system_vars   = {}
+    self.template_vars = {}
+    self.templates     = {}
 
-environment = Environment()
-environment.keep_trailing_newline=True
+  def list_resources(self, package="pypi_template.templates"):
+    EXCLUDED_EXT = ".pyc"
+    EXCLUDED     = [ "__init__.py" ]
+    files = []
+    for resource in resource_listdir(package, ""):
+      if resource.endswith(EXCLUDED_EXT) or resource in EXCLUDED:
+        pass
+      elif resource_isdir(package, resource):
+        if resource == "base": continue
+        subfiles = self.list_resources("{0}.{1}".format(package, resource))
+        files += [ os.path.join(resource, f) for f in subfiles ]
+      else:
+        files.append(resource)
+    return files
 
-def list_package(package="pypi_template.templates"):
-  files = []
-  for resource in resource_listdir(package, ""):
-    if resource.endswith(EXCLUDED_EXT) or resource in EXCLUDED:
+  def load_vars(self):
+    self.system_vars = {
+      "current_year"          : datetime.datetime.now().year,
+      "pypi_template_version" : __version__
+    }
+    try:    self.template_vars = yaml.safe_load(open(".pypi-template"))
+    except: pass
+
+  def collect_templates(self):
+    for resource in self.list_resources():
+      name = resource.replace("(dot)", ".")
+      self.templates[name] = self.environment.get_template(resource)
+      # extract template variables
+      source = resource_string(__name__, os.path.join("templates", resource))
+      for var in meta.find_undeclared_variables(self.environment.parse(source)):
+        if not var in self.template_vars and not var in self.system_vars:
+          self.template_vars[var] = ""
+
+  def collect_var_values(self):
+    for var, current in self.template_vars.items():
+      if current and "-y" in sys.argv: continue
+      question = "{0}: ".format(var.replace("_", " ").capitalize())
+      self.template_vars[var] = prompt(
+        unicode(question, "utf-8"),
+        default=unicode(current, "utf-8")
+      )
+
+  def save_var_values(self):
+    with open(".pypi-template", "w") as outfile:
+      yaml.safe_dump(self.template_vars, outfile, default_flow_style=False)
+
+  def render_files(self):
+    for filename, template in self.templates.items():
+      if "skip" in self.template_vars and filename in self.template_vars["skip"]:
+        print("skipping {0}".format(filename))
+        continue
+      directory = os.path.dirname(filename)
+      if directory != "" and not os.path.exists(directory):
+        os.makedirs(directory)
+      vars = self.template_vars.copy()
+      vars.update(self.system_vars)
+      new_content = template.render(**vars)
+      if os.path.isfile(filename):
+        with open(filename, "r") as file: original_content = file.read()
+        if new_content == original_content: continue
+        print("backing up {0}".format(filename))
+        os.rename(filename, filename + ".backup")
+      print("writing {0}".format(filename))
+      with open(filename, "w") as outfile: outfile.write(new_content)
+
+  def run(self):
+    try:
+      self.load_vars()
+      self.collect_templates()
+      self.collect_var_values()
+      self.save_var_values()
+      self.render_files()
+    except KeyboardInterrupt:
       pass
-    elif resource_isdir(package, resource):
-      files += [ os.path.join(resource, f) for f in list_package("{0}.{1}".format(package, resource)) ]
-    else:
-      files.append(resource)
-  return files
 
-def load(resource):
-  return resource_string(__name__, os.path.join("templates", resource))
-
-def list_variables(template):
-  ast = environment.parse(template)
-  return meta.find_undeclared_variables(ast)
-
-# load variables cache
-system_vars = {
-  "current_year"          : datetime.datetime.now().year,
-  "pypi_template_version" : __version__
-}
-try:    vars = yaml.safe_load(open(".pypi-template"))
-except: pass
-if vars is None: vars = {}
-
-# collect templates from package, load and collect variables in them
-files = {}
-for f in dict((p, None) for p in list_package()):
-  name = f.replace("(dot)", ".")
-  files[name] = load(f)
-  for var in list_variables(files[name]):
-    if not var in vars and not var in system_vars: vars[var] = ""
-
-# collect variable values
-for var, current in vars.items():
-  if current and "-y" in sys.argv: continue
-  question = "{0}: ".format(var.replace("_", " ").capitalize())
-  vars[var] = prompt(
-    unicode(question, "utf-8"),
-    default=unicode(current, "utf-8")
-  )
-
-# save new vars settings
-with open(".pypi-template", "w") as outfile:
-  yaml.safe_dump(vars, outfile, default_flow_style=False)
-
-vars.update(system_vars)
-
-# render all files
-for f in files:
-  if "skip" in vars and f in vars["skip"]:
-    print("skipping {0}".format(f))
-    continue
-  print("writing {0}".format(f))
-  directory = os.path.dirname(f)
-  if directory != "" and not os.path.exists(directory): os.makedirs(directory)
-  with open(f, "w") as outfile:
-    outfile.write(environment.from_string(files[f]).render(**vars))
+if __name__ == "__main__":
+  CLI().run()

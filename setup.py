@@ -21,8 +21,16 @@ CLASSIFIERS      = [
   "Programming Language :: Python :: 2.7",
   "Programming Language :: Python :: 3.7",
 ]
-INSTALL_REQUIRES = []
-ENTRY_POINTS     = {}
+INSTALL_REQUIRES = [
+  "jinja2",
+  "pyyaml",
+  "prompt-toolkit"
+]
+ENTRY_POINTS     = {
+  "console_scripts": [
+    "pypi-template=pypi_template.__main__:cli"
+  ]
+}
 SCRIPTS          = []
 
 HERE = os.path.dirname(__file__)
@@ -40,16 +48,18 @@ LONG_DESCRIPTION = read(README)
 
 if __name__ == "__main__":
   setuptools.setup(name=NAME,
-        version=VERSION,
-        packages=setuptools.find_packages(),
-        author=AUTHOR,
-        description=DESCRIPTION,
-        long_description=LONG_DESCRIPTION,
-        long_description_content_type="text/markdown",
-        license=LICENSE,
-        keywords=KEYWORDS,
-        url=URL,
-        classifiers=CLASSIFIERS,
-        install_requires=INSTALL_REQUIRES,
-        entry_points=ENTRY_POINTS,
-        scripts=SCRIPTS)
+    version=VERSION,
+    packages=setuptools.find_packages(),
+    author=AUTHOR,
+    description=DESCRIPTION,
+    long_description=LONG_DESCRIPTION,
+    long_description_content_type="text/markdown",
+    license=LICENSE,
+    keywords=KEYWORDS,
+    url=URL,
+    classifiers=CLASSIFIERS,
+    install_requires=INSTALL_REQUIRES,
+    entry_points=ENTRY_POINTS,
+    scripts=SCRIPTS,
+    include_package_data=True
+  )

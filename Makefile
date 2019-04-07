@@ -30,4 +30,7 @@ docs: requirements
 	. venv/bin/activate; cd docs; make html
 	open docs/_build/html/index.html
 
+clean:
+	find . | grep '\.backup' | xargs rm
+
 .PHONY: dist docs
