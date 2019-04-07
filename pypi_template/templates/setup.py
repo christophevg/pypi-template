@@ -11,19 +11,23 @@ KEYWORDS         = "{{ keywords_describing_the_package }}"
 URL              = "https://github.com/{{ github_account }}/" + NAME
 README           = ".github/README.md"
 CLASSIFIERS      = [
-  "Environment :: Console",
-  "Development Status :: 4 - Beta",
-  "Intended Audience :: Developers",
-  "Intended Audience :: System Administrators",
-  "Topic :: Software Development",
-  "License :: OSI Approved :: MIT License",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 2.7",
-  "Programming Language :: Python :: 3.7",
+  {% for classifier in classifiers %}"{{ classifier }}",
+  {% endfor %}
 ]
-INSTALL_REQUIRES = []
-ENTRY_POINTS     = {}
-SCRIPTS          = []
+INSTALL_REQUIRES = [
+  {% for required in requires %}"{{ required }}",
+  {% endfor %}
+]
+ENTRY_POINTS = {
+  {% if console_scripts %}"console_scripts" : [
+    {% for script in console_scripts %}"{{ script }}",
+    {% endfor %}
+  ]{% endif %}
+}
+SCRIPTS = [
+  {% if scripts %}{% for script in scripts %}"{{ script }}",
+  {% endfor %}{% endif %}
+]
 
 HERE = os.path.dirname(__file__)
 
@@ -39,17 +43,20 @@ VERSION = re.search(
 LONG_DESCRIPTION = read(README)
 
 if __name__ == "__main__":
-  setuptools.setup(name=NAME,
-        version=VERSION,
-        packages=setuptools.find_packages(),
-        author=AUTHOR,
-        description=DESCRIPTION,
-        long_description=LONG_DESCRIPTION,
-        long_description_content_type="text/markdown",
-        license=LICENSE,
-        keywords=KEYWORDS,
-        url=URL,
-        classifiers=CLASSIFIERS,
-        install_requires=INSTALL_REQUIRES,
-        entry_points=ENTRY_POINTS,
-        scripts=SCRIPTS)
+  setuptools.setup(
+    name=NAME,
+    version=VERSION,
+    packages=setuptools.find_packages(),
+    author=AUTHOR,
+    description=DESCRIPTION,
+    long_description=LONG_DESCRIPTION,
+    long_description_content_type="text/markdown",
+    license=LICENSE,
+    keywords=KEYWORDS,
+    url=URL,
+    classifiers=CLASSIFIERS,
+    install_requires=INSTALL_REQUIRES,
+    entry_points=ENTRY_POINTS,
+    scripts=SCRIPTS,
+    include_package_data=True    
+  )

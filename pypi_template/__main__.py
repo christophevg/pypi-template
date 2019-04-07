@@ -8,6 +8,7 @@ from jinja2 import Environment, PackageLoader, meta
 
 import yaml
 
+from prompt_toolkit.completion import FuzzyWordCompleter
 from prompt_toolkit import prompt
 
 from pypi_template import __version__
@@ -18,9 +19,26 @@ class CLI(object):
       loader=PackageLoader("pypi_template", "templates")
     )
     self.environment.keep_trailing_newline=True
-    self.system_vars   = {}
+    self.system_vars = {
+      "current_year"          : datetime.datetime.now().year,
+      "pypi_template_version" : __version__
+    }
+    self.list_vars = {
+      "classifiers"      : self.load_classifiers(),
+      "requires"        : None,
+      "console_scripts" : None,
+      "scripts"         : None
+    }
     self.template_vars = {}
     self.templates     = {}
+
+  def load_classifiers(self):
+    return unicode(
+      self.load_resource("base", "classifiers.txt"), "utf-8"
+    ).split("\n")
+
+  def load_resource(self, *args):
+    return resource_string(__name__, os.path.join("templates", *args))
 
   def list_resources(self, package="pypi_template.templates"):
     EXCLUDED_EXT = ".pyc"
@@ -38,10 +56,6 @@ class CLI(object):
     return files
 
   def load_vars(self):
-    self.system_vars = {
-      "current_year"          : datetime.datetime.now().year,
-      "pypi_template_version" : __version__
-    }
     try:    self.template_vars = yaml.safe_load(open(".pypi-template"))
     except: pass
 
@@ -50,19 +64,46 @@ class CLI(object):
       name = resource.replace("(dot)", ".")
       self.templates[name] = self.environment.get_template(resource)
       # extract template variables
-      source = resource_string(__name__, os.path.join("templates", resource))
+      source = self.load_resource(resource) 
       for var in meta.find_undeclared_variables(self.environment.parse(source)):
         if not var in self.template_vars and not var in self.system_vars:
-          self.template_vars[var] = ""
+          self.template_vars[var] = None
 
   def collect_var_values(self):
     for var, current in self.template_vars.items():
-      if current and "-y" in sys.argv: continue
-      question = "{0}: ".format(var.replace("_", " ").capitalize())
-      self.template_vars[var] = prompt(
-        unicode(question, "utf-8"),
-        default=unicode(current, "utf-8")
-      )
+      if not current is None and "-y" in sys.argv: continue
+      if var in self.list_vars:
+        self.collect_var_selections(var)
+      else:
+        self.collect_var_value(var, current)
+
+  def collect_var_value(self, var, current):
+    question = "{0}: ".format(var.replace("_", " ").capitalize())
+    if current is None: current = ""
+    self.template_vars[var] = prompt(
+      unicode(question, "utf-8"),
+      default=unicode(current, "utf-8")
+    )
+
+  def collect_var_selections(self, var):
+    question = "Select {0}: ".format(var.replace("_", " "))
+    values   = self.list_vars[var]
+    if values: completer = FuzzyWordCompleter(values)
+    selections = []
+    selection = None
+    while selection != "":
+      if values:
+        selection = prompt(
+          unicode(question, "utf-8"),
+          completer=completer,
+          complete_while_typing=True
+        )
+      else:
+        selection = prompt(
+          unicode(question, "utf-8")
+        )
+      if selection != "": selections.append(selection)
+    self.template_vars[var] = selections
 
   def save_var_values(self):
     with open(".pypi-template", "w") as outfile:

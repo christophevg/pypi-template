@@ -1,4 +1,16 @@
 a_description_for_the_package: A managed template repository for PyPi packages
+classifiers:
+- 'Environment :: Console'
+- 'Development Status :: 4 - Beta'
+- 'Intended Audience :: Developers'
+- 'System Intended Audience :: System Administrators'
+- 'Topic :: Topic :: Software Development'
+- 'MIT License :: OSI Approved :: MIT License'
+- 'Programming Language :: Python'
+- 'Programming Language :: Python :: 2.7'
+- 'Programming Language :: Python :: 3.7'
+console_scripts:
+- pypi-template=pypi_template.__main__:cli
 first_year_of_publication: '2018'
 github_account: christophevg
 github_repo_name: pypi-template
@@ -6,5 +18,10 @@ keywords_describing_the_package: pypi template
 package_name: pypi-template
 package_tagline: A managed template repository for maintaining PyPi packages
 package_title: PyPi Template
+requires:
+- jinja2
+- pyyaml
+- promp-toolkit
+scripts: []
 your_email_address: contact@christophe.vg
 your_full_name: Christophe Van Ginneken

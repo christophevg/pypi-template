@@ -14,24 +14,29 @@ CLASSIFIERS      = [
   "Environment :: Console",
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
-  "Intended Audience :: System Administrators",
-  "Topic :: Software Development",
-  "License :: OSI Approved :: MIT License",
+  "System Intended Audience :: System Administrators",
+  "Topic :: Topic :: Software Development",
+  "MIT License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 2.7",
   "Programming Language :: Python :: 3.7",
+  
 ]
 INSTALL_REQUIRES = [
   "jinja2",
   "pyyaml",
-  "prompt-toolkit"
+  "promp-toolkit",
+  
 ]
-ENTRY_POINTS     = {
-  "console_scripts": [
-    "pypi-template=pypi_template.__main__:cli"
+ENTRY_POINTS = {
+  "console_scripts" : [
+    "pypi-template=pypi_template.__main__:cli",
+    
   ]
 }
-SCRIPTS          = []
+SCRIPTS = [
+  
+]
 
 HERE = os.path.dirname(__file__)
 
@@ -47,7 +52,8 @@ VERSION = re.search(
 LONG_DESCRIPTION = read(README)
 
 if __name__ == "__main__":
-  setuptools.setup(name=NAME,
+  setuptools.setup(
+    name=NAME,
     version=VERSION,
     packages=setuptools.find_packages(),
     author=AUTHOR,
@@ -61,5 +67,5 @@ if __name__ == "__main__":
     install_requires=INSTALL_REQUIRES,
     entry_points=ENTRY_POINTS,
     scripts=SCRIPTS,
-    include_package_data=True
+    include_package_data=True    
   )
