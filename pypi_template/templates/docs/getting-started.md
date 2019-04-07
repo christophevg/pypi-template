@@ -18,33 +18,27 @@ $ pypi-template
 
 PyPi template will ask you to provide some basic information, which allows it to generate several files for your. All files that are written are reported. When ready, you have a fresh, customized source tree.
 
-### Things to edit
+## Minimal things to edit
 
 1. module top-level folder
 
-There is a placeholder top-level module folder. You'll probably want to rename that.
+There is a placeholder `pypi_template` top-level module folder. You'll probably want to rename that to your own package/module name and populate it with your own code ;-)
 
 ```bash
 $ mv pypi_template your_new_project
 ```
 
-2. LICENSE.txt
+2. docs/
 
-Change the license to whatever you feel is (more) appropriate.
+The `docs/` a copy of PyPi Templates own docs. These can be published to [ReadTheDocs](https://readthedocs.org) (see below). You can edit those files to accommodate your project.
 
-3. .github/README.md
+> **NOTE regarding editing generated files:** you can re-run `pypi-template`, and it will regenerate files that have changed. This is useful if you have made changes to `.pypi-template`, which contains your provided values. In case of the actual documentation, which contains no variables, you can add these files to the `skip` variable in the `.pypi-template` file, to avoid them being overwritten.
 
-Replace this information with information regarding your project.
-
-4. setup.py
-
-Replace the Python package configuration with one appropriate to your project.
-
-5. docs/
-
-The `docs/` contains a copy of this README as a placeholder for additional documentation, that can be published to [ReadTheDocs](https://readthedocs.org). Edit `conf.py` to reflect your project's name and description.
+> **I said "minimal"!** Of course you can also change the default MIT License (probably a great [issue](https://github.com/christophevg/pypi-template/issues) to register, to allow choosing one ;-) )
 
 ## Things to do
+
+Besides providing you with a lot of boilerplate (configuration) files, there are also things to do...
 
 ### Testing
 
@@ -88,4 +82,4 @@ or
 $ make publish
 ```
 
-to publish your module to the main instance of  [PyPi](https://pypi.org).
+to publish your module to the main instance of [PyPi](https://pypi.org).
