@@ -15,6 +15,7 @@ first_year_of_publication: '2018'
 github_account: christophevg
 github_repo_name: pypi-template
 keywords_describing_the_package: pypi template
+package_module_name: pypi_template
 package_name: pypi-template
 package_tagline: A managed template repository for maintaining PyPi packages
 package_title: PyPi Template
@@ -23,5 +24,6 @@ requires:
 - pyyaml
 - promp-toolkit
 scripts: []
+your_author_name: Christophe VG
 your_email_address: contact@christophe.vg
 your_full_name: Christophe Van Ginneken
