@@ -48,7 +48,6 @@ class CLI(object):
       if resource.endswith(EXCLUDED_EXT) or resource in EXCLUDED:
         pass
       elif resource_isdir(package, resource):
-        if resource == "base": continue
         subfiles = self.list_resources("{0}.{1}".format(package, resource))
         files += [ os.path.join(resource, f) for f in subfiles ]
       else:
@@ -138,5 +137,8 @@ class CLI(object):
     except KeyboardInterrupt:
       pass
 
-if __name__ == "__main__":
+def cli():
   CLI().run()
+
+if __name__ == "__main__":
+  cli()

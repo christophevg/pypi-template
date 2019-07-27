@@ -22,7 +22,7 @@ package_title: PyPi Template
 requires:
 - jinja2
 - pyyaml
-- promp-toolkit
+- prompt-toolkit
 scripts: []
 your_author_name: Christophe VG
 your_email_address: contact@christophe.vg

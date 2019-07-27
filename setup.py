@@ -25,7 +25,7 @@ CLASSIFIERS      = [
 INSTALL_REQUIRES = [
   "jinja2",
   "pyyaml",
-  "promp-toolkit",
+  "prompt-toolkit",
   
 ]
 ENTRY_POINTS = {
