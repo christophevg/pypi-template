@@ -1,7 +1,7 @@
 class Template(object):
   """
   
-  A very studid example class, mainly for showing documentation generation.
+  A very stupid example class, mainly for showing documentation generation.
   
   """
   def say_hello(self, name="Christophe"):
