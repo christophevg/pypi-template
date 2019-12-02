@@ -33,7 +33,7 @@ class CLI(object):
     self.templates     = {}
 
   def load_classifiers(self):
-    return unicode(
+    return str(
       self.load_resource("base", "classifiers.txt"), "utf-8"
     ).split("\n")
 
@@ -80,8 +80,8 @@ class CLI(object):
     question = "{0}: ".format(var.replace("_", " ").capitalize())
     if current is None: current = ""
     self.template_vars[var] = prompt(
-      unicode(question, "utf-8"),
-      default=unicode(current, "utf-8")
+      str(question, "utf-8"),
+      default=str(current, "utf-8")
     )
 
   def collect_var_selections(self, var):
@@ -93,14 +93,12 @@ class CLI(object):
     while selection != "":
       if values:
         selection = prompt(
-          unicode(question, "utf-8"),
+          str(question, "utf-8"),
           completer=completer,
           complete_while_typing=True
         )
       else:
-        selection = prompt(
-          unicode(question, "utf-8")
-        )
+        selection = prompt(question)
       if selection != "": selections.append(selection)
     self.template_vars[var] = selections
 
