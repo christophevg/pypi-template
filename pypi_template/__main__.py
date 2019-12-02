@@ -79,10 +79,7 @@ class CLI(object):
   def collect_var_value(self, var, current):
     question = "{0}: ".format(var.replace("_", " ").capitalize())
     if current is None: current = ""
-    self.template_vars[var] = prompt(
-      str(question, "utf-8"),
-      default=str(current, "utf-8")
-    )
+    self.template_vars[var] = prompt(question, default=current)
 
   def collect_var_selections(self, var):
     question = "Select {0}: ".format(var.replace("_", " "))
@@ -93,7 +90,7 @@ class CLI(object):
     while selection != "":
       if values:
         selection = prompt(
-          str(question, "utf-8"),
+          question,
           completer=completer,
           complete_while_typing=True
         )
