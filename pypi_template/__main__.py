@@ -42,7 +42,7 @@ class CLI(object):
 
   def list_resources(self, package="pypi_template.templates"):
     EXCLUDED_EXT = ".pyc"
-    EXCLUDED     = [ "__init__.py" ]
+    EXCLUDED     = [ "__init__.py", "__pycache__" ]
     files = []
     for resource in resource_listdir(package, ""):
       if resource.endswith(EXCLUDED_EXT) or resource in EXCLUDED:
