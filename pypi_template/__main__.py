@@ -142,7 +142,8 @@ class CLI(object):
         os.makedirs(directory)
         # TODO generalize?
         if directory == self.template_vars["package_module_name"]:
-          open(os.path.join(directory, "__init__.py"), "a").close()
+          with open(os.path.join(directory, "__init__.py"), "w") as f:
+            f.write('__version__ = "0.0.1"')
       vars = self.template_vars.copy()
       vars.update(self.system_vars)
       new_content = template.render(**vars)
