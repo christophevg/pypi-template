@@ -131,9 +131,11 @@ class CLI(object):
 
   def render_files(self):
     for filename, template in self.templates.items():
-      if "skip" in self.template_vars and filename in self.template_vars["skip"]:
-        print("skipping {0}".format(filename))
-        continue
+      directory = os.path.dirname(filename)
+      if "skip" in self.template_vars:
+        if filename in self.template_vars["skip"] or directory in self.template_vars["skip"]:
+          print("skipping {0}".format(filename))
+          continue
       # TODO generalize?
       filename = filename.replace(
         "(package_module_name)", self.template_vars["package_module_name"]
