@@ -68,13 +68,20 @@ class CLI(object):
         if not var in self.template_vars and not var in self.system_vars:
           self.template_vars[var] = None
 
-  def collect_var_values(self):
-    for var, current in self.template_vars.items():
-      if not current is None and "-y" in sys.argv: continue
+  def collect_all_vars(self):
+    for var in sorted(self.template_vars.keys()):
+      self.collect_var(var)
+
+  def collect_var(self, var, force=False):
+    try:
+      current = self.template_vars[var]
+      if not force and not current is None and "-y" in sys.argv: return
       if var in self.list_vars:
         self.collect_var_selections(var, current)
       else:
         self.collect_var_value(var, current)
+    except KeyError:
+      print("unknown template variable: {0}".format(var))
 
   def collect_var_value(self, var, current):
     question = "{0}: ".format(var.replace("_", " ").capitalize())
@@ -132,7 +139,11 @@ class CLI(object):
     try:
       self.load_vars()
       self.collect_templates()
-      self.collect_var_values()
+      if "-e" in sys.argv:
+        var = sys.argv[sys.argv.index("-e") + 1]
+        self.collect_var(var, force=True)
+      else:
+        self.collect_all_vars()
       self.save_var_values()
       self.render_files()
     except KeyboardInterrupt:
