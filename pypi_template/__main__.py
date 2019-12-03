@@ -99,6 +99,7 @@ class CLI(object):
     )
 
   def collect_var_selections(self, var, current=[]):
+    if not current: current = []
     if len(current) > 0:
       print(Fore.BLUE + "Current {}:".format(var.replace("_", " ")))
       for selection in current:
