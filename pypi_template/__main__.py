@@ -10,6 +10,14 @@ import yaml
 
 from prompt_toolkit.completion import FuzzyWordCompleter
 from prompt_toolkit import prompt
+from prompt_toolkit.styles import Style
+
+style = Style.from_dict({
+  "underlined": "underline"
+})
+
+from colorama import init, Fore
+init(autoreset=True)
 
 from pypi_template import __version__
 
@@ -86,13 +94,15 @@ class CLI(object):
   def collect_var_value(self, var, current):
     question = "{0}: ".format(var.replace("_", " ").capitalize())
     if current is None: current = ""
-    self.template_vars[var] = prompt(question, default=current)
+    self.template_vars[var] = prompt(
+      [("class:underlined", question)], style=style, default=current
+    )
 
   def collect_var_selections(self, var, current=[]):
     if len(current) > 0:
-      print("Current {}:".format(var.replace("_", " ")))
+      print(Fore.BLUE + "Current {}:".format(var.replace("_", " ")))
       for selection in current:
-        print("- {0}".format(selection))
+        print(Fore.BLUE + "- {0}".format(selection))
     question = "Select {0}: ".format(var.replace("_", " "))
     values   = self.list_vars[var]
     if values: completer = FuzzyWordCompleter(values)
@@ -101,12 +111,13 @@ class CLI(object):
     while selection != "":
       if values:
         selection = prompt(
-          question,
+          [("class:underlined", question)],
+          style=style, 
           completer=completer,
           complete_while_typing=True
         )
       else:
-        selection = prompt(question)
+        selection = prompt([("class:underlined", question)], style=style)
       if selection != "":
         if not selection in selections:
           selections.append(selection)

@@ -22,6 +22,7 @@ requires:
 - jinja2
 - pyyaml
 - prompt-toolkit
+- colorama
 scripts: []
 your_author_name: Christophe VG
 your_email_address: contact@christophe.vg

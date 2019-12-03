@@ -25,6 +25,7 @@ INSTALL_REQUIRES = [
   "jinja2",
   "pyyaml",
   "prompt-toolkit",
+  "colorama",
   
 ]
 ENTRY_POINTS = {
