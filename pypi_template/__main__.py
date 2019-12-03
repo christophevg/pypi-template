@@ -32,10 +32,11 @@ class CLI(object):
       "pypi_template_version" : __version__
     }
     self.list_vars = {
-      "classifiers"      : self.load_classifiers(),
+      "classifiers"     : self.load_classifiers(),
       "requires"        : None,
       "console_scripts" : None,
-      "scripts"         : None
+      "scripts"         : None,
+      "skip"            : None
     }
     self.template_vars = {}
     self.templates     = {}
