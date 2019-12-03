@@ -1,2 +1,5 @@
-def test_example():
-  assert 1 == 1
+from {{ package_module_name }}.module import Template
+
+def test_template():
+  t = Template()
+  assert t.say_hello() == "hello Christophe"
