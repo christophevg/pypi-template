@@ -72,7 +72,7 @@ class CLI(object):
     for var, current in self.template_vars.items():
       if not current is None and "-y" in sys.argv: continue
       if var in self.list_vars:
-        self.collect_var_selections(var)
+        self.collect_var_selections(var, current)
       else:
         self.collect_var_value(var, current)
 
@@ -81,11 +81,15 @@ class CLI(object):
     if current is None: current = ""
     self.template_vars[var] = prompt(question, default=current)
 
-  def collect_var_selections(self, var):
+  def collect_var_selections(self, var, current=[]):
+    if len(current) > 0:
+      print("Current {}:".format(var.replace("_", " ")))
+      for selection in current:
+        print("- {0}".format(selection))
     question = "Select {0}: ".format(var.replace("_", " "))
     values   = self.list_vars[var]
     if values: completer = FuzzyWordCompleter(values)
-    selections = []
+    selections = current
     selection = None
     while selection != "":
       if values:
@@ -96,7 +100,9 @@ class CLI(object):
         )
       else:
         selection = prompt(question)
-      if selection != "": selections.append(selection)
+      if selection != "":
+        if not selection in selections:
+          selections.append(selection)
     self.template_vars[var] = selections
 
   def save_var_values(self):
