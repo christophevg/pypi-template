@@ -133,9 +133,16 @@ class CLI(object):
       if "skip" in self.template_vars and filename in self.template_vars["skip"]:
         print("skipping {0}".format(filename))
         continue
+      # TODO generalize?
+      filename = filename.replace(
+        "(package_module_name)", self.template_vars["package_module_name"]
+      )
       directory = os.path.dirname(filename)
       if directory != "" and not os.path.exists(directory):
         os.makedirs(directory)
+        # TODO generalize?
+        if directory == self.template_vars["package_module_name"]:
+          open(os.path.join(directory, "__init__.py"), "a").close()
       vars = self.template_vars.copy()
       vars.update(self.system_vars)
       new_content = template.render(**vars)
