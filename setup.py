@@ -14,9 +14,9 @@ CLASSIFIERS      = [
   "Environment :: Console",
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
-  "System Intended Audience :: System Administrators",
-  "Topic :: Topic :: Software Development",
-  "MIT License :: OSI Approved :: MIT License",
+  "Intended Audience :: System Administrators",
+  "Topic :: Software Development",
+  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3.7",
   
