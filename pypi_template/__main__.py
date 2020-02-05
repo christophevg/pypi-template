@@ -22,7 +22,13 @@ init(autoreset=True)
 from pypi_template import __version__
 
 class CLI(object):
-  def __init__(self):
+  def __init__(self, path=None, verbose=False, debug=False, edit=None, yes=False):
+    if not path is None: os.chdir(path)
+    self.be_verbose = verbose
+    self.show_debug = debug
+    self.edit       = edit
+    self.yes        = yes
+    
     self.environment = Environment(
       loader=PackageLoader("pypi_template", "templates")
     )
@@ -41,6 +47,9 @@ class CLI(object):
     self.template_vars = {}
     self.templates     = {}
 
+  def debug(self, msg):
+    if self.show_debug: print(msg)
+
   def load_classifiers(self):
     return str(
       self.load_resource("base", "classifiers.txt"), "utf-8"
@@ -51,7 +60,7 @@ class CLI(object):
 
   def list_resources(self, package="pypi_template.templates"):
     EXCLUDED_EXT = ".pyc"
-    EXCLUDED     = [ "__init__.py", "__pycache__", "base" ]
+    EXCLUDED     = [ "__init__.py", "__pycache__" ]
     files = []
     for resource in resource_listdir(package, ""):
       if resource.endswith(EXCLUDED_EXT) or resource in EXCLUDED:
@@ -74,6 +83,7 @@ class CLI(object):
       # extract template variables
       source = self.load_resource(resource) 
       for var in meta.find_undeclared_variables(self.environment.parse(source)):
+        self.debug("found variable {} : {}".format(name, var))
         if not var in self.template_vars and not var in self.system_vars:
           self.template_vars[var] = None
 
@@ -84,7 +94,7 @@ class CLI(object):
   def collect_var(self, var, force=False):
     try:
       current = self.template_vars[var]
-      if not force and not current is None and "-y" in sys.argv: return
+      if not force and not current is None and self.yes: return
       if var in self.list_vars:
         self.collect_var_selections(var, current)
       else:
@@ -130,11 +140,15 @@ class CLI(object):
       yaml.safe_dump(self.template_vars, outfile, default_flow_style=False)
 
   def render_files(self):
+    EXCLUDED = [ "base/index.md", "base/classifiers.txt" ]
     for filename, template in self.templates.items():
+      if filename in EXCLUDED:
+        self.debug("not rendering {}".format(filename))
+        continue
       directory = os.path.dirname(filename)
       if "skip" in self.template_vars:
         if filename in self.template_vars["skip"] or directory in self.template_vars["skip"]:
-          print("skipping {0}".format(filename))
+          self.debug("skipping {0}".format(filename))
           continue
       # TODO generalize?
       filename = filename.replace(
@@ -142,6 +156,7 @@ class CLI(object):
       )
       directory = os.path.dirname(filename)
       if directory != "" and not os.path.exists(directory):
+        self.debug("creating directory {}".format(directory))
         os.makedirs(directory)
         # TODO generalize?
         if directory == self.template_vars["package_module_name"]:
@@ -152,7 +167,9 @@ class CLI(object):
       new_content = template.render(**vars)
       if os.path.isfile(filename):
         with open(filename, "r") as file: original_content = file.read()
-        if new_content == original_content: continue
+        if new_content == original_content:
+          self.debug("unchanged {}".format(filename))
+          continue
         print("backing up {0}".format(filename))
         os.rename(filename, filename + ".backup")
       print("writing {0}".format(filename))
@@ -162,9 +179,8 @@ class CLI(object):
     try:
       self.load_vars()
       self.collect_templates()
-      if "-e" in sys.argv:
-        var = sys.argv[sys.argv.index("-e") + 1]
-        self.collect_var(var, force=True)
+      if not self.edit is None:
+        self.collect_var(self.edit, force=True)
       else:
         self.collect_all_vars()
       self.save_var_values()
@@ -172,8 +188,23 @@ class CLI(object):
     except KeyboardInterrupt:
       pass
 
+import argparse
+
 def cli():
-  CLI().run()
+  parser = argparse.ArgumentParser(description="Manage a Python PyPi module.")
+  parser.add_argument("path", type=str, nargs="?",
+                      help="path to module (default=current)")
+  parser.add_argument("--edit",    "-e", dest="edit",
+                      help="edit a variable")
+  parser.add_argument("--yes",     "-y", dest="yes",     action="store_true",
+                      help="accept all current variable values")
+  parser.add_argument("--debug",   "-d", dest="debug",   action="store_true",
+                      help="don't do it, just say it")
+  parser.add_argument("--verbose", "-v", dest="verbose", action="store_true",
+                      help="don't do it, just say it")
+
+  args = parser.parse_args()
+  CLI(**vars(args)).run()
 
 if __name__ == "__main__":
   cli()
