@@ -14,6 +14,7 @@ first_year_of_publication: '2018'
 github_account: christophevg
 github_repo_name: pypi-template
 keywords_describing_the_package: pypi template
+license: MIT
 package_module_name: pypi_template
 package_name: pypi-template
 package_tagline: A managed template repository for maintaining PyPi packages
@@ -32,3 +33,4 @@ skip:
 your_author_name: Christophe VG
 your_email_address: contact@christophe.vg
 your_full_name: Christophe Van Ginneken
+your_name: Christophe VG

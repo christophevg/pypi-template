@@ -3,10 +3,10 @@ import re
 import setuptools
 
 NAME             = "{{ package_name }}"
-AUTHOR           = "Christophe VG"
+AUTHOR           = "{{ your_name }}"
 AUTHOR_EMAIL     = "{{ your_email_address }}"
 DESCRIPTION      = "{{ a_description_for_the_package }}"
-LICENSE          = "MIT"
+LICENSE          = "{{ license }}"
 KEYWORDS         = "{{ keywords_describing_the_package }}"
 URL              = "https://github.com/{{ github_account }}/" + NAME
 README           = ".github/README.md"
