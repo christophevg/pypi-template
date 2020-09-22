@@ -11,32 +11,33 @@ This project is hosted on [GitHub](https://githhub.com/christophevg/pypi-templat
 
 ## My Development Workflow
 
-I try to develop pypi-template in a self-hosting way, which means that I run it on its own repository.
+I try to develop pypi-template in a self-hosting way, which means that I run it from the repository on the repository itself.
 
 Running pypi-template from the repository can be done according to the following steps:
 
 ### Setup an Environment with Dependencies
 
-```bash
-$ make venv
-virtualenv -p python3 venv
-Running virtualenv with interpreter /Library/Frameworks/Python.framework/Versions/3.5/bin/python3
-Using base prefix '/Library/Frameworks/Python.framework/Versions/3.5'
-New python executable in /Users/xtof/Workspace/pypi-template/venv/bin/python3
-Also creating executable in /Users/xtof/Workspace/pypi-template/venv/bin/python
-Installing setuptools, pip, wheel...
-done.
+I started using PyEnv recently and the top-level Makefile in the repository is using that. So if you go down the PyEnv road, you can use it ;-)
 
+Minimal survival commands: 
+
+[https://github.com/pyenv/pyenv#installation](https://github.com/pyenv/pyenv#installation)
+
+```bash
 $ make requirements
-. venv/bin/activate; pip install --upgrade -r requirements.txt > /dev/null 
+pypi-template (set by /Users/xtof/Workspace/pypi-template/.python-version)
+```
+
+If you want to use a different virtual evironment manager, or none, simply issue the usual...
+
+```bash
+$ pip install -r requirements.txt
 ```
 
 ### Running pypi-template from the Repository
 
 ```bash
-$ . venv/bin/activate
-
-(venv) $ python -m pypi_template
+$ python -m pypi_template
 A description for the package: A managed template repository for PyPi packages
 Current classifiers:
 - Environment :: Console
