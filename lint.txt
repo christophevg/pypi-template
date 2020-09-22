@@ -45,22 +45,7 @@ pypi_template/__main__.py:177:2: C0116: Missing function or method docstring (mi
 pypi_template/__main__.py:190:0: C0413: Import "import argparse" should be placed at the top of the module (wrong-import-position)
 pypi_template/__main__.py:192:0: C0116: Missing function or method docstring (missing-function-docstring)
 pypi_template/__main__.py:190:0: C0411: standard import "import argparse" should be placed before "from pkg_resources import resource_string, resource_listdir, resource_isdir" (wrong-import-order)
-************* Module pypi_template.templates.setup
-pypi_template/templates/setup.py:14:4: E0001: invalid syntax (<unknown>, line 14) (syntax-error)
-************* Module pypi_template.templates.(dot)github
-pypi_template/templates/(dot)github/__init__.py:1:0: C0103: Module name "(dot)github" doesn't conform to snake_case naming style (invalid-name)
-************* Module pypi_template.templates.tests.test_example
-pypi_template/templates/tests/test_example.py:1:6: E0001: invalid syntax (<unknown>, line 1) (syntax-error)
-************* Module pypi_template.templates.docs.conf
-pypi_template/templates/docs/conf.py:26:6: E0001: invalid syntax (<unknown>, line 26) (syntax-error)
-************* Module pypi_template.templates.(package_module_name)
-pypi_template/templates/(package_module_name)/__init__.py:1:0: C0103: Module name "(package_module_name)" doesn't conform to snake_case naming style (invalid-name)
-************* Module pypi_template.templates.(package_module_name).module
-pypi_template/templates/(package_module_name)/module.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-pypi_template/templates/(package_module_name)/module.py:1:0: R0205: Class 'Template' inherits from object, can be safely removed from bases in python3 (useless-object-inheritance)
-pypi_template/templates/(package_module_name)/module.py:5:2: R0201: Method could be a function (no-self-use)
-pypi_template/templates/(package_module_name)/module.py:1:0: R0903: Too few public methods (1/2) (too-few-public-methods)
 
 ------------------------------------------------------------------
-Your code has been rated at 6.08/10 (previous run: 5.78/10, +0.30)
+Your code has been rated at 7.26/10 (previous run: 6.67/10, +0.60)
 
