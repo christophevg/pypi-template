@@ -1,5 +1,4 @@
 import os
-import sys
 import datetime
 
 from pkg_resources import resource_string, resource_listdir, resource_isdir

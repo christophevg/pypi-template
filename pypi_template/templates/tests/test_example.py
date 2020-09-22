@@ -1,5 +1,5 @@
-from {{ package_module_name }}.module import Template
+from pypi_template.module import Template
 
 def test_template():
   t = Template()
-  assert t.say_hello() == "hello Christophe"
+  assert t.hello().my_name_is("Christophe") == "hello Christophe"
