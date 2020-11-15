@@ -39,7 +39,7 @@ release = __version__
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.autodoc"]
+extensions = ["sphinx.ext.autodoc", "recommonmark"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -49,11 +49,6 @@ templates_path = ['_templates']
 #
 # source_suffix = ['.rst', '.md']
 # source_suffix = '.rst'
-
-from recommonmark.parser import CommonMarkParser
-from recommonmark.transform import AutoStructify
-source_parsers = { ".md": CommonMarkParser }
-source_suffix  = ['.rst', '.md']
 
 # The master toctree document.
 master_doc = 'index'
@@ -180,6 +175,8 @@ epub_title = project
 
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
+
+from recommonmark.transform import AutoStructify
 
 def setup(app):
   app.add_config_value('recommonmark_config', {
