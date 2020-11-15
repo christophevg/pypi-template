@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath('../'))
 # -- Project information -----------------------------------------------------
 
 project = u'PyPi Template'
-copyright = u'2018-2019, Christophe Van Ginneken'
+copyright = u'2018-2020, Christophe Van Ginneken'
 author = u'Christophe VG'
 
 from pypi_template import __version__
