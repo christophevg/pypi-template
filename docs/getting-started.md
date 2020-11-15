@@ -6,7 +6,7 @@ PyPi template is hosted on PyPi, so...
 $ pip install pypi-template
 ```
 
-## Use PyPi Template to setup a new package
+## Use PyPi Template to Setup a New Package
 
 ```bash
 $ mkdir my-new-project
@@ -18,7 +18,7 @@ $ pypi-template
 
 PyPi template will ask you to provide some basic information, which allows it to generate several files for your. All files that are written are reported. When ready, you have a fresh, customized source tree.
 
-## Minimal things to edit
+### Minimal Things to Edit
 
 1. module top-level folder
 
@@ -35,6 +35,60 @@ The `docs/` a copy of PyPi Templates own docs. These can be published to [ReadTh
 > **NOTE regarding editing generated files:** you can re-run `pypi-template`, and it will regenerate files that have changed. This is useful if you have made changes to `.pypi-template`, which contains your provided values. In case of the actual documentation, which contains no variables, you can add these files to the `skip` variable in the `.pypi-template` file, to avoid them being overwritten.
 
 > **I said "minimal"!** Of course you can also change the default MIT License (probably a great [issue](https://github.com/christophevg/pypi-template/issues) to register, to allow choosing one ;-) )
+
+## Use PyPi Template to Manage Your Package
+
+If you run `pypi-template` in an existing PyPi Template package, it will again ask all questions, providing your with previously given answers, ready for editing.
+
+    :::console
+    $ pypi-template
+    A description for the package: A managed template repository for PyPi packages
+    Current classifiers:
+    - Environment :: Console
+    - Development Status :: 4 - Beta
+    - Intended Audience :: Developers
+    - Intended Audience :: System Administrators
+    - Topic :: Software Development
+    - License :: OSI Approved :: MIT License
+    - Programming Language :: Python
+    - Programming Language :: Python :: 3.7
+    Select classifiers: 
+    ...
+    Your name: Christophe VG
+    backing up requirements.txt
+    writing requirements.txt
+    $
+
+You can also simply a single variable in this way:
+
+    :::console
+    $ pypi-template --edit requires
+    Current requires:
+    - jinja2
+    - pyyaml
+    - prompt-toolkit
+    - colorama
+    Select requires:
+    $
+
+A few more command line arguments are available:
+
+    :::console
+    $ pypi-template --help
+    usage: __main__.py [-h] [--edit EDIT] [--yes] [--debug] [--verbose] [path]
+
+    Manage a Python PyPi module.
+
+    positional arguments:
+      path                  path to module (default=current)
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --edit EDIT, -e EDIT  edit a variable
+      --yes, -y             accept all current variable values
+      --debug, -d           don't do it, just say it
+      --verbose, -v         do it and say it
+    $
 
 ## Things to do
 
