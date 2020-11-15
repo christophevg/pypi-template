@@ -200,7 +200,7 @@ def cli():
   parser.add_argument("--debug",   "-d", dest="debug",   action="store_true",
                       help="don't do it, just say it")
   parser.add_argument("--verbose", "-v", dest="verbose", action="store_true",
-                      help="don't do it, just say it")
+                      help="do it and say it")
 
   args = parser.parse_args()
   CLI(**vars(args)).run()
