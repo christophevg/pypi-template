@@ -17,6 +17,7 @@ test: requirements
 	tox
 
 dist: requirements
+	rm -rf $@
 	python setup.py sdist bdist_wheel
 
 publish-test: dist
