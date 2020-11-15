@@ -2,18 +2,17 @@
 
 PyPi template is hosted on PyPi, so...
 
-```bash
+```console
 $ pip install pypi-template
 ```
 
 ## Use PyPi Template to Setup a New Package
 
-```bash
+```console
 $ mkdir my-new-project
 $ cd my-new-project
 $ git init
 $ pypi-template
-
 ```
 
 PyPi template will ask you to provide some basic information, which allows it to generate several files for your. All files that are written are reported. When ready, you have a fresh, customized source tree.
@@ -24,7 +23,7 @@ PyPi template will ask you to provide some basic information, which allows it to
 
 There is a placeholder `pypi_template` top-level module folder. You'll probably want to rename that to your own package/module name and populate it with your own code ;-)
 
-```bash
+```console
 $ mv pypi_template your_new_project
 ```
 
@@ -40,55 +39,55 @@ The `docs/` a copy of PyPi Templates own docs. These can be published to [ReadTh
 
 If you run `pypi-template` in an existing PyPi Template package, it will again ask all questions, providing your with previously given answers, ready for editing.
 
-    :::console
-    $ pypi-template
-    A description for the package: A managed template repository for PyPi packages
-    Current classifiers:
-    - Environment :: Console
-    - Development Status :: 4 - Beta
-    - Intended Audience :: Developers
-    - Intended Audience :: System Administrators
-    - Topic :: Software Development
-    - License :: OSI Approved :: MIT License
-    - Programming Language :: Python
-    - Programming Language :: Python :: 3.7
-    Select classifiers: 
-    ...
-    Your name: Christophe VG
-    backing up requirements.txt
-    writing requirements.txt
-    $
+```console
+$ pypi-template
+A description for the package: A managed template repository for PyPi packages
+Current classifiers:
+- Environment :: Console
+- Development Status :: 4 - Beta
+- Intended Audience :: Developers
+- Intended Audience :: System Administrators
+- Topic :: Software Development
+- License :: OSI Approved :: MIT License
+- Programming Language :: Python
+- Programming Language :: Python :: 3.7
+Select classifiers: 
+...
+Your name: Christophe VG
+backing up requirements.txt
+writing requirements.txt
+```
 
 You can also simply a single variable in this way:
 
-    :::console
-    $ pypi-template --edit requires
-    Current requires:
-    - jinja2
-    - pyyaml
-    - prompt-toolkit
-    - colorama
-    Select requires:
-    $
+```console
+$ pypi-template --edit requires
+Current requires:
+- jinja2
+- pyyaml
+- prompt-toolkit
+- colorama
+Select requires:
+```
 
 A few more command line arguments are available:
 
-    :::console
-    $ pypi-template --help
-    usage: __main__.py [-h] [--edit EDIT] [--yes] [--debug] [--verbose] [path]
+```console
+$ pypi-template --help
+usage: __main__.py [-h] [--edit EDIT] [--yes] [--debug] [--verbose] [path]
 
-    Manage a Python PyPi module.
+Manage a Python PyPi module.
 
-    positional arguments:
-      path                  path to module (default=current)
+positional arguments:
+  path                  path to module (default=current)
 
-    optional arguments:
-      -h, --help            show this help message and exit
-      --edit EDIT, -e EDIT  edit a variable
-      --yes, -y             accept all current variable values
-      --debug, -d           don't do it, just say it
-      --verbose, -v         do it and say it
-    $
+optional arguments:
+  -h, --help            show this help message and exit
+  --edit EDIT, -e EDIT  edit a variable
+  --yes, -y             accept all current variable values
+  --debug, -d           don't do it, just say it
+  --verbose, -v         do it and say it
+```
 
 ## Things to do
 
@@ -98,7 +97,7 @@ Besides providing you with a lot of boilerplate (configuration) files, there are
 
 A basic testing setup has been prepared. To run it locally, issue...
 
-```bash
+```console
 $ make test
 ...
 ___________________________________ summary ____________________________________
@@ -112,19 +111,19 @@ Head over to [https://coveralls.io](https://coveralls.io) and register your proj
 
 ### Generate/Publish Documentation
 
-```bash
+```console
 $ make docs
 ```
 
 This wil generate a HTML version of your `docs/` and open it in a browser.
 
-If you want to publish your documentation (from the [docs/](docs/) folder) to e.g. [ReadTheDocs](https://readthedocs.org), import the repository over there also.
+If you want to publish your documentation (from the `docs/` folder) to e.g. [ReadTheDocs](https://readthedocs.org), import the repository over there also.
 
 ### Publishing to PyPi
 
 Head over to [https://test.pypi.org](https://test.pypi.org) and register for an account. Next simply issue...
 
-```bash
+```console
 $ make publish-test
 ```
 
@@ -132,7 +131,7 @@ to publish your module to the test instance of PyPi.
 
 or
 
-```bash
+```console
 $ make publish
 ```
 

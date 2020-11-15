@@ -23,20 +23,20 @@ Minimal survival commands:
 
 [https://github.com/pyenv/pyenv#installation](https://github.com/pyenv/pyenv#installation)
 
-```bash
+```console
 $ make requirements
 pypi-template (set by /Users/xtof/Workspace/pypi-template/.python-version)
 ```
 
 If you want to use a different virtual evironment manager, or none, simply issue the usual...
 
-```bash
+```console
 $ pip install -r requirements.txt
 ```
 
 ### Running pypi-template from the Repository
 
-```bash
+```console
 $ python -m pypi_template
 A description for the package: A managed template repository for PyPi packages
 Current classifiers:
