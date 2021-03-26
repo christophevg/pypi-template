@@ -35,7 +35,7 @@ pylint==2.6.0
 pyOpenSSL==19.1.0
 pyparsing==2.4.7
 pytz==2020.4
-PyYAML==5.3.1
+PyYAML==5.4
 readme-renderer==28.0
 recommonmark==0.6.0
 regex==2020.11.13
