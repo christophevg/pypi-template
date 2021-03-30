@@ -30,7 +30,7 @@ pluggy==0.13.1
 prompt-toolkit==3.0.8
 py==1.9.0
 pycparser==2.20
-Pygments==2.7.2
+Pygments==2.7.4
 pylint==2.6.0
 pyOpenSSL==19.1.0
 pyparsing==2.4.7
