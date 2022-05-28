@@ -215,7 +215,7 @@ class CLI():
       pass
 
 def cli():
-  parser = argparse.ArgumentParser(description="Manage a Python PyPi module.")
+  parser = argparse.ArgumentParser(description="Manage a Python PyPi package.")
   parser.add_argument("path", type=str, nargs="?",
                       help="path to module (default=current)")
   parser.add_argument("--edit",    "-e", dest="edit",
@@ -226,8 +226,14 @@ def cli():
                       help="don't do it, just say it")
   parser.add_argument("--verbose", "-v", dest="verbose", action="store_true",
                       help="do it and say it")
+  parser.add_argument("--version", dest="version", action="store_true",
+                      help="show version")
+
   args = parser.parse_args()
-  CLI(**vars(args)).run()
+  if args.version:
+    print(__version__)
+  else:
+    CLI(**vars(args)).run()
 
 if __name__ == "__main__":
   cli()

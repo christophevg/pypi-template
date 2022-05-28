@@ -74,9 +74,9 @@ A few more command line arguments are available:
 
 ```console
 $ pypi-template --help
-usage: __main__.py [-h] [--edit EDIT] [--yes] [--debug] [--verbose] [path]
+usage: pypi-template [-h] [--edit EDIT] [--yes] [--debug] [--verbose] [path]
 
-Manage a Python PyPi module.
+Manage a Python PyPi package.
 
 positional arguments:
   path                  path to module (default=current)
