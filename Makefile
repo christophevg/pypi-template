@@ -3,7 +3,7 @@ tag:
 	git push --tags
 
 .python-version:
-	@pyenv virtualenv 3.7.7 $$(basename ${CURDIR}) > /dev/null 2>&1 || true
+	@pyenv virtualenv $$(basename ${CURDIR}) > /dev/null 2>&1 || true
 	@pyenv local $$(basename ${CURDIR})
 	@pyenv version
 
