@@ -144,11 +144,13 @@ class CLI(object):
       if filename in EXCLUDED:
         self.debug("not rendering {}".format(filename))
         continue
+        
       directory = os.path.dirname(filename)
       if "skip" in self.template_vars:
         if filename in self.template_vars["skip"] or directory in self.template_vars["skip"]:
           self.debug("skipping {0}".format(filename))
           continue
+
       # TODO generalize?
       filename = filename.replace(
         "(package_module_name)", self.template_vars["package_module_name"]
@@ -156,11 +158,12 @@ class CLI(object):
       directory = os.path.dirname(filename)
       if directory != "" and not os.path.exists(directory):
         self.debug("creating directory {}".format(directory))
-        os.makedirs(directory)
-        # TODO generalize?
-        if directory == self.template_vars["package_module_name"]:
-          with open(os.path.join(directory, "__init__.py"), "w") as f:
-            f.write('__version__ = "0.0.1"')
+        if not self.show_debug:
+          os.makedirs(directory)
+          # TODO generalize?
+          if directory == self.template_vars["package_module_name"]:
+            with open(os.path.join(directory, "__init__.py"), "w") as f:
+              f.write('__version__ = "0.0.1"')
       vars = self.template_vars.copy()
       vars.update(self.system_vars)
       new_content = template.render(**vars)
@@ -170,9 +173,11 @@ class CLI(object):
           self.debug("unchanged {}".format(filename))
           continue
         print("backing up {0}".format(filename))
-        os.rename(filename, filename + ".backup")
+        if not self.show_debug:
+          os.rename(filename, filename + ".backup")
       print("writing {0}".format(filename))
-      with open(filename, "w") as outfile: outfile.write(new_content)
+      if not self.show_debug:
+        with open(filename, "w") as outfile: outfile.write(new_content)
 
   def run(self):
     try:
