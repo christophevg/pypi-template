@@ -233,7 +233,13 @@ def cli():
   if args.version:
     print(__version__)
   else:
-    CLI(**vars(args)).run()
+    CLI(
+      path=args.path,
+      verbose=args.verbose,
+      debug=args.debug,
+      edit=args.edit,
+      yes=args.yes
+    ).run()
 
 if __name__ == "__main__":
   cli()
