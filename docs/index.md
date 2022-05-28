@@ -16,3 +16,4 @@
 * [Getting Started](getting-started.md)
 * [Contributing](contributing.md)
 * [Known Issues](known-issues.md)
+* [Code Example](code.md)

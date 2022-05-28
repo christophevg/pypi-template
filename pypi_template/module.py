@@ -23,9 +23,9 @@ class Template():
     """This function says hello.
     Accepts an optional name and formats a salutation given that name.
     Args:
-      name: A optional string as name of some nice person to say hello to.
+    name: A optional string as name of some nice person to say hello to.
     Returns:
-      A personalized salutation in the form of a string.
+    A personalized salutation in the form of a string.
     """
     if self.said_hello:
       return "hello {0}".format(name)
