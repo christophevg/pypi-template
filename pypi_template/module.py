@@ -28,5 +28,5 @@ class Template():
     A personalized salutation in the form of a string.
     """
     if self.said_hello:
-      return "hello {0}".format(name)
+      return f"hello {name}"
     return None
