@@ -33,10 +33,10 @@ docs: requirements
 	cd docs; make html
 	open docs/_build/html/index.html
 
-PROJECT:=`find . -name '__init__.py' -maxdepth 2 | xargs dirname`
+PROJECT:=`find . -name '__init__.py' -maxdepth 2 | xargs dirname | grep -v docs`
 
 lint:
-	@pylint ${PROJECT} | tee lint.txt
+	@PYTHONPATH=. pylint ${PROJECT} | tee lint.txt
 
 clean:
 	find . | grep '\.backup' | xargs rm

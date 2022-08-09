@@ -26,6 +26,7 @@ INSTALL_REQUIRES = [
   "pyyaml",
   "prompt-toolkit",
   "colorama",
+  "fire",
   
 ]
 ENTRY_POINTS = {

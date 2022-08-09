@@ -24,6 +24,7 @@ requires:
 - pyyaml
 - prompt-toolkit
 - colorama
+- fire
 scripts: []
 skip:
 - MANIFEST.in

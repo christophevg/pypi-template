@@ -37,25 +37,26 @@ $ pip install -r requirements.txt
 ### Running pypi-template from the Repository
 
 ```console
-$ python -m pypi_template
+% python -m pypi_template verbose edit all apply
 A description for the package: A managed template repository for PyPi packages
 Current classifiers:
 - Environment :: Console
 - Development Status :: 4 - Beta
 - Intended Audience :: Developers
-- System Intended Audience :: System Administrators
-- Topic :: Topic :: Software Development
-- MIT License :: OSI Approved :: MIT License
+- Intended Audience :: System Administrators
+- Topic :: Software Development
+- License :: OSI Approved :: MIT License
 - Programming Language :: Python
 - Programming Language :: Python :: 3.7
-Select classifiers:
+Select classifiers: 
 Current console scripts:
 - pypi-template=pypi_template.__main__:cli
-Select console scripts:
+Select console scripts: 
 First year of publication: 2018
 Github account: christophevg
 Github repo name: pypi-template
 Keywords describing the package: pypi template
+License: MIT
 Package module name: pypi_template
 Package name: pypi-template
 Package tagline: A managed template repository for maintaining PyPi packages
@@ -65,28 +66,39 @@ Current requires:
 - pyyaml
 - prompt-toolkit
 - colorama
-Select requires:
-Select scripts:
+- fire
+Select requires: 
+Select scripts: 
 Current skip:
 - MANIFEST.in
 - docs
 - tests
 - (package_module_name)
-Select skip:
+Select skip: 
 Your author name: Christophe VG
 Your email address: contact@christophe.vg
 Your full name: Christophe Van Ginneken
-backing up LICENSE.txt
-writing LICENSE.txt
-skipping docs/getting-started.md
-skipping docs/contributing.md
-skipping docs/Makefile
-skipping MANIFEST.in
-skipping docs/whats-in-the-box.md
-skipping tests/test_example.py
-skipping docs/make.bat
-skipping docs/conf.py
-skipping (package_module_name)/module.py
-skipping docs/code.md
-skipping docs/index.md
+Your name: Christophe VG
+✅ requirements.txt has no changes
+✅ Makefile has no changes
+✅ .github/README.md has no changes
+✅ .gitignore has no changes
+⏭ skipping tests/test_example.py
+⏭ skipping MANIFEST.in
+⏭ skipping docs/Makefile
+⏭ skipping docs/conf.py
+⏭ skipping docs/whats-in-the-box.md
+✅ docs/_static/.gitignore has no changes
+⏭ skipping docs/getting-started.md
+⏭ skipping docs/make.bat
+⏭ skipping docs/index.md
+⏭ skipping docs/contributing.md
+⏭ skipping docs/code.md
+✅ setup.py has no changes
+⏭ skipping (package_module_name)/module.py
+✅ tox.ini has no changes
+✅ LICENSE.txt has no changes
+✅ .travis.yml has no changes
+🛑 not rendering excluded base/classifiers.txt
+🛑 not rendering excluded base/index.md
 ```
