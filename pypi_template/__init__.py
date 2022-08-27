@@ -31,8 +31,13 @@ class PyPiTemplate():
   Several commands can be issues at the same time. These are chainable commands
   and are as such indicated in the help description of each command.
 
-  To actually `apply` your changes, end your
-
+  To actually `apply` your changes, end your sequence of commands with `apply`.
+  
+  Examples of usage:
+  
+      % pypi-template init           # to setup your project initially
+      % pypi-template apply          # e.g. after an upgrade of pypi-template
+      % pypi-template edit requires  # to add an additional dependency
   """
   
   def __init__(self):
