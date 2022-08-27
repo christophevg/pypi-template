@@ -39,6 +39,6 @@ lint:
 	@PYTHONPATH=. pylint ${PROJECT} | tee lint.txt
 
 clean:
-	find . | grep '\.backup' | xargs rm
+	find . -type f -name "*.backup" | xargs rm
 
 .PHONY: dist docs
