@@ -1,0 +1,2 @@
+[tool.ruff]
+extend-exclude = [ "pypi_template/templates", "docs" ]

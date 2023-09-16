@@ -3,9 +3,13 @@
 
 ## Contents
 
-* [What is in the Box](whats-in-the-box.md)
-* [Getting Started](getting-started.md)
-* [Contributing](contributing.md)
-* [Code Example](code.md)
+```{toctree}
+:maxdepth: 1
+whats-in-the-box.md
+getting-started.md
+contributing.md
+code.md
+```
 
 {% endblock %}
+

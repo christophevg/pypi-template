@@ -1,10 +1,11 @@
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 import os
 import datetime
-import argparse
 
-from pkg_resources import resource_string, resource_listdir, resource_isdir
+import importlib_resources
+
+from fire import Fire
 
 from jinja2 import Environment, PackageLoader, meta
 
@@ -190,7 +191,8 @@ class PyPiTemplate():
     ).split("\n")
 
   def _load_resource(self, *args):
-    return resource_string(__name__, os.path.join("templates", *args))
+    f = importlib_resources.files(__name__).joinpath("templates", *args)
+    return f.read_bytes()
 
   def _list_resources(self, package="pypi_template.templates"):
     excluded_ext = ".pyc"
@@ -202,12 +204,14 @@ class PyPiTemplate():
       "pypi_template.templates.docs._static.__init__.py"
     ]
     files = []
-    for resource in resource_listdir(package, ""):
+
+    for entry in importlib_resources.files(package).iterdir():
+      resource = entry.name
       if resource.endswith(excluded_ext) or \
          resource in excluded or \
          f"{package}.{resource}" in excluded:
         pass
-      elif resource_isdir(package, resource):
+      elif importlib_resources.files(package).joinpath(resource).is_dir():
         subfiles = self._list_resources(f"{package}.{resource}")
         files += [ os.path.join(resource, f) for f in subfiles ]
       else:
@@ -224,7 +228,7 @@ class PyPiTemplate():
     try:
       with open(".pypi-template", encoding="utf-8") as fp:
         self._template_vars = yaml.safe_load(fp)
-    except:
+    except Exception:
       pass
 
   def _collect_templates(self):
@@ -235,7 +239,7 @@ class PyPiTemplate():
       source = self._load_resource(resource)
       for var in meta.find_undeclared_variables(self._environment.parse(source)):
         self._debugging(f"🔎 found variable in {name} : {var}")
-        if not var in self._template_vars and not var in self._system_vars:
+        if var not in self._template_vars and var not in self._system_vars:
           self._template_vars[var] = None
 
   def _collect_all_vars(self):
@@ -245,7 +249,7 @@ class PyPiTemplate():
   def _collect_var(self, var, force=False):
     try:
       current = self._template_vars[var]
-      if not force and not current is None and self._say_yes_to_all:
+      if not force and current is not None and self._say_yes_to_all:
         return
       if var in self._var_lists:
         self.__collect_var_selections(var, current)
@@ -291,14 +295,14 @@ class PyPiTemplate():
       else:
         selection = prompt([("class:underlined", question)], style=style)
       if selection != "":
-        if not selection in selections:
+        if selection not in selections:
           selections.append(selection)
     self._template_vars[var] = selections
     
 
   def _save_var_values(self):
     if self._changes:
-      if self._going_to(f"💾 saving variables"):
+      if self._going_to("💾 saving variables"):
         with open(".pypi-template", "w", encoding="utf-8") as outfile:
           yaml.safe_dump(self._template_vars, outfile, default_flow_style=False)
     self.changes = {}

@@ -27,9 +27,3 @@ Collecting wheel
 Installing collected packages: wheel
 Successfully installed wheel-0.35.1
 ```
-
-## DocUtils is pinned to 0.16
-
-This is due to an incompatible issue in recommonmark. See [https://github.com/sphinx-doc/sphinx/issues/9049](https://github.com/sphinx-doc/sphinx/issues/9049) for more info. 
-
-I'll try to fix this ... in the near future ;-)
