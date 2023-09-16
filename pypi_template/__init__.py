@@ -167,6 +167,13 @@ class PyPiTemplate():
 
     return self
 
+  def ignore(self, target):
+    try:
+      self._template_vars["skip"].append(target)
+    except KeyError:
+      self._template_vars["skip"] = [ target ]
+    return self
+
   def apply(self):
     """
     Apply the currently registered configuration.
