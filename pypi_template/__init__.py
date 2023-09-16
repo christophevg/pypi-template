@@ -68,7 +68,7 @@ class PyPiTemplate():
     }
     self._template_vars = {}
     self._templates     = {}
-    self._changes        = {}
+    self._changes       = {}
     
   # fire default output
   
