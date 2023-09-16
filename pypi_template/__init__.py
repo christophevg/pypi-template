@@ -311,7 +311,11 @@ class PyPiTemplate():
         continue
       directory = os.path.dirname(filename)
       if "skip" in self._template_vars:
-        if filename in self._template_vars["skip"] or directory in self._template_vars["skip"]:
+        # TODO take into account e.g. docs/_static is in docs
+        if directory in self._template_vars["skip"]:
+          self._being_verbose(f"⏭  skipping folder {directory}")
+          continue
+        if filename in self._template_vars["skip"]:
           self._being_verbose(f"⏭  skipping {filename}")
           continue
       # TODO generalize?
