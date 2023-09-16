@@ -23,6 +23,7 @@ autodoc2_render_plugin = "myst"
 autodoc2_packages = [
   {
     "path": "../pypi_template",
+    "exclude_dirs" : [ "templates" ],
     "auto_mode": False
   }
 ]

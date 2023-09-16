@@ -23,6 +23,7 @@ autodoc2_render_plugin = "myst"
 autodoc2_packages = [
   {
     "path": "../{{package_module_name}}",
+    "exclude_dirs" : [ "templates" ],
     "auto_mode": False
   }
 ]
