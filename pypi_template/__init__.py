@@ -147,6 +147,9 @@ class PyPiTemplate():
     return self
 
   def ignore(self, target):
+    """
+    Adds a target to the list of skipped paths (folders recursively) (chainable)
+    """
     self._being_verbose(f"🔎 ignoring {target}")
     self._append("skip", target)
     return self
@@ -160,6 +163,9 @@ class PyPiTemplate():
     self._render_files()
 
   def save(self):
+    """
+    Saves the current set of variables to `.pypi-template` (chainable)
+    """
     if self._changes:
       if self._going_to("💾 saving variables"):
         with open(".pypi-template", "w", encoding="utf-8") as outfile:
