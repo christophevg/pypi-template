@@ -1,4 +1,4 @@
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 import os
 import datetime
@@ -169,10 +169,8 @@ class PyPiTemplate():
     return self
 
   def ignore(self, target):
-    try:
-      self._template_vars["skip"].append(target)
-    except KeyError:
-      self._template_vars["skip"] = [ target ]
+    self._being_verbose(f"🔎 ignoring {target}")
+    self._append("skip", target)
     return self
 
   def apply(self):
@@ -246,6 +244,26 @@ class PyPiTemplate():
     for var in sorted(self._template_vars.keys()):
       self._collect_var(var)
 
+  def _update(self, var, value):
+    try:
+      current = self._template_vars[var]
+    except KeyError:
+      current = None
+    if value != current:
+      self._debugging(f"👉 recording change {current} -> {value}")
+      self._template_vars[var] = value
+      self._changes[var] = {
+        "old" : current,
+        "new" : value
+      }
+
+  def _append(self, var, value):
+    try:
+      current = self._template_vars["skip"].copy()
+    except KeyError:
+      current = []
+    self._update(var, current + [value])
+
   def _collect_var(self, var, force=False):
     try:
       current = self._template_vars[var]
@@ -255,11 +273,6 @@ class PyPiTemplate():
         self.__collect_var_selections(var, current)
       else:
         self.__collect_var_value(var, current)
-      if self._template_vars[var] != current:
-        self._changes[var] = {
-          "old" : current,
-          "new" : self._template_vars[var]
-        }
     except KeyError:
       print(f"🚨 unknown template variable: {var}")
 
@@ -267,9 +280,9 @@ class PyPiTemplate():
     question = f"{var.replace('_', ' ').capitalize()}: "
     if current is None:
       current = ""
-    self._template_vars[var] = prompt(
+    self._update(var, prompt(
       [("class:underlined", question)], style=style, default=current
-    )
+    ))
 
   def __collect_var_selections(self, var, current=None):
     if not current:
@@ -297,7 +310,7 @@ class PyPiTemplate():
       if selection != "":
         if selection not in selections:
           selections.append(selection)
-    self._template_vars[var] = selections
+    self._update(var, selections)
     
 
   def _save_var_values(self):
