@@ -272,8 +272,9 @@ class PyPiTemplate():
       current = self._template_vars[var].copy()
     except KeyError:
       current = []
-    self._debugging(f"appending {value} to {current}")
-    self._update(var, current + [value])
+    if not value in current:
+      self._debugging(f"appending {value} to {current}")
+      self._update(var, current + [value])
 
   def _collect_var(self, var, force=False):
     try:
