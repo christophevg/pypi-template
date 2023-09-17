@@ -68,9 +68,14 @@ class PyPiTemplate():
       "scripts"         : None,
       "skip"            : None
     }
-    self._template_vars = {}
-    self._templates     = {}
-    self._changes       = {}
+    self._template_vars  = {}
+    self._templates      = {}
+    self._changes        = {}
+    self._default_values = {
+      "readme"                    : ".github/README.md",
+      "first_year_of_publication" : self._system_vars["current_year"],
+    }
+    self._load_personal_default_values()
     
   # fire default output
   
@@ -133,6 +138,13 @@ class PyPiTemplate():
     """
     self._start()
     return list(self._template_vars.keys()) + list(self._var_lists.keys())
+
+  def defaults(self):
+    """
+    Returns a list of all default template variables values.
+    """
+    self._start()
+    return self._default_values
 
   def edit(self, variable):
     """
@@ -244,6 +256,13 @@ class PyPiTemplate():
     except Exception:
       pass
 
+  def _load_personal_default_values(self):
+    try:
+      with open(os.path.expanduser("~/.pypi-template"), encoding="utf-8") as fp:
+        self._default_values.update(yaml.safe_load(fp))
+    except Exception:
+      pass
+
   def _collect_templates(self):
     for resource in self._list_resources():
       name = resource.replace("(dot)", ".")
@@ -298,7 +317,10 @@ class PyPiTemplate():
   def __collect_var_value(self, var, current):
     question = f"{var.replace('_', ' ').capitalize()}: "
     if current is None:
-      current = ""
+      if var in self._default_values:
+        current = self._default_values[var]
+      else:
+        current = ""
     self._update(var, prompt(
       [("class:underlined", question)], style=style, default=current
     ))
