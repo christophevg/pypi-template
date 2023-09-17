@@ -39,6 +39,7 @@ class PyPiTemplate():
       % pypi-template init           # to setup your project initially
       % pypi-template apply          # e.g. after an upgrade of pypi-template
       % pypi-template edit requires  # to add an additional dependency
+      % pypi-template yes edit all   # to edit any new variables
   """
   
   def __init__(self):
