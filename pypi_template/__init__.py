@@ -89,35 +89,12 @@ class PyPiTemplate():
     self._be_verbose = True
     return self
 
-  def _being_verbose(self, msg):
-    if self._be_verbose or self._show_debug:
-      print(msg)
-      return True
-    return False
-
   def debug(self):
     """
     Don't actually do it, but tell what would have been done. (chainable)
     """
     self._show_debug = True
     return self
-
-  def _debugging(self, msg):
-    if self._show_debug:
-      print(msg)
-      return True
-    return False
-
-  def _going_to(self, msg):
-    prefix = ""
-    # leading whitespace + icon
-    while msg.startswith(" ") or msg[1] == " ":
-      prefix += msg[0]
-      msg = msg[1:]
-    if not self._debugging(f"{prefix}not really {msg}"):
-      self._being_verbose(f"{prefix}{msg}")
-      return True
-    return False
 
   def yes(self):
     """
@@ -191,6 +168,29 @@ class PyPiTemplate():
     return self
 
   # helper functions
+  
+  def _being_verbose(self, msg):
+    if self._be_verbose or self._show_debug:
+      print(msg)
+      return True
+    return False
+  
+  def _debugging(self, msg):
+    if self._show_debug:
+      print(msg)
+      return True
+    return False
+
+  def _going_to(self, msg):
+    prefix = ""
+    # leading whitespace + icon
+    while msg.startswith(" ") or msg[1] == " ":
+      prefix += msg[0]
+      msg = msg[1:]
+    if not self._debugging(f"{prefix}not really {msg}"):
+      self._being_verbose(f"{prefix}{msg}")
+      return True
+    return False
   
   def _load_classifiers(self):
     return str(
