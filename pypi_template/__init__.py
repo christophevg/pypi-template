@@ -178,8 +178,15 @@ class PyPiTemplate():
     Apply the currently registered configuration.
     """
     self._start()
-    self._save_var_values()
+    self.save()
     self._render_files()
+
+  def save(self):
+    if self._changes:
+      if self._going_to("💾 saving variables"):
+        with open(".pypi-template", "w", encoding="utf-8") as outfile:
+          yaml.safe_dump(self._template_vars, outfile, default_flow_style=False)
+    self.changes = {}
 
   # helper functions
   
@@ -315,15 +322,8 @@ class PyPiTemplate():
           selections.append(selection)
     self._update(var, selections)
     
-
-  def _save_var_values(self):
-    if self._changes:
-      if self._going_to("💾 saving variables"):
-        with open(".pypi-template", "w", encoding="utf-8") as outfile:
-          yaml.safe_dump(self._template_vars, outfile, default_flow_style=False)
-    self.changes = {}
-
   def _render_files(self):
+    self._being_verbose("🔨 applying templates")
     excluded = [ "base/index.md", "base/classifiers.txt" ]
     for filename, template in self._templates.items():
       if filename in excluded:
