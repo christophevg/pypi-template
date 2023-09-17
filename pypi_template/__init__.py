@@ -187,6 +187,7 @@ class PyPiTemplate():
         with open(".pypi-template", "w", encoding="utf-8") as outfile:
           yaml.safe_dump(self._template_vars, outfile, default_flow_style=False)
     self.changes = {}
+    return self
 
   # helper functions
   
