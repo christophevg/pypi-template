@@ -57,7 +57,7 @@ class PyPiTemplate():
     # substitution/template variables
     self._system_vars = {
       "now"                   : datetime.datetime.now().isoformat(),
-      "current_year"          : datetime.datetime.now().year,
+      "current_year"          : str(datetime.datetime.now().year),
       "pypi_template_version" : __version__
     }
     self._var_lists = {
