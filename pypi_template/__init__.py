@@ -298,7 +298,7 @@ class PyPiTemplate():
       current = self._template_vars[var].copy()
     except KeyError:
       current = []
-    if not value in current:
+    if value not in current:
       self._debugging(f"appending {value} to {current}")
       self._update(var, current + [value])
 
@@ -360,7 +360,7 @@ class PyPiTemplate():
     def _is_skipped_folder(folder):
       for path in self._template_vars["skip"]:
         if folder.startswith(path):
-          if not folder in reported:
+          if folder not in reported:
             self._being_verbose(f"⏭  skipping '{folder}' due to skipped '{path}'")
             reported.append(folder)
           return True
@@ -368,7 +368,7 @@ class PyPiTemplate():
     
     for filename, template in self._templates.items():
       if filename in excluded:
-        if not filename in reported:
+        if filename not in reported:
           self._being_verbose(f"🛑 not rendering excluded {filename}")
           reported.append(filename)
         continue
@@ -377,7 +377,7 @@ class PyPiTemplate():
         if _is_skipped_folder(directory):
           continue
         if filename in self._template_vars["skip"]:
-          if not filename in reported:
+          if filename not in reported:
             self._being_verbose(f"⏭  skipping {filename}")
             reported.append(filename)
           continue
