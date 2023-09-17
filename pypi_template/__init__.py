@@ -322,22 +322,39 @@ class PyPiTemplate():
           selections.append(selection)
     self._update(var, selections)
     
-  def _render_files(self):
-    self._being_verbose("🔨 applying templates")
+  def _changed_files(self):
     excluded = [ "base/index.md", "base/classifiers.txt" ]
+    reported = []
+    
+    def _is_skipped_folder(folder):
+      for path in self._template_vars["skip"]:
+        if folder.startswith(path):
+          if not folder in reported:
+            self._being_verbose(f"⏭  skipping '{folder}' due to skipped '{path}'")
+            reported.append(folder)
+          return True
+      return False
+    
     for filename, template in self._templates.items():
       if filename in excluded:
-        self._being_verbose(f"🛑 not rendering excluded {filename}")
+        if not filename in reported:
+          self._being_verbose(f"🛑 not rendering excluded {filename}")
+          reported.append(filename)
         continue
       directory = os.path.dirname(filename)
       if "skip" in self._template_vars:
-        # TODO take into account e.g. docs/_static is in docs
-        if directory in self._template_vars["skip"]:
-          self._being_verbose(f"⏭  skipping folder {directory}")
+        if _is_skipped_folder(directory):
           continue
         if filename in self._template_vars["skip"]:
-          self._being_verbose(f"⏭  skipping {filename}")
+          if not filename in reported:
+            self._being_verbose(f"⏭  skipping {filename}")
+            reported.append(filename)
           continue
+      yield filename, template
+
+  def _render_files(self):
+    self._being_verbose("🔨 applying templates")
+    for filename, template in self._changed_files():
       # TODO generalize?
       filename = filename.replace(
         "(package_module_name)", self._template_vars["package_module_name"]
