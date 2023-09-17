@@ -1,4 +1,4 @@
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 
 import os
 import datetime
@@ -245,6 +245,7 @@ class PyPiTemplate():
       self._collect_var(var)
 
   def _update(self, var, value):
+    self._start()
     try:
       current = self._template_vars[var]
     except KeyError:
@@ -258,10 +259,12 @@ class PyPiTemplate():
       }
 
   def _append(self, var, value):
+    self._start()
     try:
-      current = self._template_vars["skip"].copy()
+      current = self._template_vars[var].copy()
     except KeyError:
       current = []
+    self._debugging(f"appending {value} to {current}")
     self._update(var, current + [value])
 
   def _collect_var(self, var, force=False):
