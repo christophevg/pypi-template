@@ -22,6 +22,7 @@ package_module_name: pypi_template
 package_name: pypi-template
 package_tagline: A managed template repository for maintaining PyPi packages
 package_title: PyPi Template
+readme: .github/README.md
 requires:
 - jinja2
 - pyyaml

@@ -9,7 +9,7 @@ DESCRIPTION      = "{{ a_description_for_the_package }}"
 LICENSE          = "{{ license }}"
 KEYWORDS         = "{{ keywords_describing_the_package }}"
 URL              = "https://github.com/{{ github_account }}/" + NAME
-README           = ".github/README.md"
+README           = "{{ readme }}"
 CLASSIFIERS      = [
   {% for classifier in classifiers %}"{{ classifier }}",
   {% endfor %}
