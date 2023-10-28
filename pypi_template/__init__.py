@@ -115,7 +115,7 @@ class PyPiTemplate():
     """
     Output PyPiTemplate's version.
     """
-    print(__version__)
+    return __version__
 
   def path(self, p):
     """
