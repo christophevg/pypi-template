@@ -146,6 +146,13 @@ class PyPiTemplate():
     self._start()
     return self._default_values
 
+  def uninitialized(self):
+    """
+    Return a list of template variables that don't have a value yet.
+    """
+    self._start()
+    return [ key for key in self.variables() if self._template_vars[key] is None ]
+
   def edit(self, variable):
     """
     Edit a variable (or provide "all") and apply the change. (chainable)
