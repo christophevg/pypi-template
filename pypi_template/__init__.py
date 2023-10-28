@@ -134,14 +134,14 @@ class PyPiTemplate():
 
   def variables(self):
     """
-    Returns a list of all available template variables you can edit.
+    Return a list of all available template variables you can edit.
     """
     self._start()
     return list(self._template_vars.keys()) + list(self._var_lists.keys())
 
   def defaults(self):
     """
-    Returns a list of all default template variables values.
+    Return a list of all default template variables values.
     """
     self._start()
     return self._default_values
@@ -160,7 +160,7 @@ class PyPiTemplate():
 
   def ignore(self, target):
     """
-    Adds a target to the list of skipped paths (folders recursively) (chainable)
+    Add a target to the list of skipped paths (folders recursively) (chainable)
     """
     self._being_verbose(f"🔎 ignoring {target}")
     self._append("skip", target)
@@ -176,7 +176,7 @@ class PyPiTemplate():
 
   def save(self):
     """
-    Saves the current set of variables to `.pypi-template` (chainable)
+    Save the current set of variables to `.pypi-template` (chainable)
     """
     if self._changes:
       if self._going_to("💾 saving variables"):
