@@ -29,7 +29,7 @@ class PyPiTemplate():
   root of the project. You can edit this file directly, or use the `edit`
   command to do it in an interactive way.
   
-  Several commands can be issues at the same time. These are chainable commands
+  Several commands can be issued at the same time. These are chainable commands
   and are as such indicated in the help description of each command.
 
   To actually `apply` your changes, end your sequence of commands with `apply`.
