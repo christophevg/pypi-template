@@ -255,6 +255,9 @@ class PyPiTemplate():
       self._load_vars()
       self._collect_templates()
       self._started = True
+      if self.uninitialized():
+        plural = "s" if len(self.uninitialized()) > 1 else ""
+        print(f"🚨 uninitialized template variable{plural}: {self.uninitialized()}")
 
   def _load_vars(self):
     try:
