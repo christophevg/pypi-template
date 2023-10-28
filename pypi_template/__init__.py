@@ -402,6 +402,9 @@ class PyPiTemplate():
         self._mkdir(directory)
       applied_vars = self._template_vars.copy()
       applied_vars.update(self._system_vars)
+      applied_vars = {
+        key : "" if value is None else value for key, value in applied_vars.items()
+      }
       new_content = template.render(**applied_vars)
       if os.path.isfile(filename):
         with open(filename, encoding="utf-8") as file:
