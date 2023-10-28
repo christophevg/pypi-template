@@ -22,7 +22,7 @@ init(autoreset=True)
 class PyPiTemplate():
 
   """
-  allows you to manage your PyPi-published Python project.
+  manage a PyPi-published Python project using templates.
   
   It is essentially a set of templates, which you can customise using several
   variables. The variables are stored in a file called `.pypi-template` in the 

@@ -99,7 +99,7 @@ A few more command line arguments are available:
 ```console
 % pypi-template --help
 NAME
-    pypi-template - allows you to manage your PyPi-published Python project.
+    pypi-template - manage a PyPi-published Python project using templates.
 
 SYNOPSIS
     pypi-template COMMAND
