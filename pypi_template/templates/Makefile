@@ -23,9 +23,11 @@ test: lint
 coverage: test
 	coverage report
 
+PYTHON_VERSION=py38
+
 lint:
-	ruff --select=E9,F63,F7,F82 --target-version=py37 .
-	ruff --target-version=py37 .
+	ruff --select=E9,F63,F7,F82 --target-version=$(PYTHON_VERSION) .
+	ruff --target-version=$(PYTHON_VERSION) .
 
 docs:
 	cd docs; make html
