@@ -9,8 +9,8 @@ tag:
 
 # dependencies targets
 
-requirements: .python-version requirements.txt
-	@pip install --upgrade -r requirements.txt > /dev/null
+requirements: requirements.txt
+	@pip install --upgrade -r $< > /dev/null
 
 upgrade:
 	@pip list --outdated | tail +3 | cut -d " " -f 1 | xargs -n1 pip install -U
