@@ -6,3 +6,5 @@ $(CLASSIFIERS):
 	curl $(CLASSIFIERS_URL) > $@
 	
 .PHONY: $(CLASSIFIERS)
+
+RUN_ARGS = verbose debug apply

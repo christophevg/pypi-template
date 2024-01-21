@@ -3,19 +3,35 @@
 PyPi template is hosted on PyPi, so...
 
 ```console
-$ pip install pypi-template
+% pip install pypi-template
 ```
+
+> Pro-Tip: check also [a word on virtual environments](virtual-environments)
 
 ## Use PyPi Template to Setup a New Package
 
+Starting a new PyPi Template-based project will typically look like this:
+
 ```console
-$ mkdir my-new-project
-$ cd my-new-project
-$ git init
-$ pypi-template init
+% mkdir my-new-project
+% cd my-new-project
+% git init
+% pyenv virtualenv my-new-project
+% pyenv local my-new-project
+(my-new-project) % pip install pypi-template
+(my-new-project) % pypi-template init
 ```
 
-PyPi template will ask you to provide some basic information, which allows it to generate several files for your. All files that are written are reported. When ready, you have a fresh, customized source tree.
+PyPi template will ask you to provide some basic information, which allows it to generate several files for your. All files that are written are reported. When ready, you have a fresh, customized source tree:
+
+```console
+(my-new-project) % ls -a
+.                     .python-version       docs                  requirements.txt
+..                    .readthedocs.yaml     my_brand_new_project  setup.py
+.github               LICENSE.txt           requirements.docs.txt tests
+.gitignore            MANIFEST.in           requirements.pypi.txt tox.ini
+.pypi-template        Makefile              
+```
 
 ### Minimal Things to Edit
 
@@ -34,7 +50,7 @@ The `docs/` a copy of PyPi Templates own docs. These can be published to [ReadTh
 Run `pypi-template edit all` in an existing PyPi Template package, it will again ask all questions, providing your with previously given answers, ready for editing.
 
 ```console
-$ pypi-template edit all
+% pypi-template edit all
 A description for the package: A managed template repository for PyPi packages
 Current classifiers:
 - Environment :: Console
@@ -55,7 +71,7 @@ writing requirements.txt
 You can also simply a single variable in this way:
 
 ```console
-$ pypi-template edit requires
+% pypi-template edit requires
 Current requires:
 - jinja2
 - pyyaml
@@ -67,7 +83,7 @@ Select requires:
 To get a list of all available variables:
 
 ```console
-$ pypi-template variables
+% pypi-template variables
 a_description_for_the_package
 classifiers
 console_scripts
@@ -185,7 +201,7 @@ Head over to [https://coveralls.io](https://coveralls.io) and register your proj
 ### Generate/Publish Documentation
 
 ```console
-$ make docs
+% make docs
 ...
 ```
 
@@ -207,7 +223,7 @@ If you want to publish your documentation (from the `docs/` folder) to e.g. [Rea
 Head over to [https://test.pypi.org](https://test.pypi.org) and register for an account. Next simply issue...
 
 ```console
-$ make publish-test
+% make publish-test
 ...
 ```
 
@@ -216,7 +232,7 @@ to publish your module to the test instance of PyPi.
 or
 
 ```console
-$ make publish
+% make publish
 ...
 ```
 

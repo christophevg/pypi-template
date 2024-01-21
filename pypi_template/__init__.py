@@ -1,11 +1,9 @@
-__version__ = "0.4.7"
+__version__ = "0.5.0"
 
 import os
 import datetime
 
 import importlib_resources
-
-from fire import Fire
 
 from jinja2 import Environment, PackageLoader, meta
 
@@ -15,6 +13,8 @@ from prompt_toolkit.completion import FuzzyWordCompleter
 from prompt_toolkit import prompt
 from prompt_toolkit.styles import Style
 from colorama import init, Fore
+
+import subprocess
 
 style = Style.from_dict({ "underlined": "underline" })
 init(autoreset=True)
@@ -129,8 +129,11 @@ class PyPiTemplate():
     """
     Initialize a fresh project.
     """
+    self._start(notify_uninitialized=False)
     self.edit("all")
     self.apply()
+    if self._going_to("👷‍♂️ performing post-init install (e.g. environments)"):
+      subprocess.run(["make", "install"])
 
   def variables(self):
     """
@@ -151,7 +154,12 @@ class PyPiTemplate():
     Return a list of template variables that don't have a value yet.
     """
     self._start()
-    return [ key for key in self.variables() if self._template_vars[key] is None ]
+    return [
+      key
+      for key in self.variables()
+      if key not in self._template_vars
+      or self._template_vars[key] is None
+    ]
 
   def edit(self, variable):
     """
@@ -250,12 +258,12 @@ class PyPiTemplate():
         files.append(resource)
     return files
 
-  def _start(self):
+  def _start(self, notify_uninitialized=True):
     if not self._started:
       self._load_vars()
       self._collect_templates()
       self._started = True
-      if self.uninitialized():
+      if self.uninitialized() and notify_uninitialized:
         plural = "s" if len(self.uninitialized()) > 1 else ""
         print(f"🚨 uninitialized template variable{plural}: {self.uninitialized()}")
 
@@ -431,12 +439,3 @@ class PyPiTemplate():
     if self._going_to(f"   💾 writing {filename}"):
       with open(filename, "w", encoding="utf-8") as outfile:
         outfile.write(new_content)
-
-def cli():
-  try:
-    Fire(PyPiTemplate(), name="pypi-template")
-  except KeyboardInterrupt:
-    pass
-
-if __name__ == "__main__":
-  cli()

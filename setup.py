@@ -5,9 +5,9 @@ import setuptools
 NAME             = "pypi-template"
 AUTHOR           = "Christophe VG"
 AUTHOR_EMAIL     = "contact@christophe.vg"
-DESCRIPTION      = "A managed template repository for PyPi packages"
+DESCRIPTION      = "Template-based common/best practices for managing a Python package on PyPi"
 LICENSE          = "MIT"
-KEYWORDS         = "pypi template"
+KEYWORDS         = "python pypi package management template"
 URL              = "https://github.com/christophevg/" + NAME
 README           = ".github/README.md"
 CLASSIFIERS      = [

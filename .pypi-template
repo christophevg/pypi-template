@@ -1,4 +1,4 @@
-a_description_for_the_package: A managed template repository for PyPi packages
+a_description_for_the_package: Template-based common/best practices for managing a Python package on PyPi
 classifiers:
 - 'Environment :: Console'
 - 'Development Status :: 4 - Beta'
@@ -16,11 +16,11 @@ console_scripts:
 first_year_of_publication: '2018'
 github_account: christophevg
 github_repo_name: pypi-template
-keywords_describing_the_package: pypi template
+keywords_describing_the_package: python pypi package management template
 license: MIT
 package_module_name: pypi_template
 package_name: pypi-template
-package_tagline: A managed template repository for maintaining PyPi packages
+package_tagline: Template-based common/best practices for managing a Python package on PyPi
 package_title: PyPi Template
 readme: .github/README.md
 requires:
@@ -38,5 +38,5 @@ skip:
 - (package_module_name)
 your_author_name: Christophe VG
 your_email_address: contact@christophe.vg
-your_full_name: Christophe Van Ginneken
+your_full_name: Christophe VG
 your_name: Christophe VG
