@@ -6,9 +6,9 @@ This project is hosted on [GitHub](https://githhub.com/christophevg/pypi-templat
 
 * Do use the [issues tracker](https://githhub.com/christophevg/pypi-template/issues).
 * Let's discuss any proposed change or fix in an issue, so your work is not done in vain - I hate to reject pull requests...
-* Create [pull requests](https://githhub.com/christophevg/pypi-template/pulls) against `next` branch.
+* Create [pull requests](https://githhub.com/christophevg/pypi-template/pulls) against `next` branch if it is currently actively used, else use the `master` branch.
 * Try to keep pull requests "atomic", and if possible related to an issue.
--
+
 ## My Development Workflow
 
 I try to develop pypi-template in a self-hosting way, which means that I run it from the repository on the repository itself.
@@ -17,28 +17,31 @@ Running pypi-template from the repository can be done according to the following
 
 ### Setup an Environment with Dependencies
 
-I started using PyEnv recently and the top-level Makefile in the repository is using that. So if you go down the PyEnv road, you can use it ;-)
-
-Minimal survival commands: 
-
-[https://github.com/pyenv/pyenv#installation](https://github.com/pyenv/pyenv#installation)
+PyPi Template is (highly optionated) convention driven and relies on Pyenv to keep everything nicely tucked away in [virtual environments](virtual-environments). So at this point avoiding Pyenv is not really an option.
 
 ```console
-$ make requirements
-pypi-template (set by /Users/xtof/Workspace/pypi-template/.python-version)
-```
-
-If you want to use a different virtual evironment manager, or none, simply issue the usual...
-
-```console
+$ git clone https://github.com/christophevg/pypi-template.git
+$ cd pypi-template
+$ pyenv virtualenv pypi-template
+$ pyenv local pypi-template
 $ pip install -r requirements.txt
+$ make install
+$ make run
 ```
+
+And if everything goes well, PyPi Template is run on itself, reporting every file is up2date.
 
 ### Running pypi-template from the Repository
 
+As shown in the final command above, the `Makefile` allows for running the application/package. The default `RUN_CMD` is `python -m package_name` without any arguments. Using `RUN_ARGS` additional arguments can be added, which in case of PyPi Template itself is done in `Makefile.mak`: `RUN_ARGS = verbose debug apply`.
+
+So, we can replace these to first edit alle variables and then actually apply them:
+
 ```console
-% python -m pypi_template verbose edit all apply
-A description for the package: A managed template repository for PyPi packages
+% make run RUN_ARGS="verbose edit all apply"
+pyenv local pypi-template-run
+python -m `cat .pypi-template | grep "^package_module_name" | cut -d":" -f2` verbose edit all apply
+A description for the package: Template-based common/best practices for managing a Python package on PyPi
 Current classifiers:
 - Environment :: Console
 - Development Status :: 4 - Beta
@@ -47,7 +50,10 @@ Current classifiers:
 - Topic :: Software Development
 - License :: OSI Approved :: MIT License
 - Programming Language :: Python
-- Programming Language :: Python :: 3.7
+- Programming Language :: Python :: 3.8
+- Programming Language :: Python :: 3.9
+- Programming Language :: Python :: 3.10
+- Programming Language :: Python :: 3.11
 Select classifiers: 
 Current console scripts:
 - pypi-template=pypi_template.__main__:cli
@@ -55,50 +61,49 @@ Select console scripts:
 First year of publication: 2018
 Github account: christophevg
 Github repo name: pypi-template
-Keywords describing the package: pypi template
+Keywords describing the package: python pypi package management template
 License: MIT
 Package module name: pypi_template
 Package name: pypi-template
-Package tagline: A managed template repository for maintaining PyPi packages
+Package tagline: Template-based common/best practices for managing a Python package on PyPi
 Package title: PyPi Template
+Readme: .github/README.md
 Current requires:
 - jinja2
 - pyyaml
 - prompt-toolkit
 - colorama
 - fire
+- importlib-resources
 Select requires: 
 Select scripts: 
 Current skip:
 - MANIFEST.in
-- docs
 - tests
+- docs
 - (package_module_name)
 Select skip: 
 Your author name: Christophe VG
 Your email address: contact@christophe.vg
-Your full name: Christophe Van Ginneken
+Your full name: Christophe VG
 Your name: Christophe VG
+🔨 applying templates
 ✅ requirements.txt has no changes
+✅ requirements.docs.txt has no changes
 ✅ Makefile has no changes
+✅ .github/workflows/test.yaml has no changes
+✅ .github/workflows/__init__.py has no changes
 ✅ .github/README.md has no changes
 ✅ .gitignore has no changes
-⏭ skipping tests/test_example.py
-⏭ skipping MANIFEST.in
-⏭ skipping docs/Makefile
-⏭ skipping docs/conf.py
-⏭ skipping docs/whats-in-the-box.md
-✅ docs/_static/.gitignore has no changes
-⏭ skipping docs/getting-started.md
-⏭ skipping docs/make.bat
-⏭ skipping docs/index.md
-⏭ skipping docs/contributing.md
-⏭ skipping docs/code.md
+⏭  skipping 'tests' due to skipped 'tests'
+⏭  skipping MANIFEST.in
+⏭  skipping 'docs' due to skipped 'docs'
+⏭  skipping 'docs/_static' due to skipped 'docs'
 ✅ setup.py has no changes
-⏭ skipping (package_module_name)/module.py
+⏭  skipping '(package_module_name)' due to skipped '(package_module_name)'
 ✅ tox.ini has no changes
 ✅ LICENSE.txt has no changes
-✅ .travis.yml has no changes
 🛑 not rendering excluded base/classifiers.txt
 🛑 not rendering excluded base/index.md
+✅ .readthedocs.yaml has no changes
 ```
