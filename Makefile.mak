@@ -8,3 +8,7 @@ $(CLASSIFIERS):
 .PHONY: $(CLASSIFIERS)
 
 RUN_ARGS = verbose debug apply
+
+update: RUN_ARGS=verbose apply
+update: run
+	
