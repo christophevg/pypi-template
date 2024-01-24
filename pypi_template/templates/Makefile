@@ -13,7 +13,8 @@ RUFF_PYTHON_VERSION ?= py38
 PROJECT=$(shell basename $(CURDIR))
 PACKAGE_NAME=`cat .pypi-template | grep "^package_module_name" | cut -d":" -f2`
 
-RUN_CMD?=python -m $(PACKAGE_NAME)
+LOG_LEVEL?=ERROR
+RUN_CMD?=LOG_LEVEL=$(LOG_LEVEL) python -m $(PACKAGE_NAME)
 RUN_ARGS?=
 
 TEST_ENVS=$(addprefix $(PROJECT)-test-,$(PYTHON_VERSIONS))
