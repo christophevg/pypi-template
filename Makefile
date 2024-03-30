@@ -95,8 +95,7 @@ coverage: test
 	coverage report
 
 lint: env-test
-	ruff --select=E9,F63,F7,F82 --target-version=$(RUFF_PYTHON_VERSION) .
-	ruff --target-version=$(RUFF_PYTHON_VERSION) .
+	ruff check --target-version=$(RUFF_PYTHON_VERSION) .
 
 docs: env-docs
 	cd docs; make html
