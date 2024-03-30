@@ -129,7 +129,7 @@ class PyPiTemplate():
     """
     Initialize a fresh project.
     """
-    self._start(notify_uninitialized=False)
+    self._start(notify=False)
     self.edit("all")
     self.apply()
     if self._going_to("👷‍♂️ performing post-init install (e.g. environments)"):
@@ -154,12 +154,7 @@ class PyPiTemplate():
     Return a list of template variables that don't have a value yet.
     """
     self._start()
-    return [
-      key
-      for key in self.variables()
-      if key not in self._template_vars
-      or self._template_vars[key] is None
-    ]
+    return [ key for key in self.variables() if self[key] is None ]
 
   def edit(self, variable):
     """
@@ -193,12 +188,21 @@ class PyPiTemplate():
     """
     Save the current set of variables to `.pypi-template` (chainable)
     """
+    self._start(notify=False)
+    self["version"] = self.version
     if self._changes:
       if self._going_to("💾 saving variables"):
         with open(".pypi-template", "w", encoding="utf-8") as outfile:
           yaml.safe_dump(self._template_vars, outfile, default_flow_style=False)
-    self.changes = {}
+      self._changes = {}
+    self._start()
     return self
+
+  def status(self):
+    """
+    Start to load variables and perform sanity checks
+    """
+    self._start()
 
   # helper functions
   
@@ -258,14 +262,41 @@ class PyPiTemplate():
         files.append(resource)
     return files
 
-  def _start(self, notify_uninitialized=True):
+  def _start(self, notify=True):
     if not self._started:
       self._load_vars()
       self._collect_templates()
       self._started = True
-      if self.uninitialized() and notify_uninitialized:
-        plural = "s" if len(self.uninitialized()) > 1 else ""
-        print(f"🚨 uninitialized template variable{plural}: {self.uninitialized()}")
+
+      if notify:
+        # notify of uninitialized variables
+        if self.uninitialized():
+          plural = "s" if len(self.uninitialized()) > 1 else ""
+          print(f"🚨 uninitialized template variable{plural}: {', '.join(self.uninitialized())}")
+          print( "   👉 issue 'yes edit all apply' to fix!")
+
+        # notify if version in config isn't current
+        if self["version"] != self.version:
+          print(f"🚨 pypi-template config version {self['version']} != {self.version}")
+          print( "   👉 issue 'save' to update!")
+
+  def __getitem__(self, key):
+    try:
+      return self._template_vars[key]
+    except KeyError:
+      pass
+    return None
+
+  def __setitem__(self, var, value):
+    self._start()
+    current = self[var]
+    if value != current:
+      self._debugging(f"👉 recording change {current} -> {value}")
+      self._template_vars[var] = value
+      self._changes[var] = {
+        "old" : current,
+        "new" : value
+      }
 
   def _load_vars(self):
     try:
@@ -296,20 +327,6 @@ class PyPiTemplate():
     for var in sorted(self._template_vars.keys()):
       self._collect_var(var)
 
-  def _update(self, var, value):
-    self._start()
-    try:
-      current = self._template_vars[var]
-    except KeyError:
-      current = None
-    if value != current:
-      self._debugging(f"👉 recording change {current} -> {value}")
-      self._template_vars[var] = value
-      self._changes[var] = {
-        "old" : current,
-        "new" : value
-      }
-
   def _append(self, var, value):
     self._start()
     try:
@@ -318,7 +335,7 @@ class PyPiTemplate():
       current = []
     if value not in current:
       self._debugging(f"appending {value} to {current}")
-      self._update(var, current + [value])
+      self[var] = current + [value]
 
   def _collect_var(self, var, force=False):
     try:
@@ -339,9 +356,9 @@ class PyPiTemplate():
         current = self._default_values[var]
       else:
         current = ""
-    self._update(var, prompt(
+    self[var] = prompt(
       [("class:underlined", question)], style=style, default=current
-    ))
+    )
 
   def __collect_var_selections(self, var, current=None):
     if not current:
@@ -369,7 +386,7 @@ class PyPiTemplate():
       if selection != "":
         if selection not in selections:
           selections.append(selection)
-    self._update(var, selections)
+    self[var] = selections
     
   def _changed_files(self):
     excluded = [ "base/index.md", "base/classifiers.txt" ]

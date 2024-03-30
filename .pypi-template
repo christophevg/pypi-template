@@ -1,4 +1,5 @@
-a_description_for_the_package: Template-based common/best practices for managing a Python package on PyPi
+a_description_for_the_package: Template-based common/best practices for managing a
+  Python package on PyPi
 classifiers:
 - 'Environment :: Console'
 - 'Development Status :: 4 - Beta'
@@ -20,7 +21,8 @@ keywords_describing_the_package: python pypi package management template
 license: MIT
 package_module_name: pypi_template
 package_name: pypi-template
-package_tagline: Template-based common/best practices for managing a Python package on PyPi
+package_tagline: Template-based common/best practices for managing a Python package
+  on PyPi
 package_title: PyPi Template
 readme: .github/README.md
 requires:
@@ -36,6 +38,7 @@ skip:
 - tests
 - docs
 - (package_module_name)
+version: 0.5.0
 your_author_name: Christophe VG
 your_email_address: contact@christophe.vg
 your_full_name: Christophe VG
