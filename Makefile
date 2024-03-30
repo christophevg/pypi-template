@@ -72,13 +72,16 @@ upgrade:
 # env switching
 
 env-%:
-	pyenv local $(PROJECT)-$*
+	@echo "👷‍♂️ $(BLUE)activating $* environment$(NC)"
+	@pyenv local $(PROJECT)-$*
 
 env:
-	pyenv local $(PROJECT)
+	@echo "👷‍♂️ $(BLUE)activating project environment$(NC)"
+	@pyenv local $(PROJECT)
 
 env-test:
-	pyenv local $(TEST_ENVS)
+	@echo "👷‍♂️ $(BLUE)activating test environments$(NC)"
+	@pyenv local $(TEST_ENVS)
 	
 # functional targets
 
