@@ -215,9 +215,12 @@ class PyPiTemplate():
     """
     Perform a few sanity checks (chainable)
     """
-    self._check_pypi_version()
-    self._check_uninitialized_variables()
-    self._check_config_version()
+    if all([
+      self._check_pypi_version(),
+      self._check_uninitialized_variables(),
+      self._check_config_version()
+    ]):
+      print("✅ everyhing is OK")
     return self
 
   # helper functions
@@ -229,6 +232,8 @@ class PyPiTemplate():
     if packaging_version.parse(self.version) < packaging_version.parse(latest_version):
       print(f"🚨 a newer version of pypi-template ({latest_version}) is available")
       print( "   👉 issue 'pip install -U pypi-template' to upgrade!")
+      return False
+    return True
 
   def _check_uninitialized_variables(self):
     # notify of uninitialized variables
@@ -236,12 +241,16 @@ class PyPiTemplate():
       plural = "s" if len(self.uninitialized) > 1 else ""
       print(f"🚨 uninitialized template variable{plural}: {', '.join(self.uninitialized)}")
       print( "   👉 issue 'yes edit all apply' to fix!")
+      return False
+    return True
 
   def _check_config_version(self):
     # notify if version in config isn't current
     if self["version"] != self.version:
       print(f"🚨 pypi-template config version {self['version']} != {self.version}")
       print( "   👉 issue 'save' to update!")
+      return False
+    return True
 
   # template vars are items of self
 
