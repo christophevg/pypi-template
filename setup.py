@@ -31,6 +31,8 @@ INSTALL_REQUIRES = [
   "colorama",
   "fire",
   "importlib-resources",
+  "requests",
+  "packaging",
   
 ]
 ENTRY_POINTS = {

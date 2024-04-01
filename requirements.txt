@@ -4,4 +4,6 @@ prompt-toolkit
 colorama
 fire
 importlib-resources
+requests
+packaging
 

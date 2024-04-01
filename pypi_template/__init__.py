@@ -16,6 +16,9 @@ from colorama import init, Fore
 
 import subprocess
 
+import requests
+from packaging import version as packaging_version
+
 style = Style.from_dict({ "underlined": "underline" })
 init(autoreset=True)
 
@@ -111,6 +114,7 @@ class PyPiTemplate():
 
   # commands
 
+  @property
   def version(self):
     """
     Output PyPiTemplate's version.
@@ -269,6 +273,13 @@ class PyPiTemplate():
       self._started = True
 
       if notify:
+        # notify of newer version
+        response = requests.get("https://pypi.org/pypi/pypi-template/json")
+        latest_version = response.json()['info']['version']
+        if packaging_version.parse(self.version) < packaging_version.parse(latest_version):
+          print(f"🚨 a newer version of pypi-template ({latest_version}) is available")
+          print( "   👉 issue 'pip install -U pypi-template' to upgrade!")
+        
         # notify of uninitialized variables
         if self.uninitialized():
           plural = "s" if len(self.uninitialized()) > 1 else ""

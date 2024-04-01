@@ -32,6 +32,8 @@ requires:
 - colorama
 - fire
 - importlib-resources
+- requests
+- packaging
 scripts: []
 skip:
 - MANIFEST.in
