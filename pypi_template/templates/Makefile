@@ -93,6 +93,7 @@ test: env-test lint
 
 coverage: test
 	coverage report
+	coverage lcov
 
 lint: env-test
 	ruff check --target-version=$(RUFF_PYTHON_VERSION) .

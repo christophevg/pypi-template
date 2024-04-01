@@ -2,7 +2,7 @@
 extend-exclude = [ "pypi_template/templates", "docs" ]
 
 [tool.coverage.run]
-omit = [ "*/templates/*" ]
+omit = [ "*/templates/*", "*/.tox/*", "*/distutils/*", "tests/*" ]
 
 [tool.coverage.report]
-omit = [ "*/templates/*" ]
+omit = [ "*/templates/*", "*/.tox/*", "*/distutils/*", "tests/*" ]
