@@ -31,5 +31,6 @@ jobs:
         run: |
           coverage run -m pytest
           coverage lcov
+          coverage report
       - name: Coveralls
         uses: coverallsapp/github-action@v2
