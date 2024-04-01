@@ -1,2 +1,5 @@
 [tool.ruff]
 extend-exclude = [ "pypi_template/templates", "docs" ]
+
+[tool.coverage.report]
+omit = [ "*/templates/*" ]
