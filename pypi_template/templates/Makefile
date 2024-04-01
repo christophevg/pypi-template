@@ -50,7 +50,7 @@ $(PROJECT)-test-%:
 	-pyenv virtualenv $* $@ > /dev/null
 	pyenv local $@
 	pip install -U pip > /dev/null
-	pip install -U ruff tox > /dev/null
+	pip install -U ruff tox coverage > /dev/null
 
 uninstall: uninstall-envs
 
