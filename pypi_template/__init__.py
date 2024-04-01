@@ -202,11 +202,12 @@ class PyPiTemplate():
 
   def status(self):
     """
-    Perform a few sanity checks
+    Perform a few sanity checks (chainable)
     """
     self._check_pypi_version()
     self._check_uninitialized_variables()
     self._check_config_version()
+    return self
 
   # helper functions
   
