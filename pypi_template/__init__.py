@@ -7,6 +7,7 @@ import importlib_resources
 
 from jinja2 import Environment, PackageLoader, meta
 
+import json
 import yaml
 
 from prompt_toolkit.completion import FuzzyWordCompleter
@@ -50,6 +51,7 @@ class PyPiTemplate():
     self._be_verbose     = False
     self._show_debug     = False
     self._say_yes_to_all = False
+    self._as_json        = False
   
     # setup Jinja Template Engine
     self._environment = Environment(
@@ -113,6 +115,13 @@ class PyPiTemplate():
     self._say_yes_to_all = True
     return self
 
+  def json(self):
+    """
+    Format output as a JSON string
+    """
+    self._as_json = True
+    return self
+
   # values
 
   @property
@@ -120,28 +129,30 @@ class PyPiTemplate():
     """
     Output PyPiTemplate's version.
     """
-    return __version__
+    return self._out(__version__)
 
   @property
   def variables(self):
     """
     Return a list of all available template variables you can edit.
     """
-    return sorted(list(self._template_vars.keys()) + list(self._var_lists.keys()))
+    return self._out(
+      sorted(list(self._template_vars.keys()) + list(self._var_lists.keys()))
+    )
 
   @property
   def defaults(self):
     """
     Return a list of all default template variables values.
     """
-    return self._default_values
+    return self._out(self._default_values)
 
   @property
   def uninitialized(self):
     """
     Return a list of template variables that don't have a value yet.
     """
-    return [ key for key in self.variables if self[key] is None ]
+    return self._out([ key for key in self.variables if self[key] is None ])
 
   # commands
 
@@ -414,6 +425,11 @@ class PyPiTemplate():
         outfile.write(new_content)
 
   # output helpers
+  
+  def _out(self, data):
+    if self._as_json:
+      return json.dumps(data, indent=2, default=str)
+    return data
 
   def _being_verbose(self, msg):
     if self._be_verbose or self._show_debug:
