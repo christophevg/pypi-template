@@ -47,7 +47,6 @@ class PyPiTemplate():
   
   def __init__(self):
     # operational setup
-    self._started        = False
     self._be_verbose     = False
     self._show_debug     = False
     self._say_yes_to_all = False
@@ -79,6 +78,8 @@ class PyPiTemplate():
       "first_year_of_publication" : self._system_vars["current_year"],
     }
     self._load_personal_default_values()
+    self._load_vars()
+    self._collect_templates()
     
   # fire default output
   
@@ -88,7 +89,7 @@ class PyPiTemplate():
     else:
       return ""
 
-  # operational setup
+  # operational setup commands
 
   def verbose(self):
     """
@@ -112,7 +113,7 @@ class PyPiTemplate():
     self._say_yes_to_all = True
     return self
 
-  # commands
+  # values
 
   @property
   def version(self):
@@ -120,6 +121,29 @@ class PyPiTemplate():
     Output PyPiTemplate's version.
     """
     return __version__
+
+  @property
+  def variables(self):
+    """
+    Return a list of all available template variables you can edit.
+    """
+    return sorted(list(self._template_vars.keys()) + list(self._var_lists.keys()))
+
+  @property
+  def defaults(self):
+    """
+    Return a list of all default template variables values.
+    """
+    return self._default_values
+
+  @property
+  def uninitialized(self):
+    """
+    Return a list of template variables that don't have a value yet.
+    """
+    return [ key for key in self.variables if self[key] is None ]
+
+  # commands
 
   def path(self, p):
     """
@@ -133,38 +157,15 @@ class PyPiTemplate():
     """
     Initialize a fresh project.
     """
-    self._start(notify=False)
     self.edit("all")
     self.apply()
     if self._going_to("👷‍♂️ performing post-init install (e.g. environments)"):
       subprocess.run(["make", "install"])
 
-  def variables(self):
-    """
-    Return a list of all available template variables you can edit.
-    """
-    self._start()
-    return list(self._template_vars.keys()) + list(self._var_lists.keys())
-
-  def defaults(self):
-    """
-    Return a list of all default template variables values.
-    """
-    self._start()
-    return self._default_values
-
-  def uninitialized(self):
-    """
-    Return a list of template variables that don't have a value yet.
-    """
-    self._start()
-    return [ key for key in self.variables() if self[key] is None ]
-
   def edit(self, variable):
     """
     Edit a variable (or provide "all") and apply the change. (chainable)
     """
-    self._start()
     if variable == "all":
       self._collect_all_vars()
     else:
@@ -184,7 +185,6 @@ class PyPiTemplate():
     """
     Apply the currently registered configuration.
     """
-    self._start()
     self.save()
     self._render_files()
 
@@ -192,104 +192,46 @@ class PyPiTemplate():
     """
     Save the current set of variables to `.pypi-template` (chainable)
     """
-    self._start(notify=False)
     self["version"] = self.version
     if self._changes:
       if self._going_to("💾 saving variables"):
         with open(".pypi-template", "w", encoding="utf-8") as outfile:
           yaml.safe_dump(self._template_vars, outfile, default_flow_style=False)
       self._changes = {}
-    self._start()
     return self
 
   def status(self):
     """
-    Start to load variables and perform sanity checks
+    Perform a few sanity checks
     """
-    self._start()
+    self._check_pypi_version()
+    self._check_uninitialized_variables()
+    self._check_config_version()
 
   # helper functions
   
-  def _being_verbose(self, msg):
-    if self._be_verbose or self._show_debug:
-      print(msg)
-      return True
-    return False
-  
-  def _debugging(self, msg):
-    if self._show_debug:
-      print(msg)
-      return True
-    return False
+  def _check_pypi_version(self):
+    # notify of newer version
+    response = requests.get("https://pypi.org/pypi/pypi-template/json")
+    latest_version = response.json()['info']['version']
+    if packaging_version.parse(self.version) < packaging_version.parse(latest_version):
+      print(f"🚨 a newer version of pypi-template ({latest_version}) is available")
+      print( "   👉 issue 'pip install -U pypi-template' to upgrade!")
 
-  def _going_to(self, msg):
-    prefix = ""
-    # leading whitespace + icon
-    while msg.startswith(" ") or msg[1] == " ":
-      prefix += msg[0]
-      msg = msg[1:]
-    if not self._debugging(f"{prefix}not really {msg}"):
-      self._being_verbose(f"{prefix}{msg}")
-      return True
-    return False
-  
-  def _load_classifiers(self):
-    return str(
-      self._load_resource("base", "classifiers.txt"), "utf-8"
-    ).split("\n")
+  def _check_uninitialized_variables(self):
+    # notify of uninitialized variables
+    if self.uninitialized:
+      plural = "s" if len(self.uninitialized) > 1 else ""
+      print(f"🚨 uninitialized template variable{plural}: {', '.join(self.uninitialized)}")
+      print( "   👉 issue 'yes edit all apply' to fix!")
 
-  def _load_resource(self, *args):
-    f = importlib_resources.files(__name__).joinpath("templates", *args)
-    return f.read_bytes()
+  def _check_config_version(self):
+    # notify if version in config isn't current
+    if self["version"] != self.version:
+      print(f"🚨 pypi-template config version {self['version']} != {self.version}")
+      print( "   👉 issue 'save' to update!")
 
-  def _list_resources(self, package="pypi_template.templates"):
-    excluded_ext = ".pyc"
-    excluded     = [
-      "__pycache__",
-      "pypi_template.templates.__init__.py",
-      "pypi_template.templates.(dot)github.__init__.py",
-      "pypi_template.templates.base.__init__.py",
-      "pypi_template.templates.docs._static.__init__.py"
-    ]
-    files = []
-
-    for entry in importlib_resources.files(package).iterdir():
-      resource = entry.name
-      if resource.endswith(excluded_ext) or \
-         resource in excluded or \
-         f"{package}.{resource}" in excluded:
-        pass
-      elif importlib_resources.files(package).joinpath(resource).is_dir():
-        subfiles = self._list_resources(f"{package}.{resource}")
-        files += [ os.path.join(resource, f) for f in subfiles ]
-      else:
-        files.append(resource)
-    return files
-
-  def _start(self, notify=True):
-    if not self._started:
-      self._load_vars()
-      self._collect_templates()
-      self._started = True
-
-      if notify:
-        # notify of newer version
-        response = requests.get("https://pypi.org/pypi/pypi-template/json")
-        latest_version = response.json()['info']['version']
-        if packaging_version.parse(self.version) < packaging_version.parse(latest_version):
-          print(f"🚨 a newer version of pypi-template ({latest_version}) is available")
-          print( "   👉 issue 'pip install -U pypi-template' to upgrade!")
-        
-        # notify of uninitialized variables
-        if self.uninitialized():
-          plural = "s" if len(self.uninitialized()) > 1 else ""
-          print(f"🚨 uninitialized template variable{plural}: {', '.join(self.uninitialized())}")
-          print( "   👉 issue 'yes edit all apply' to fix!")
-
-        # notify if version in config isn't current
-        if self["version"] != self.version:
-          print(f"🚨 pypi-template config version {self['version']} != {self.version}")
-          print( "   👉 issue 'save' to update!")
+  # template vars are items of self
 
   def __getitem__(self, key):
     try:
@@ -299,7 +241,6 @@ class PyPiTemplate():
     return None
 
   def __setitem__(self, var, value):
-    self._start()
     current = self[var]
     if value != current:
       self._debugging(f"👉 recording change {current} -> {value}")
@@ -308,6 +249,8 @@ class PyPiTemplate():
         "old" : current,
         "new" : value
       }
+
+  # variables helpers
 
   def _load_vars(self):
     try:
@@ -339,7 +282,6 @@ class PyPiTemplate():
       self._collect_var(var)
 
   def _append(self, var, value):
-    self._start()
     try:
       current = self._template_vars[var].copy()
     except KeyError:
@@ -455,6 +397,8 @@ class PyPiTemplate():
         self._backup(filename)
       self._write_file(filename, new_content)
 
+  # filesystem helpers
+
   def _mkdir(self, directory):
     if self._going_to(f"📁 creating directory {directory}"):
       os.makedirs(directory)
@@ -467,3 +411,63 @@ class PyPiTemplate():
     if self._going_to(f"   💾 writing {filename}"):
       with open(filename, "w", encoding="utf-8") as outfile:
         outfile.write(new_content)
+
+  # output helpers
+
+  def _being_verbose(self, msg):
+    if self._be_verbose or self._show_debug:
+      print(msg)
+      return True
+    return False
+  
+  def _debugging(self, msg):
+    if self._show_debug:
+      print(msg)
+      return True
+    return False
+
+  def _going_to(self, msg):
+    prefix = ""
+    # leading whitespace + icon
+    while msg.startswith(" ") or msg[1] == " ":
+      prefix += msg[0]
+      msg = msg[1:]
+    if not self._debugging(f"{prefix}not really {msg}"):
+      self._being_verbose(f"{prefix}{msg}")
+      return True
+    return False
+  
+  # resources helpers
+  
+  def _load_classifiers(self):
+    return str(
+      self._load_resource("base", "classifiers.txt"), "utf-8"
+    ).split("\n")
+
+  def _load_resource(self, *args):
+    f = importlib_resources.files(__name__).joinpath("templates", *args)
+    return f.read_bytes()
+
+  def _list_resources(self, package="pypi_template.templates"):
+    excluded_ext = ".pyc"
+    excluded     = [
+      "__pycache__",
+      "pypi_template.templates.__init__.py",
+      "pypi_template.templates.(dot)github.__init__.py",
+      "pypi_template.templates.base.__init__.py",
+      "pypi_template.templates.docs._static.__init__.py"
+    ]
+    files = []
+
+    for entry in importlib_resources.files(package).iterdir():
+      resource = entry.name
+      if resource.endswith(excluded_ext) or \
+         resource in excluded or \
+         f"{package}.{resource}" in excluded:
+        pass
+      elif importlib_resources.files(package).joinpath(resource).is_dir():
+        subfiles = self._list_resources(f"{package}.{resource}")
+        files += [ os.path.join(resource, f) for f in subfiles ]
+      else:
+        files.append(resource)
+    return files
