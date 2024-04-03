@@ -76,6 +76,11 @@ class PyPiTemplate():
     # key/value substitution/template variables
     self._template_vars  = {}
 
+    # system vars that are in the .pypi-template
+    self._system_template_vars = {
+      "version" : __version__
+    }
+
     # all templates
     self._templates      = {}
     
@@ -214,11 +219,13 @@ class PyPiTemplate():
     """
     Save the current set of variables to `.pypi-template` (chainable)
     """
-    self["version"] = self.version
     if self._changes:
       if self._going_to("💾 saving variables"):
         with open(".pypi-template", "w", encoding="utf-8") as outfile:
-          yaml.safe_dump(self._template_vars, outfile, default_flow_style=False)
+          yaml.safe_dump(
+            {**self._template_vars, **self._system_template_vars},
+            outfile, default_flow_style=False
+          )
       self._changes = {}
     return self
 
@@ -257,8 +264,9 @@ class PyPiTemplate():
 
   def _check_config_version(self):
     # notify if version in config isn't current
-    if self["version"] != self.version:
-      print(f"🚨 pypi-template config version {self['version']} != {self.version}")
+    config_version = self._system_template_vars["version"]
+    if config_version != self.version:
+      print(f"🚨 pypi-template config version {config_version} != {self.version}")
       print( "   👉 issue 'save' to update!")
       return False
     return True
@@ -282,13 +290,25 @@ class PyPiTemplate():
         "new" : value
       }
 
+  def __delitem__(self, key):
+    del self._template_vars[key]
+
   # variables helpers
 
   def _load_vars(self):
     try:
       with open(".pypi-template", encoding="utf-8") as fp:
         self._template_vars = yaml.safe_load(fp)
-    except Exception:
+      self._debugging(f"💾 loaded .pypy-template")
+      for key, value in self._template_vars.items():
+        self._debugging(f"  {key} = {value} {'⚙️' if key in self._system_template_vars else ''}")
+      # move the version to the system_template_vars
+      # since it isn't a real (template) var
+      for key in self._system_template_vars.keys():
+        self._system_template_vars[key] = self._template_vars.pop("version", None)
+    except FileNotFoundError:
+      pass
+    except KeyError:
       pass
 
   def _load_personal_default_values(self):
