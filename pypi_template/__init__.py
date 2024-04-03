@@ -57,14 +57,15 @@ class PyPiTemplate():
     self._environment = Environment(
       loader=PackageLoader("pypi_template", "templates")
     )
-    self._environment.keep_trailing_newline=True
+    self._environment.keep_trailing_newline = True
 
-    # substitution/template variables
+    # default, not exposed, system-style dynamic variables
     self._system_vars = {
       "now"                   : datetime.datetime.now().isoformat(),
       "current_year"          : str(datetime.datetime.now().year),
       "pypi_template_version" : __version__
     }
+    # substitution/template variables that are lists, not single values
     self._var_lists = {
       "classifiers"     : self._load_classifiers(),
       "requires"        : None,
@@ -72,19 +73,29 @@ class PyPiTemplate():
       "scripts"         : None,
       "skip"            : None
     }
+    # key/value substitution/template variables
     self._template_vars  = {}
+
+    # all templates
     self._templates      = {}
+    
+    # tracking changes applied to _template_vars
     self._changes        = {}
+
+    # default default values
     self._default_values = {
       "readme"                    : ".github/README.md",
       "first_year_of_publication" : self._system_vars["current_year"],
     }
+    
+    # load personal default values, saved variables (from .pypi-template)
+    # and discover all templates and variables that have been used on them
     self._load_personal_default_values()
     self._load_vars()
     self._collect_templates()
     
-  # fire default output
-  
+  # fire default output - if there are unapplied changes, notify them when
+  # exiting - and thus losing them
   def __str__(self):
     if self._changes:
       return f"unapplied changes:\n{yaml.dump(self._changes)}"
