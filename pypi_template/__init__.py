@@ -299,7 +299,7 @@ class PyPiTemplate():
     try:
       with open(".pypi-template", encoding="utf-8") as fp:
         self._template_vars = yaml.safe_load(fp)
-      self._debugging(f"💾 loaded .pypy-template")
+      self._debugging("💾 loaded .pypy-template")
       for key, value in self._template_vars.items():
         self._debugging(f"  {key} = {value} {'⚙️' if key in self._system_template_vars else ''}")
       # move the version to the system_template_vars

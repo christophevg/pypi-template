@@ -29,7 +29,6 @@ def test_variables():
     "scripts",
     "skip",
     "skip",
-    "version",
     "your_author_name",
     "your_email_address",
     "your_full_name",
