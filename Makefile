@@ -14,6 +14,8 @@ PROJECT=$(shell basename $(CURDIR))
 PACKAGE_NAME=`cat .pypi-template | grep "^package_module_name" | cut -d":" -f2 | xargs`
 
 LOG_LEVEL?=ERROR
+SILENT?=yes
+
 RUN_CMD?=LOG_LEVEL=$(LOG_LEVEL) python -m $(PACKAGE_NAME)
 RUN_ARGS?=
 
@@ -90,7 +92,11 @@ run: env-run
 	@$(RUN_CMD) $(RUN_ARGS)
 
 test: env-test lint
+ifeq ($(SILENT),yes)
+	tox -q
+else
 	tox
+endif
 
 coverage: test
 	coverage report
