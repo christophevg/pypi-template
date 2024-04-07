@@ -238,7 +238,7 @@ class PyPiTemplate():
       self._check_uninitialized_variables(),
       self._check_config_version()
     ]):
-      print("✅ everyhing is OK")
+      print("😎 everyhing is OK")
     return self
 
   # helper functions
