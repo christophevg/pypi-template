@@ -1,4 +1,4 @@
-__version__ = "0.6.0"
+__version__ = "0.6.1"
 
 import os
 import datetime
@@ -238,7 +238,7 @@ class PyPiTemplate():
       self._check_uninitialized_variables(),
       self._check_config_version()
     ]):
-      print("😎 everyhing is OK")
+      print("😎 everything is OK")
     return self
 
   # helper functions
