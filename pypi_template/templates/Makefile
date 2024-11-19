@@ -25,7 +25,7 @@ install: install-env-run install-env-docs install-env-test
 	@echo "👷‍♂️ $(BLUE)installing requirements in $(PROJECT)$(NC)"
 	pyenv local $(PROJECT)
 	pip install -U pip > /dev/null
-	pip install -U wheel twine > /dev/null
+	pip install -U wheel twine setuptools > /dev/null
 
 install-env-run:
 	@echo "👷‍♂️ $(BLUE)creating virtual environment $(PROJECT)-run$(NC)"
