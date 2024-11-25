@@ -1,4 +1,4 @@
-__version__ = "0.7.0"
+__version__ = "0.8.0"
 
 import os
 import datetime
@@ -49,6 +49,7 @@ class PyPiTemplate():
   def __init__(self):
     # operational setup
     self._be_verbose     = False
+    self._force          = False
     self._show_debug     = False
     self._say_yes_to_all = False
     self._as_json        = False
@@ -77,7 +78,9 @@ class PyPiTemplate():
     self._template_vars  = {}
 
     # system vars that are in the .pypi-template
-    self._system_template_vars = {
+    self._system_template_vars = {}
+    # the actually expected system values
+    self._system_template_vars_defaults = {
       "version" : __version__
     }
 
@@ -114,6 +117,13 @@ class PyPiTemplate():
     Explain everything that is done. (chainable)
     """
     self._be_verbose = True
+    return self
+
+  def force(self):
+    """
+    Force everything that can done. (chainable)
+    """
+    self._force = True
     return self
 
   def debug(self):
@@ -219,11 +229,11 @@ class PyPiTemplate():
     """
     Save the current set of variables to `.pypi-template` (chainable)
     """
-    if self._changes:
+    if self._changes or self._force:
       if self._going_to("💾 saving variables"):
         with open(".pypi-template", "w", encoding="utf-8") as outfile:
           yaml.safe_dump(
-            {**self._template_vars, **self._system_template_vars},
+            {**self._template_vars, **self._system_template_vars_defaults},
             outfile, default_flow_style=False
           )
       self._changes = {}
@@ -267,7 +277,7 @@ class PyPiTemplate():
     config_version = self._system_template_vars["version"]
     if config_version != self.version:
       print(f"🚨 pypi-template config version {config_version} != {self.version}")
-      print( "   👉 issue 'save' to update!")
+      print( "   👉 issue 'force save' to update!")
       return False
     return True
 
@@ -301,11 +311,11 @@ class PyPiTemplate():
         self._template_vars = yaml.safe_load(fp)
       self._debugging("💾 loaded .pypy-template")
       for key, value in self._template_vars.items():
-        self._debugging(f"  {key} = {value} {'⚙️' if key in self._system_template_vars else ''}")
-      # move the version to the system_template_vars
-      # since it isn't a real (template) var
-      for key in self._system_template_vars.keys():
-        self._system_template_vars[key] = self._template_vars.pop("version", None)
+        self._debugging(f"  {key} = {value} {'⚙️' if key in self._system_template_vars_defaults else ''}")
+      # extract system_template_vars since it aren't real (template) vars
+      for key in self._system_template_vars_defaults.keys():
+        self._system_template_vars[key] = self._template_vars.pop(key, None)
+          
     except FileNotFoundError:
       pass
     except KeyError:
