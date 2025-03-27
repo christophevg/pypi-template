@@ -1,5 +1,6 @@
 from pathlib import Path
 import os.path
+from datetime import datetime
 
 from pypi_template import PyPiTemplate, __version__
 
@@ -42,7 +43,7 @@ def test_defaults(monkeypatch):
   
   assert PyPiTemplate().defaults == {
     "readme": ".github/README.md",
-    "first_year_of_publication": "2024",
+    "first_year_of_publication": str(datetime.now().year),
     "your_author_name": "Christophe VG",
     "your_full_name": "Christophe VG",
     "your_name": "Christophe VG",
