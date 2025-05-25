@@ -64,6 +64,8 @@ $(addprefix uninstall-env-test-,$(PYTHON_VERSIONS)) uninstall-env-docs uninstall
 	@echo "👷‍♂️ $(RED)deleting virtual environment $(PROJECT)-$*$(NC)"
 	-pyenv virtualenv-delete $(PROJECT)-$*
 
+reinstall: uninstall install
+
 clean-env:
 	@echo "👷‍♂️ $(RED)deleting all packages from current environment$(NC)"
 	pip freeze | cut -d"@" -f1 | cut -d'=' -f1 | xargs pip uninstall -y > /dev/null
