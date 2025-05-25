@@ -51,6 +51,10 @@ Environment :: GPU :: NVIDIA CUDA :: 12
 Environment :: GPU :: NVIDIA CUDA :: 12 :: 12.0
 Environment :: GPU :: NVIDIA CUDA :: 12 :: 12.1
 Environment :: GPU :: NVIDIA CUDA :: 12 :: 12.2
+Environment :: GPU :: NVIDIA CUDA :: 12 :: 12.3
+Environment :: GPU :: NVIDIA CUDA :: 12 :: 12.4
+Environment :: GPU :: NVIDIA CUDA :: 12 :: 12.5
+Environment :: GPU :: NVIDIA CUDA :: 12 :: 12.6
 Environment :: Handhelds/PDA's
 Environment :: MacOS X
 Environment :: MacOS X :: Aqua
@@ -119,7 +123,10 @@ Framework :: Django :: 4
 Framework :: Django :: 4.0
 Framework :: Django :: 4.1
 Framework :: Django :: 4.2
+Framework :: Django :: 5
 Framework :: Django :: 5.0
+Framework :: Django :: 5.1
+Framework :: Django :: 5.2
 Framework :: Django CMS
 Framework :: Django CMS :: 3.4
 Framework :: Django CMS :: 3.5
@@ -131,6 +138,7 @@ Framework :: Django CMS :: 3.10
 Framework :: Django CMS :: 3.11
 Framework :: Django CMS :: 4.0
 Framework :: Django CMS :: 4.1
+Framework :: Django CMS :: 5.0
 Framework :: FastAPI
 Framework :: Flake8
 Framework :: Flask
@@ -165,6 +173,11 @@ Framework :: Odoo :: 14.0
 Framework :: Odoo :: 15.0
 Framework :: Odoo :: 16.0
 Framework :: Odoo :: 17.0
+Framework :: Odoo :: 18.0
+Framework :: OpenTelemetry
+Framework :: OpenTelemetry :: Distros
+Framework :: OpenTelemetry :: Exporters
+Framework :: OpenTelemetry :: Instrumentations
 Framework :: Opps
 Framework :: Paste
 Framework :: Pelican
@@ -183,6 +196,7 @@ Framework :: Plone :: 5.2
 Framework :: Plone :: 5.3
 Framework :: Plone :: 6.0
 Framework :: Plone :: 6.1
+Framework :: Plone :: 6.2
 Framework :: Plone :: Addon
 Framework :: Plone :: Core
 Framework :: Plone :: Distribution
@@ -195,6 +209,7 @@ Framework :: Pydantic
 Framework :: Pydantic :: 1
 Framework :: Pydantic :: 2
 Framework :: Pylons
+Framework :: Pyodide
 Framework :: Pyramid
 Framework :: Pytest
 Framework :: Review Board
@@ -221,6 +236,7 @@ Framework :: Wagtail :: 3
 Framework :: Wagtail :: 4
 Framework :: Wagtail :: 5
 Framework :: Wagtail :: 6
+Framework :: Wagtail :: 7
 Framework :: ZODB
 Framework :: Zope
 Framework :: Zope2
@@ -270,8 +286,10 @@ License :: OSI Approved :: Apple Public Source License
 License :: OSI Approved :: Artistic License
 License :: OSI Approved :: Attribution Assurance License
 License :: OSI Approved :: BSD License
+License :: OSI Approved :: Blue Oak Model License (BlueOak-1.0.0)
 License :: OSI Approved :: Boost Software License 1.0 (BSL-1.0)
 License :: OSI Approved :: CEA CNRS Inria Logiciel Libre License, version 2.1 (CeCILL-2.1)
+License :: OSI Approved :: CMU License (MIT-CMU)
 License :: OSI Approved :: Common Development and Distribution License 1.0 (CDDL-1.0)
 License :: OSI Approved :: Common Public License
 License :: OSI Approved :: Eclipse Public License 1.0 (EPL-1.0)
@@ -297,11 +315,8 @@ License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)
 License :: OSI Approved :: Historical Permission Notice and Disclaimer (HPND)
 License :: OSI Approved :: IBM Public License
 License :: OSI Approved :: ISC License (ISCL)
-License :: OSI Approved :: Intel Open Source License
-License :: OSI Approved :: Jabber Open Source License
 License :: OSI Approved :: MIT License
 License :: OSI Approved :: MIT No Attribution License (MIT-0)
-License :: OSI Approved :: MITRE Collaborative Virtual Workspace License (CVW)
 License :: OSI Approved :: MirOS License (MirOS)
 License :: OSI Approved :: Motosoto License
 License :: OSI Approved :: Mozilla Public License 1.0 (MPL)
@@ -320,14 +335,12 @@ License :: OSI Approved :: Qt Public License (QPL)
 License :: OSI Approved :: Ricoh Source Code Public License
 License :: OSI Approved :: SIL Open Font License 1.1 (OFL-1.1)
 License :: OSI Approved :: Sleepycat License
-License :: OSI Approved :: Sun Industry Standards Source License (SISSL)
 License :: OSI Approved :: Sun Public License
 License :: OSI Approved :: The Unlicense (Unlicense)
 License :: OSI Approved :: Universal Permissive License (UPL)
 License :: OSI Approved :: University of Illinois/NCSA Open Source License
 License :: OSI Approved :: Vovida Software License 1.0
 License :: OSI Approved :: W3C License
-License :: OSI Approved :: X.Net License
 License :: OSI Approved :: Zero-Clause BSD (0BSD)
 License :: OSI Approved :: Zope Public License
 License :: OSI Approved :: zlib/libpng License
@@ -336,12 +349,14 @@ License :: Public Domain
 License :: Repoze Public License
 Natural Language :: Afrikaans
 Natural Language :: Arabic
+Natural Language :: Armenian
 Natural Language :: Basque
 Natural Language :: Bengali
 Natural Language :: Bosnian
 Natural Language :: Bulgarian
 Natural Language :: Cantonese
 Natural Language :: Catalan
+Natural Language :: Catalan (Valencian)
 Natural Language :: Chinese (Simplified)
 Natural Language :: Chinese (Traditional)
 Natural Language :: Croatian
@@ -350,9 +365,11 @@ Natural Language :: Danish
 Natural Language :: Dutch
 Natural Language :: English
 Natural Language :: Esperanto
+Natural Language :: Estonian
 Natural Language :: Finnish
 Natural Language :: French
 Natural Language :: Galician
+Natural Language :: Georgian
 Natural Language :: German
 Natural Language :: Greek
 Natural Language :: Hebrew
@@ -393,6 +410,7 @@ Natural Language :: Turkish
 Natural Language :: Ukrainian
 Natural Language :: Urdu
 Natural Language :: Vietnamese
+Natural Language :: Yiddish
 Operating System :: Android
 Operating System :: BeOS
 Operating System :: MacOS
@@ -506,6 +524,8 @@ Programming Language :: Python :: 3.10
 Programming Language :: Python :: 3.11
 Programming Language :: Python :: 3.12
 Programming Language :: Python :: 3.13
+Programming Language :: Python :: 3.14
+Programming Language :: Python :: 3.15
 Programming Language :: Python :: Implementation
 Programming Language :: Python :: Implementation :: CPython
 Programming Language :: Python :: Implementation :: IronPython
@@ -715,6 +735,7 @@ Topic :: Scientific/Engineering :: Mathematics
 Topic :: Scientific/Engineering :: Medical Science Apps.
 Topic :: Scientific/Engineering :: Oceanography
 Topic :: Scientific/Engineering :: Physics
+Topic :: Scientific/Engineering :: Quantum Computing
 Topic :: Scientific/Engineering :: Visualization
 Topic :: Security
 Topic :: Security :: Cryptography
