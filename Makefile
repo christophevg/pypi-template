@@ -10,6 +10,9 @@ NC=\033[0m
 PYTHON_VERSIONS ?= 3.9.18 3.10.13 3.11.12 3.12.10
 RUFF_PYTHON_VERSION ?= py311
 
+# base env to create non-test envs from, e.g.: -docs -run
+PYTHON_BASE ?= 3.11.12
+
 PROJECT=$(shell basename $(CURDIR))
 PACKAGE_NAME=`cat .pypi-template | grep "^package_module_name" | cut -d":" -f2 | xargs`
 
@@ -30,7 +33,7 @@ install: install-env-run install-env-docs install-env-test
 install-env-run:
 	@echo "👷‍♂️ $(BLUE)creating virtual environment $(PROJECT)-run$(NC)"
 	pyenv local --unset
-	-pyenv virtualenv $(PROJECT)-run > /dev/null
+	-pyenv virtualenv $(PYTHON_BASE) $(PROJECT)-run > /dev/null
 	pyenv local $(PROJECT)-run
 	pip install -U pip > /dev/null
 	pip install -r requirements.txt > /dev/null
@@ -39,7 +42,7 @@ install-env-run:
 install-env-docs:
 	@echo "👷‍♂️ $(BLUE)creating virtual environment $(PROJECT)-docs$(NC)"
 	pyenv local --unset
-	-pyenv virtualenv $(PROJECT)-docs > /dev/null
+	-pyenv virtualenv $(PYTHON_BASE) $(PROJECT)-docs > /dev/null
 	pyenv local $(PROJECT)-docs
 	pip install -U pip > /dev/null
 	pip install -r requirements.docs.txt > /dev/null
