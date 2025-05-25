@@ -2,16 +2,16 @@ a_description_for_the_package: Template-based common/best practices for managing
   Python package on PyPi
 classifiers:
 - 'Environment :: Console'
-- 'Development Status :: 4 - Beta'
+- 'Development Status :: 5 - Production/Stable'
 - 'Intended Audience :: Developers'
 - 'Intended Audience :: System Administrators'
 - 'Topic :: Software Development'
 - 'License :: OSI Approved :: MIT License'
 - 'Programming Language :: Python'
-- 'Programming Language :: Python :: 3.8'
 - 'Programming Language :: Python :: 3.9'
 - 'Programming Language :: Python :: 3.10'
 - 'Programming Language :: Python :: 3.11'
+- 'Programming Language :: Python :: 3.12'
 console_scripts:
 - pypi-template=pypi_template.__main__:cli
 first_year_of_publication: '2018'
@@ -40,7 +40,7 @@ skip:
 - tests
 - docs
 - (package_module_name)
-version: 0.8.0
+version: 1.0.0
 your_author_name: Christophe VG
 your_email_address: contact@christophe.vg
 your_full_name: Christophe VG
