@@ -16,10 +16,16 @@ PYTHON_BASE ?= 3.11.12
 PROJECT=$(shell basename $(CURDIR))
 PACKAGE_NAME=`cat .pypi-template | grep "^package_module_name" | cut -d":" -f2 | xargs`
 
-LOG_LEVEL?=ERROR
+LOG_LEVEL?=INFO
 SILENT?=yes
 
-RUN_CMD?=LOG_LEVEL=$(LOG_LEVEL) python -m $(PACKAGE_NAME)
+ifeq ($(wildcard pypi_template),) 
+	PYPI_TEMPLATE = pypi-template
+else 
+	PYPI_TEMPLATE = python -m pypi_template
+endif
+
+RUN_CMD?=LOG_LEVEL=$(LOG_LEVEL) $(PYPI_TEMPLATE)
 RUN_ARGS?=
 
 TEST_ENVS=$(addprefix $(PROJECT)-test-,$(PYTHON_VERSIONS))
@@ -85,6 +91,7 @@ env-%:
 env:
 	@echo "👷‍♂️ $(BLUE)activating project environment$(NC)"
 	@pyenv local $(PROJECT)
+	@$(PYPI_TEMPLATE) status > /dev/null
 
 env-test:
 	@echo "👷‍♂️ $(BLUE)activating test environments$(NC)"
