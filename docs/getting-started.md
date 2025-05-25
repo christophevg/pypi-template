@@ -33,6 +33,8 @@ PyPi template will ask you to provide some basic information, which allows it to
 .pypi-template        Makefile              
 ```
 
+> Pro-Tip: Create a single virtualenv for all your pypi-template managed projects!
+
 ### Minimal Things to Edit
 
 1. your package/module code ;-)
