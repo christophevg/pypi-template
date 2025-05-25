@@ -270,7 +270,7 @@ class PyPiTemplate():
   def _check_pypi_version(self):
     # notify of newer version
     response = requests.get("https://pypi.org/pypi/pypi-template/json")
-    latest_version = response.json()['info']['version']
+    latest_version = response.json()["info"]["version"]
     if packaging_version.parse(self.version) < packaging_version.parse(latest_version):
       logger.warning(f"🚨 a newer version of pypi-template ({latest_version}) is available")
       logger.warning( "   👉 issue 'pip install -U pypi-template' to upgrade!")
