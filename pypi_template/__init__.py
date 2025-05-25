@@ -1,6 +1,7 @@
 __version__ = "1.0.0"
 
 import os
+import sys
 import datetime
 
 import importlib_resources
@@ -19,6 +20,19 @@ import subprocess
 
 import requests
 from packaging import version as packaging_version
+
+import logging
+
+# setup logging: info to stdout, warning to stderr
+logging.basicConfig(format="%(message)s", handlers=[])
+logger = logging.getLogger(__name__)
+logger.setLevel(os.environ.get("LOG_LEVEL", logging.INFO))
+stdout = logging.StreamHandler(sys.stdout)
+stdout.addFilter(lambda record: record.levelno <= logging.INFO)
+stderr = logging.StreamHandler()
+stderr.setLevel(logging.WARNING)
+logger.addHandler(stdout)
+logger.addHandler(stderr)
 
 style = Style.from_dict({ "underlined": "underline" })
 init(autoreset=True)
@@ -248,7 +262,7 @@ class PyPiTemplate():
       self._check_uninitialized_variables(),
       self._check_config_version()
     ]):
-      print("😎 everything is OK")
+      logger.info("😎 everything is OK")
     return self
 
   # helper functions
@@ -258,8 +272,8 @@ class PyPiTemplate():
     response = requests.get("https://pypi.org/pypi/pypi-template/json")
     latest_version = response.json()['info']['version']
     if packaging_version.parse(self.version) < packaging_version.parse(latest_version):
-      print(f"🚨 a newer version of pypi-template ({latest_version}) is available")
-      print( "   👉 issue 'pip install -U pypi-template' to upgrade!")
+      logger.warning(f"🚨 a newer version of pypi-template ({latest_version}) is available")
+      logger.warning( "   👉 issue 'pip install -U pypi-template' to upgrade!")
       return False
     return True
 
@@ -267,8 +281,8 @@ class PyPiTemplate():
     # notify of uninitialized variables
     if self.uninitialized:
       plural = "s" if len(self.uninitialized) > 1 else ""
-      print(f"🚨 uninitialized template variable{plural}: {', '.join(self.uninitialized)}")
-      print( "   👉 issue 'yes edit all apply' to fix!")
+      logger.warning(f"🚨 uninitialized template variable{plural}: {', '.join(self.uninitialized)}")
+      logger.warning( "   👉 issue 'yes edit all apply' to fix!")
       return False
     return True
 
@@ -276,8 +290,8 @@ class PyPiTemplate():
     # notify if version in config isn't current
     config_version = self._system_template_vars["version"]
     if config_version != self.version:
-      print(f"🚨 pypi-template config version {config_version} != {self.version}")
-      print( "   👉 issue 'force save' to update!")
+      logger.warning(f"🚨 pypi-template config version {config_version} != {self.version}")
+      logger.warning( "   👉 issue 'force save' to update!")
       return False
     return True
 
@@ -362,7 +376,7 @@ class PyPiTemplate():
       else:
         self.__collect_var_value(var, current)
     except KeyError:
-      print(f"🚨 unknown template variable: {var}")
+      logger.warning(f"🚨 unknown template variable: {var}")
 
   def __collect_var_value(self, var, current):
     question = f"{var.replace('_', ' ').capitalize()}: "
@@ -379,9 +393,9 @@ class PyPiTemplate():
     if not current:
       current = []
     if len(current) > 0:
-      print(Fore.BLUE + f"Current {var.replace('_', ' ')}:")
+      logger.info(Fore.BLUE + f"Current {var.replace('_', ' ')}:")
       for selection in current:
-        print(Fore.BLUE + f"- {selection}")
+        logger.info(Fore.BLUE + f"- {selection}")
     question = f"Select {var.replace('_', ' ')}: "
     values   = self._var_lists[var]
     if values:
@@ -483,13 +497,13 @@ class PyPiTemplate():
 
   def _being_verbose(self, msg):
     if self._be_verbose or self._show_debug:
-      print(msg)
+      logger.info(msg)
       return True
     return False
   
   def _debugging(self, msg):
     if self._show_debug:
-      print(msg)
+      logger.info(msg)
       return True
     return False
 
