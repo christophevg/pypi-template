@@ -103,7 +103,9 @@ run: env-run
 	@echo "👷‍♂️ $(BLUE)running$(GREEN) $(RUN_CMD) $(RUN_ARGS)$(NC)"
 	@$(RUN_CMD) $(RUN_ARGS)
 
-test: env-test lint
+test: env-test lint tox env
+	
+tox:
 ifeq ($(SILENT),yes)
 	tox -q
 else
