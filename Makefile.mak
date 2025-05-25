@@ -11,4 +11,6 @@ RUN_ARGS = verbose debug apply
 
 update: RUN_ARGS=verbose apply
 update: run
-	
+
+force-update: RUN_ARGS=verbose force apply
+force-update: run
