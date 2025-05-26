@@ -1,3 +1,5 @@
+-include .env
+
 # colors
 
 GREEN=\033[0;32m
@@ -14,6 +16,13 @@ RUFF_PYTHON_VERSION ?= py311
 PYTHON_BASE ?= 3.11.12
 
 PROJECT=$(shell basename $(CURDIR))
+
+# by default we assume a project environment with the project/folder name
+# this can be overridden using an enrionment variable
+ifeq ($(PROJECT_ENV),)
+PROJECT_ENV := $(PROJECT)
+endif
+
 PACKAGE_NAME=`cat .pypi-template | grep "^package_module_name" | cut -d":" -f2 | xargs`
 
 LOG_LEVEL?=INFO
@@ -32,8 +41,9 @@ TEST_ENVS=$(addprefix $(PROJECT)-test-,$(PYTHON_VERSIONS))
 
 install: install-env-run install-env-docs install-env-test
 	@echo "👷‍♂️ $(BLUE)installing requirements in $(PROJECT)$(NC)"
-	pyenv local $(PROJECT)
+	pyenv local $(PROJECT_ENV)
 	pip install -U pip > /dev/null
+	pip install -U pypi-template > /dev/null
 	pip install -U wheel twine setuptools > /dev/null
 
 install-env-run:
@@ -89,8 +99,8 @@ env-%:
 	@pyenv local $(PROJECT)-$*
 
 env:
-	@echo "👷‍♂️ $(BLUE)activating project environment$(NC)"
-	@pyenv local $(PROJECT)
+	@echo "👷‍♂️ $(BLUE)activating project environment: $(PROJECT_ENV) / $(PROJECT)$(NC)"
+	@pyenv local $(PROJECT_ENV)
 	@$(PYPI_TEMPLATE) status > /dev/null
 
 env-test:
