@@ -99,7 +99,7 @@ env-%:
 	@pyenv local $(PROJECT)-$*
 
 env:
-	@echo "👷‍♂️ $(BLUE)activating project environment: $(PROJECT_ENV) / $(PROJECT)$(NC)"
+	@echo "👷‍♂️ $(BLUE)activating project environment$(NC)"
 	@pyenv local $(PROJECT_ENV)
 	@$(PYPI_TEMPLATE) status > /dev/null
 
