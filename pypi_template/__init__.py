@@ -1,4 +1,4 @@
-__version__ = "1.2.0"
+__version__ = "1.2.1"
 
 import os
 import sys
@@ -331,6 +331,8 @@ class PyPiTemplate():
         self._system_template_vars[key] = self._template_vars.pop(key, None)
           
     except FileNotFoundError:
+      # TODO Notify missing config, which is needed
+      # temp solution might be to generate a default one and use that?
       pass
     except KeyError:
       pass
