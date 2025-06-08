@@ -1,4 +1,4 @@
-__version__ = "1.2.2"
+__version__ = "1.3.0"
 
 import os
 import sys
@@ -84,6 +84,7 @@ class PyPiTemplate():
     self._var_lists = {
       "classifiers"     : self._load_classifiers(),
       "requires"        : None,
+      "test_requires"   : None,
       "console_scripts" : None,
       "scripts"         : None,
       "skip"            : None
@@ -177,7 +178,11 @@ class PyPiTemplate():
     Return a list of all available template variables you can edit.
     """
     return self._out(
-      sorted(list(self._template_vars.keys()) + list(self._var_lists.keys()))
+      sorted(
+        set(
+          list(self._template_vars.keys()) + list(self._var_lists.keys())
+        )
+      )
     )
 
   @property

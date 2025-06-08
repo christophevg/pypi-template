@@ -1,0 +1,3 @@
+{% for required in test_requires %}{{ required }}
+{% endfor %}
+
