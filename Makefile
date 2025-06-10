@@ -40,7 +40,9 @@ RUN_ARGS?=
 
 TEST_ENVS=$(addprefix $(PROJECT)-test-,$(PYTHON_VERSIONS))
 
-install: install-env-run install-env-docs install-env-test
+install: install-envs
+	
+install-envs: install-env-run install-env-docs install-env-test env
 	@echo "👷‍♂️ $(BLUE)installing requirements in $(PROJECT)$(NC)"
 	pyenv local $(PROJECT_ENV)
 	pip install -U pip > /dev/null
@@ -85,6 +87,8 @@ $(addprefix uninstall-env-test-,$(PYTHON_VERSIONS)) uninstall-env-docs uninstall
 	-pyenv virtualenv-delete $(PROJECT)-$*
 
 reinstall: uninstall install
+
+reinstall-%: uninstall-% intall-%
 
 clean-env:
 	@echo "👷‍♂️ $(RED)deleting all packages from current environment$(NC)"
