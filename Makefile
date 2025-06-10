@@ -97,9 +97,14 @@ upgrade:
 	@pip list --outdated | tail +3 | cut -d " " -f 1 | xargs -n1 pip install -U
 
 # apply current pypi-template configuration, typically after upgrading it
+ifeq ($(wildcard pypi_template),)
+apply: env
+	$(PYPI_TEMPLATE) verbose apply
+else
 apply: RUN_CMD=$(PYPI_TEMPLATE)
 apply: RUN_ARGS=verbose apply
 apply: run
+endif
 
 # apply and reinstall
 update: apply uninstall-env-run install-env-run
