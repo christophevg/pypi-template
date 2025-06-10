@@ -113,18 +113,20 @@ run: env-run
 	@echo "👷‍♂️ $(BLUE)running$(GREEN) $(RUN_CMD) $(RUN_ARGS)$(NC)"
 	@$(RUN_CMD) $(RUN_ARGS)
 
-test: env-test lint tox env
-	
-tox:
+test: lint tox env
+coverage: lint tox coverage-report env
+
+tox: env-test
 ifeq ($(SILENT),yes)
 	tox -q
 else
 	tox
 endif
 
-coverage: test
-	coverage report
-	coverage lcov
+coverage-report: env-test
+	@coverage report
+	@coverage html
+	@coverage lcov
 
 lint: env-test
 	ruff check --target-version=$(RUFF_PYTHON_VERSION) .
