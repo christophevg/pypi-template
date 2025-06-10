@@ -9,8 +9,6 @@ $(CLASSIFIERS):
 
 RUN_ARGS = verbose debug apply
 
-update: RUN_ARGS=verbose apply
-update: run
-
-force-update: RUN_ARGS=verbose force apply
-force-update: run
+publish-and-update: publish env
+	pip install -U pypi-template
+	

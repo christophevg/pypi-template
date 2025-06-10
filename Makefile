@@ -97,6 +97,13 @@ clean-env:
 upgrade:
 	@pip list --outdated | tail +3 | cut -d " " -f 1 | xargs -n1 pip install -U
 
+# apply current pypi-template configuration, typically after upgrading it
+apply: RUN_ARGS=verbose apply
+apply: run
+
+# apply and reinstall
+update: apply reinstall-env-run
+
 # env switching
 
 env-%:
