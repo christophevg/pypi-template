@@ -76,7 +76,7 @@ $(PROJECT)-test-%:
 
 uninstall: uninstall-envs
 
-uninstall-envs: uninstall-env-test uninstall-env-docs uninstall-env-run env clean-env
+uninstall-envs: uninstall-env-test uninstall-env-docs uninstall-env-run env
 
 uninstall-env-test: $(addprefix uninstall-env-test-,$(PYTHON_VERSIONS))
 
