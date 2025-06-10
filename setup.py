@@ -16,7 +16,6 @@ CLASSIFIERS      = [
   "Intended Audience :: Developers",
   "Intended Audience :: System Administrators",
   "Topic :: Software Development",
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
