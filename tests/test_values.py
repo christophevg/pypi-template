@@ -21,6 +21,7 @@ def test_variables():
     "package_name",
     "package_tagline",
     "package_title",
+    "project_env",
     "readme",
     "requires",
     "scripts",
@@ -44,5 +45,6 @@ def test_defaults(monkeypatch):
     "your_full_name": "Christophe VG",
     "your_name": "Christophe VG",
     "github_account": "christophevg",
-    "license": "MIT"
+    "license": "MIT",
+    'project_env': ""
   }
