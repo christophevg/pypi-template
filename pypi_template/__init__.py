@@ -21,6 +21,8 @@ import subprocess
 import requests
 from packaging import version as packaging_version
 
+from pypi_template.util import file_content
+
 import logging
 
 # setup logging: info to stdout, warning to stderr
@@ -109,6 +111,7 @@ class PyPiTemplate():
     self._default_values = {
       "readme"                    : ".github/README.md",
       "first_year_of_publication" : self._system_vars["current_year"],
+      "project_env"               : file_content(".python_version", default="")
     }
     
     # load personal default values, saved variables (from .pypi-template)

@@ -23,6 +23,7 @@ package_name: pypi-template
 package_tagline: Template-based common/best practices for managing a Python package
   on PyPi
 package_title: PyPi Template
+project_env: pypi-template
 readme: .github/README.md
 requires:
 - jinja2
