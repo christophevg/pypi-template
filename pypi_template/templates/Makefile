@@ -35,7 +35,7 @@ else
 	PYPI_TEMPLATE = python -m pypi_template
 endif
 
-RUN_CMD?=LOG_LEVEL=$(LOG_LEVEL) $(PYPI_TEMPLATE)
+RUN_CMD?=LOG_LEVEL=$(LOG_LEVEL) python -m $(PACKAGE_NAME)
 RUN_ARGS?=
 
 TEST_ENVS=$(addprefix $(PROJECT)-test-,$(PYTHON_VERSIONS))
