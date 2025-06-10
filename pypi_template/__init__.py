@@ -119,6 +119,10 @@ class PyPiTemplate():
     # and discover all templates and variables that have been used on them
     self._load_personal_default_values()
     self._load_vars()
+    # skip isn't anywhere in the templates and isn't collected and therefore
+    # reported as missing after init - adding it manually for now
+    if "skip" not in self._template_vars:
+      self._template_vars["skip"] = []
     self._collect_templates()
     
   # fire default output - if there are unapplied changes, notify them when
