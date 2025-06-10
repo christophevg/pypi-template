@@ -44,37 +44,37 @@ install: install-envs
 	
 install-envs: install-env-run install-env-docs install-env-test env
 	@echo "👷‍♂️ $(BLUE)installing requirements in $(PROJECT)$(NC)"
-	pyenv local $(PROJECT_ENV)
-	pip install -U pip > /dev/null
-	pip install -U pypi-template > /dev/null
-	pip install -U wheel twine setuptools > /dev/null
+	@pyenv local $(PROJECT_ENV)
+	@pip install -U pip > /dev/null
+	@pip install -U pypi-template > /dev/null
+	@pip install -U wheel twine setuptools build > /dev/null
 
 install-env-run:
 	@echo "👷‍♂️ $(BLUE)creating virtual environment $(PROJECT)-run$(NC)"
-	pyenv local --unset
-	-pyenv virtualenv $(PYTHON_BASE) $(PROJECT)-run > /dev/null
-	pyenv local $(PROJECT)-run
-	pip install -U pip > /dev/null
-	pip install -r requirements.txt > /dev/null
-	[ -f requirements.run.txt ] && pip install -r requirements.run.txt > /dev/null || true
+	@pyenv local --unset
+	@-pyenv virtualenv $(PYTHON_BASE) $(PROJECT)-run > /dev/null
+	@pyenv local $(PROJECT)-run
+	@pip install -U pip > /dev/null
+	@pip install -r requirements.txt > /dev/null
+	@[ -f requirements.run.txt ] && pip install -r requirements.run.txt > /dev/null || true
 
 install-env-docs:
 	@echo "👷‍♂️ $(BLUE)creating virtual environment $(PROJECT)-docs$(NC)"
-	pyenv local --unset
-	-pyenv virtualenv $(PYTHON_BASE) $(PROJECT)-docs > /dev/null
-	pyenv local $(PROJECT)-docs
-	pip install -U pip > /dev/null
-	pip install -r requirements.docs.txt > /dev/null
+	@pyenv local --unset
+	@-pyenv virtualenv $(PYTHON_BASE) $(PROJECT)-docs > /dev/null
+	@pyenv local $(PROJECT)-docs
+	@pip install -U pip > /dev/null
+	@pip install -r requirements.docs.txt > /dev/null
 	
 install-env-test: $(TEST_ENVS)
 
 $(PROJECT)-test-%:
 	@echo "👷‍♂️ $(BLUE)creating virtual test environment $@$(NC)"
-	pyenv local --unset
-	-pyenv virtualenv $* $@ > /dev/null
-	pyenv local $@
-	pip install -U pip > /dev/null
-	pip install -U ruff tox coverage > /dev/null
+	@pyenv local --unset
+	@-pyenv virtualenv $* $@ > /dev/null
+	@pyenv local $@
+	@pip install -U pip > /dev/null
+	@pip install -U ruff tox coverage > /dev/null
 
 uninstall: uninstall-envs
 
@@ -84,25 +84,25 @@ uninstall-env-test: $(addprefix uninstall-env-test-,$(PYTHON_VERSIONS))
 
 $(addprefix uninstall-env-test-,$(PYTHON_VERSIONS)) uninstall-env-docs uninstall-env-run: uninstall-env-%:
 	@echo "👷‍♂️ $(RED)deleting virtual environment $(PROJECT)-$*$(NC)"
-	-pyenv virtualenv-delete $(PROJECT)-$*
+	@-pyenv virtualenv-delete -f $(PROJECT)-$*
 
 reinstall: uninstall install
 
-reinstall-%: uninstall-% intall-%
-
 clean-env:
 	@echo "👷‍♂️ $(RED)deleting all packages from current environment$(NC)"
-	pip freeze | cut -d"@" -f1 | cut -d'=' -f1 | xargs pip uninstall -y > /dev/null
+	@pip freeze | cut -d"@" -f1 | cut -d'=' -f1 | xargs pip uninstall -y > /dev/null
 
 upgrade:
+	@echo "👷‍♂️ $(BLUE)upgrading outdated packages$(NC)"
 	@pip list --outdated | tail +3 | cut -d " " -f 1 | xargs -n1 pip install -U
 
 # apply current pypi-template configuration, typically after upgrading it
+apply: RUN_CMD=$(PYPI_TEMPLATE)
 apply: RUN_ARGS=verbose apply
 apply: run
 
 # apply and reinstall
-update: apply reinstall-env-run
+update: apply uninstall-env-run install-env-run
 
 # env switching
 
@@ -129,40 +129,46 @@ test: lint tox env
 coverage: lint tox coverage-report env
 
 tox: env-test
+	@echo "👷‍♂️ $(BLUE)performing tests$(NC)"
 ifeq ($(SILENT),yes)
-	tox -q
+	@tox -q
 else
-	tox
+	@tox
 endif
 
 coverage-report: env-test
+	@echo "👷‍♂️ $(BLUE)creating coverage reports$(NC)"
 	@coverage report
 	@coverage html
 	@coverage lcov
 
 lint: env-test
-	ruff check --target-version=$(RUFF_PYTHON_VERSION) .
+	@ruff check --target-version=$(RUFF_PYTHON_VERSION) .
 
 docs: env-docs
-	cd docs; make html
-	open docs/_build/html/index.html
+	@echo "👷‍♂️ $(BLUE)building documentation$(NC)"
+	@cd docs; make html
+	@open docs/_build/html/index.html
 
 # packaging targets
 
 publish-test: env dist
-	twine upload --repository testpypi dist/*
+	@echo "👷‍♂️ $(BLUE)publishing to PyPI test$(NC)"
+	@twine upload --repository testpypi dist/*
 
 publish: env dist
-	twine upload dist/*
+	@echo "👷‍♂️ $(BLUE)publishing to PyPI$(NC)"
+	@twine upload dist/*
 
 dist: env dist-clean
-	python setup.py sdist bdist_wheel
+	@echo "👷‍♂️ $(BLUE)building distribution$(NC)"
+	@python -m build > /dev/null
 
 dist-clean: clean
-	rm -rf dist build *.egg-info
+	@rm -rf dist build *.egg-info
 
 clean:
-	find . -type f -name "*.backup" | xargs rm
+	@find . -type f -name "*.backup" | xargs rm
 
 .PHONY: dist docs test
 
