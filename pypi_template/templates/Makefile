@@ -28,6 +28,7 @@ PACKAGE_NAME=`cat .pypi-template | grep "^package_module_name" | cut -d":" -f2 |
 LOG_LEVEL?=INFO
 SILENT?=yes
 
+# if we're inside our own repo folder, use the local module folder, else cli cmd
 ifeq ($(wildcard pypi_template),) 
 	PYPI_TEMPLATE = pypi-template
 else 
