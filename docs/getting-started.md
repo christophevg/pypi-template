@@ -175,25 +175,67 @@ The included `Makefile` offers several useful (IMHO) targets to perform some com
 A basic testing setup has been prepared. To run it locally, issue...
 
 ```console
-% make test                
-tox
-GLOB sdist-make: /Users/xtof/Workspace/temp/setup.py
-py3 inst-nodeps: /Users/xtof/Workspace/temp/.tox/.tmp/package/1/temp-pypi-template-0.0.1.zip
-py3 installed: attrs==22.1.0,certifi==2022.6.15,charset-normalizer==2.1.0,coverage==6.4.3,coveralls==3.3.1,docopt==0.6.2,idna==3.3,iniconfig==1.1.1,packaging==21.3,pluggy==1.0.0,py==1.11.0,pyparsing==3.0.9,pytest==7.1.2,requests==2.28.1,temp-pypi-template @ file:///Users/xtof/Workspace/temp/.tox/.tmp/package/1/temp-pypi-template-0.0.1.zip,tomli==2.0.1,urllib3==1.26.11
-py3 run-test-pre: PYTHONHASHSEED='1204045229'
-py3 run-test: commands[0] | coverage run -m '--omit=*/.tox/*,*/distutils/*,tests/*' pytest
-============================================== test session starts ===============================================
-platform darwin -- Python 3.8.12, pytest-7.1.2, pluggy-1.0.0
-cachedir: .tox/py3/.pytest_cache
-rootdir: /Users/xtof/Workspace/temp, configfile: tox.ini, testpaths: tests
-collected 1 item                                                                                                 
+% make test
+👷‍♂️ activating test environments
+All checks passed!
+👷‍♂️ performing tests
+================================ test session starts ================================
+platform darwin -- Python 3.11.12, pytest-8.3.5, pluggy-1.6.0
+cachedir: .tox/py311/.pytest_cache
+rootdir: /Users/xtof/Workspace/pypi-template
+configfile: tox.ini
+testpaths: tests
+collected 4 items
 
-tests/test_example.py .                                                                                    [100%]
+tests/test_example.py .                                                       [ 25%]
+tests/test_values.py ...                                                      [100%]
 
-=============================================== 1 passed in 0.00s ================================================
-____________________________________________________ summary _____________________________________________________
-  py3: commands succeeded
-  congratulations :)
+================================= 4 passed in 0.45s =================================
+py311: OK ✔ in 5.46 seconds
+================================ test session starts ================================
+platform darwin -- Python 3.12.10, pytest-8.3.5, pluggy-1.6.0
+cachedir: .tox/py312/.pytest_cache
+rootdir: /Users/xtof/Workspace/pypi-template
+configfile: tox.ini
+testpaths: tests
+collected 4 items
+
+tests/test_example.py .                                                       [ 25%]
+tests/test_values.py ...                                                      [100%]
+
+================================= 4 passed in 0.87s =================================
+py312: OK ✔ in 3.55 seconds
+================================ test session starts ================================
+platform darwin -- Python 3.10.13, pytest-8.3.5, pluggy-1.6.0
+cachedir: .tox/py310/.pytest_cache
+rootdir: /Users/xtof/Workspace/pypi-template
+configfile: tox.ini
+testpaths: tests
+collected 4 items
+
+tests/test_example.py .                                                       [ 25%]
+tests/test_values.py ...                                                      [100%]
+
+================================= 4 passed in 0.46s =================================
+py310: OK ✔ in 2.94 seconds
+================================ test session starts ================================
+platform darwin -- Python 3.9.18, pytest-8.3.5, pluggy-1.6.0
+cachedir: .tox/py39/.pytest_cache
+rootdir: /Users/xtof/Workspace/pypi-template
+configfile: tox.ini
+testpaths: tests
+collected 4 items
+
+tests/test_example.py .                                                       [ 25%]
+tests/test_values.py ...                                                      [100%]
+
+================================= 4 passed in 0.46s =================================
+  py311: OK (5.46 seconds)
+  py312: OK (3.55 seconds)
+  py310: OK (2.94 seconds)
+  py39: OK (2.46 seconds)
+  congratulations :) (14.50 seconds)
+👷‍♂️ activating project environment
 ```
 
 Head over to [https://travis-ci.org](https://travis-ci.org) and register your project. A basic CI configuration is also provided.
