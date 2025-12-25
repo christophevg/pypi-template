@@ -226,7 +226,7 @@ class PyPiTemplate():
     self.edit("all")
     self.apply()
     if self._going_to("👷‍♂️ performing post-init install (e.g. environments)"):
-      subprocess.run(["make", "install"])
+      self._make("install")
 
   def edit(self, variable):
     """
@@ -282,6 +282,10 @@ class PyPiTemplate():
 
   # helper functions
   
+
+  def _make(self, target):
+    subprocess.run(["make", target])
+
   def _check_pypi_version(self):
     # notify of newer version
     response = requests.get("https://pypi.org/pypi/pypi-template/json")
