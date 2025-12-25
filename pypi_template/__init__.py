@@ -23,6 +23,7 @@ import subprocess
 import requests
 from packaging import version as packaging_version
 
+from pypi_template.pip  import Pip
 from pypi_template.util import file_content
 
 import logging
@@ -126,7 +127,10 @@ class PyPiTemplate():
     if "skip" not in self._template_vars:
       self._template_vars["skip"] = []
     self._collect_templates()
-    
+
+    # set up submodules to handle groups of commands
+    self.pip = Pip(self)
+
   # fire default output - if there are unapplied changes, notify them when
   # exiting - and thus losing them
   def __str__(self):
