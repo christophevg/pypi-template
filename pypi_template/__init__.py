@@ -46,25 +46,25 @@ class PyPiTemplate():
 
   """
   manage a PyPi-published Python project using templates.
-  
+
   It is essentially a set of templates, which you can customise using several
-  variables. The variables are stored in a file called `.pypi-template` in the 
+  variables. The variables are stored in a file called `.pypi-template` in the
   root of the project. You can edit this file directly, or use the `edit`
   command to do it in an interactive way.
-  
+
   Several commands can be issued at the same time. These are chainable commands
   and are as such indicated in the help description of each command.
 
   To actually `apply` your changes, end your sequence of commands with `apply`.
-  
+
   Examples of usage:
-  
+
       % pypi-template init           # to setup your project initially
       % pypi-template apply          # e.g. after an upgrade of pypi-template
       % pypi-template edit requires  # to add an additional dependency
       % pypi-template yes edit all   # to edit any new variables
   """
-  
+
   def __init__(self):
     # operational setup with forward looking for defaults during __init__
     self._be_verbose     = "verbose" in sys.argv
@@ -72,7 +72,7 @@ class PyPiTemplate():
     self._show_debug     = "debug"   in sys.argv
     self._say_yes_to_all = "yes"     in sys.argv
     self._as_json        = False
-  
+
     # setup Jinja Template Engine
     self._environment = Environment(
       loader=PackageLoader("pypi_template", "templates")
@@ -107,7 +107,7 @@ class PyPiTemplate():
 
     # all templates
     self._templates      = {}
-    
+
     # tracking changes applied to _template_vars
     self._changes        = {}
 
@@ -117,7 +117,7 @@ class PyPiTemplate():
       "first_year_of_publication" : self._system_vars["current_year"],
       "project_env"               : file_content(".python_version", default="")
     }
-    
+
     # load personal default values, saved variables (from .pypi-template)
     # and discover all templates and variables that have been used on them
     self._load_personal_default_values()
@@ -285,7 +285,6 @@ class PyPiTemplate():
     return self
 
   # helper functions
-  
 
   def _make(self, target):
     subprocess.run(["make", target])
@@ -352,7 +351,7 @@ class PyPiTemplate():
       # extract system_template_vars since it aren't real (template) vars
       for key in self._system_template_vars_defaults.keys():
         self._system_template_vars[key] = self._template_vars.pop(key, None)
-          
+
     except FileNotFoundError:
       # TODO Notify missing config, which is needed
       # temp solution might be to generate a default one and use that?
@@ -441,11 +440,11 @@ class PyPiTemplate():
         if selection not in selections:
           selections.append(selection)
     self[var] = selections
-    
+
   def _changed_files(self):
     excluded = [ "base/index.md", "base/classifiers.txt" ]
     reported = []
-    
+
     def _is_skipped_folder(folder):
       for path in self._template_vars["skip"]:
         if folder.startswith(path):
@@ -454,7 +453,7 @@ class PyPiTemplate():
             reported.append(folder)
           return True
       return False
-    
+
     for filename, template in self._templates.items():
       if filename in excluded:
         if filename not in reported:
@@ -514,7 +513,7 @@ class PyPiTemplate():
         outfile.write(new_content)
 
   # output helpers
-  
+
   def _out(self, data):
     if self._as_json:
       return json.dumps(data, indent=2, default=str)
@@ -525,7 +524,7 @@ class PyPiTemplate():
       logger.info(msg)
       return True
     return False
-  
+
   def _debugging(self, msg):
     if self._show_debug:
       logger.info(msg)
@@ -542,9 +541,9 @@ class PyPiTemplate():
       self._being_verbose(f"{prefix}{msg}")
       return True
     return False
-  
+
   # resources helpers
-  
+
   def _load_classifiers(self):
     return str(
       self._load_resource("base", "classifiers.txt"), "utf-8"
