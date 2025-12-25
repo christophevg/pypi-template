@@ -6,6 +6,8 @@ import datetime
 
 import importlib_resources
 
+import copy
+
 from jinja2 import Environment, PackageLoader, meta
 
 import json
@@ -312,7 +314,7 @@ class PyPiTemplate():
 
   def __getitem__(self, key):
     try:
-      return self._template_vars[key]
+      return copy.copy(self._template_vars[key])
     except KeyError:
       pass
     return None
