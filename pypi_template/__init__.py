@@ -65,11 +65,11 @@ class PyPiTemplate():
   """
   
   def __init__(self):
-    # operational setup
-    self._be_verbose     = False
-    self._force          = False
-    self._show_debug     = False
-    self._say_yes_to_all = False
+    # operational setup with forward looking for defaults during __init__
+    self._be_verbose     = "verbose" in sys.argv
+    self._force          = "force"   in sys.argv
+    self._show_debug     = "debug"   in sys.argv
+    self._say_yes_to_all = "yes"     in sys.argv
     self._as_json        = False
   
     # setup Jinja Template Engine
