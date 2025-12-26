@@ -1,4 +1,4 @@
-__version__ = "1.5.0"
+__version__ = "1.5.1"
 
 import os
 import sys
@@ -287,7 +287,9 @@ class PyPiTemplate():
   # helper functions
 
   def _make(self, target):
-    subprocess.run(["make", target])
+    # TODO look further into why pyenv fails to adopt correct virtualenv
+    # subprocess.run(["make", target])
+    print(f"👉 please execute `make {target}` manually...")
 
   def _check_pypi_version(self):
     # notify of newer version
