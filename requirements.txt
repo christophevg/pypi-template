@@ -6,4 +6,5 @@ fire
 importlib-resources
 requests
 packaging
+rich
 

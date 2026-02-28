@@ -32,6 +32,7 @@ INSTALL_REQUIRES = [
   "importlib-resources",
   "requests",
   "packaging",
+  "rich",
   
 ]
 ENTRY_POINTS = {

@@ -24,18 +24,23 @@ from packaging import version as packaging_version
 from pypi_template.pip  import Pip
 from pypi_template.util import file_content
 
+from rich.console import Console
+from rich.logging import RichHandler
+
 import logging
 
-# setup logging: info to stdout, warning to stderr
-logging.basicConfig(format="%(message)s", handlers=[])
+console = Console(stderr=True, record=True)
+handler = RichHandler(console=console, markup=True)
+
+FORMAT="%(message)s"
+DATEFMT="[%X]"
+logging.basicConfig(
+  level=os.environ.get("LOG_LEVEL", "INFO"),
+  format=FORMAT, datefmt=DATEFMT,
+  handlers=[handler]
+)
+
 logger = logging.getLogger(__name__)
-logger.setLevel(os.environ.get("LOG_LEVEL", logging.INFO))
-stdout = logging.StreamHandler(sys.stdout)
-stdout.addFilter(lambda record: record.levelno <= logging.INFO)
-stderr = logging.StreamHandler()
-stderr.setLevel(logging.WARNING)
-logger.addHandler(stdout)
-logger.addHandler(stderr)
 
 style = Style.from_dict({ "underlined": "underline" })
 init(autoreset=True)
@@ -527,7 +532,7 @@ class PyPiTemplate():
 
   def _debugging(self, msg):
     if self._show_debug:
-      logger.info(msg)
+      logger.debug(msg)
       return True
     return False
 

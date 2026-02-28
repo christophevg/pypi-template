@@ -34,6 +34,7 @@ requires:
 - importlib-resources
 - requests
 - packaging
+- rich
 scripts: []
 skip:
 - MANIFEST.in
