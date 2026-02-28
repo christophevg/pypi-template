@@ -18,8 +18,6 @@ from prompt_toolkit import prompt
 from prompt_toolkit.styles import Style
 from colorama import init, Fore
 
-import subprocess
-
 import requests
 from packaging import version as packaging_version
 
