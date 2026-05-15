@@ -1,3 +1,7 @@
+# NOTE: This project is DEPRECATED
+# Migrate to pyproject.toml + hatchling setup
+# See: c3:python-project skill
+
 [tool.ruff]
 extend-exclude = [ "pypi_template/templates", "docs" ]
 

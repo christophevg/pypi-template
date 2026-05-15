@@ -1,5 +1,12 @@
 # PyPi Template
 
+> ⚠️ **DEPRECATED** - This project is no longer maintained.
+>
+> Migrate to modern `pyproject.toml` + `hatchling` setup.
+> See the [c3:python-project](https://github.com/christophevg/c3) skill for the new standard.
+>
+> ---
+
 > A managed template repository for maintaining PyPi packages
 
 [![Latest Version on PyPI](https://img.shields.io/pypi/v/pypi-template.svg)](https://pypi.python.org/pypi/pypi-template/)
